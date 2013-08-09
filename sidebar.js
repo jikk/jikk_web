@@ -13,9 +13,8 @@ document.write('\
             <p>A course website for <a href="#">3101 programming lanaguage -- python (Fall 2013)</a> is now ready.</p>\
             </li>\
             <li>\
-            <h3><a href="#">Fusce ultrices fringilla</a></h3>\
-            <p><a href="#">Quisque dictum integer nisl risus, sagittis\
-            convallis, rutrum id, congue, and nibh.</a></p>\
+            <h3><a href="#">New research project</a></h3>\
+            <p><a href="#">A comparison study of DBI frameworks</a></p>\
             </li>\
             <li>\
             <h3><a href="#">Nulla luctus eleifend</a></h3>\
