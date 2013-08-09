@@ -9,8 +9,8 @@ document.write('\
             </p>\
             </li>\
             <li>\
-            <h3><a href="#">One create python course site open</a></h3>\
-            <p>A course website for <a href="#">3101 programming lanaguage(Fall 2013)</a> is now ready.</p>\
+            <h3><a href="#">Course site for programming language</a></h3>\
+            <p>A course website for <a href="#">3101 programming lanaguage -- python (Fall 2013)</a> is now ready.</p>\
             </li>\
             <li>\
             <h3><a href="#">Fusce ultrices fringilla</a></h3>\
