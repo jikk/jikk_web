@@ -17,5 +17,4 @@ document.write('\
             <p><a href="#">A comparison study of DBI frameworks</a></p>\
             </li>\
 			</ul>\
-            <p><a href="#" class="button-style">Read More Newes</a></p>\
 ');
