@@ -16,11 +16,6 @@ document.write('\
             <h3><a href="#">New research project</a></h3>\
             <p><a href="#">A comparison study of DBI frameworks</a></p>\
             </li>\
-            <li>\
-            <h3><a href="#">Nulla luctus eleifend</a></h3>\
-            <p><a href="#">Quisque dictum integer nisl risus, sagittis\
-            convallis, rutrum id, congue, and nibh.</a></p>\
-            </li>\
-				</ul>\
-                <p><a href="#" class="button-style">Read More</a></p>\
+			</ul>\
 ');
+
