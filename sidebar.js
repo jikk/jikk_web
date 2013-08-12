@@ -1,5 +1,5 @@
 document.write('\
-          <h2>Recent news</h2>\
+          <h2>Recent highlights</h2>\
           <ul class="style2">\
             <li class="first">\
             <h3><a href="#">New paper</a></h3>\
