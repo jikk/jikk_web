@@ -13,8 +13,8 @@ document.write('\
             <p>A course website for <a href="teaching/3101-3/index.html">3101 programming lanaguage -- python (Fall 2013)</a> is now ready.</p>\
             </li>\
             <li>\
-            <h3><a href="#">New research project</a></h3>\
-            <p><a href="#">A comparison study of DBI frameworks</a></p>\
+            <h3>New research project</h3>\
+            <p><a href="projects.html#dbi_study">A comparison study of DBI frameworks</a></p>\
             </li>\
 			</ul>\
 ');
