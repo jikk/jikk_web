@@ -10,7 +10,7 @@ document.write('\
             </li>\
             <li>\
             <h3><a href="#">Course site for programming language</a></h3>\
-            <p>A course website for <a href="#">3101 programming lanaguage -- python (Fall 2013)</a> is now ready.</p>\
+            <p>A course website for <a href="teaching/3101-3/index.html">3101 programming lanaguage -- python (Fall 2013)</a> is now ready.</p>\
             </li>\
             <li>\
             <h3><a href="#">New research project</a></h3>\
