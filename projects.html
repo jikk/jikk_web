@@ -40,6 +40,7 @@ Released   : 20130326
           <h3><a href="http://nsl.cs.columbia.edu/projects/minestrone/">
           MINESTRONE: Identifying and containing software
           vulnerabilities</a></h3>
+
           <p>MINESTRONE is a novel architecture that integrates static analysis,
           dynamic confinement, and code diversification techniques to enable the
           identification, mitigation and containment of a large class of
@@ -48,16 +49,20 @@ Released   : 20130326
           extensive security instrumentation.</p>
           
           <h3><a href="https://sparchs.cs.columbia.edu/sparchs/">SPARCHS:
-          Symbiotic, Polymorphic, Autotomic, Resilient, Clean-slate, Host
+          Symbiotic, Polymorphic, Autonomic, Resilient, Clean-slate, Host
           Security</a></h3>
+          
           <p>The SPARCHS project is considering a new computer systems design
           methodology that considers security as a first-order design
           requirement at all levels, starting from hardware, in addition to the
           usual design requirements such as programmability, usability, speed,
           and power/energy efficiency.</p>
-        <h2>Research Project</h2>
-        <h3><a id="#dbi_study"> A comparison study of Dynamic Binary Instrumentation(DBI)
-          frameworks</a></h3>
+
+          <h2>Research Project</h2>
+
+          <h3><a id="#dbi_study">A comparison study of Dynamic Binary
+          Instrumentation(DBI) frameworks</a></h3>
+          
           <p>
           This project is about comparing different aspects of various
           DBI framework which includes <a href="">PIN</a>, <a href="">DynamoRIO</a>,
@@ -69,37 +74,93 @@ Released   : 20130326
           according to each one's design choices and design philosophy, we want
           to empirically evaluate them using criteria listed below.
           </p>
+
           <ul>
             <li><b>Userability: </b> the framework's learning curve, the
-          framework's user-friendliness of API, Supports from developer community</li>
+          framework's user-friendliness of API, Supports from developer
+          community</li>
             <li><b>Effectiveness/Capability: </b> framework's ability to
-          instrument and manipulate the target software provided without compromising the
-          execution transparency.</li>
-            <li><b>Efficiency: </b>  performance overhead of the framework when it
-          instruments the target software.</li>
-          </ul>
+          instrument and manipulate the target software provided without
+          compromising the execution transparency.</li>
+            <li><b>Efficiency: </b> performance overhead of the framework when
+          it instruments the target software.</li>
+        </ul>
 
-          <h3><a id="#taint_measure">Measurement of effectiveness and
-          correctness of dynamic taint tracking</a></h3>
+        <h3><a id="#taint_measure">Measurement of effectiveness and correctness
+          of dynamic taint tracking</a></h3>
 
-          <p>Dynamic Taint Analysis(DTA) gained popularity and exists many
-          implementation and deployed for many research and production
-          purposes. Albeit its known effectiveness and usefulness for various
-          research areas such as malware analysis, runtime attack detection,
-          detection of information leakages and so on, its correctness in terms
-          of false positives(FPs) or false nagatives(FNs) hasn't been
-          studied actively/thoroughly.
+          <p>Dynamic Taint Analysis(DTA) gained more and more from research
+          communities. Albeit its known effectiveness and usefulness for
+          various research areas such as malware analysis, runtime attack
+          detection, detection of information leakages and so on, its
+          correctness in terms of false positives(FPs) or false negatives(FNs)
+          hasn't been studied with cares.
 
-          From this project, we want to have a look at 
-          </p>
+          From this project, we want to tackle the issue of correct and sound
+          tainting with known DTA implementations. Fo this we implemented
+          evaluation framework for correct and sound tainting along with input
+          generation system based on symbolic block fuzzing approaches.  </p>
 
-          <h3><a id="#hybrid_instr"></a>Dynamic instrumentation framework for sources and
-          binaries</h3>
-          <p></p>
+          <h3><a id="#hybrid_instr"></a>Dynamic instrumentation framework for
+          sources and binaries</h3>
+        
+          <p>One way of implementing inline security monitor is by instrumenting
+          monitoring log[ics along with target application's
+          execution. Traditionally, we can employ two different instrumentation
+          approaches based on the availability of target application's source
+          code. Typically approaches of source-to-source transformation or
+          compilers can be used, with accesses to the source whereas
+          virtualization frameworks were used when we only have accesses to
+          binaries. Pros and cons of each approach are apparent. While compiler
+          based approach can provides better performance numbers optimizing
+          monitoring logics along with the target application as it produce
+          binaries, it has problem supporting libraries that comes without
+          sources. In contrast, binary-only approach can trivial support full
+          coverages leveraging VM layer, it comes with more overheads most of
+          the times. However situations are not black and white, we neither do
+          have full source access covering the entire execution environment nor
+          have no source access any part of it. This opens up another research
+          opportunity filling the gap by implement hybrid instrumentation that
+          meets the full coverage requirement maximizing the benefit of the
+          (even partial) source access.</p>
 
 
-          <h3><a id="#number_handling">Runtime integer error detection</a> </h3>
-          <p></p>
+        <h3><a id="#number_handling">Runtime integer error detection</a> </h3>
+
+        <p>Detection/prevention of integer error from applications written in
+        C/C++ is a problem for a long time but none could come up with complete
+        solution for this problem yet. Identification of integer error itself
+        instrumenting user application is relatively straightforward. However,
+        what it makes complicated is that the compiler writer as well as
+        application sometimes uses these errors in their code intentionally to
+        speed up their application or some other purposes. The real challenges
+        lies in differentiating real errors from these intended practices.
+
+        In this project, we integrate static and dynamic information flow
+        tracking(IFT) to integer error detection system to address this
+        issue. Using IFT, we define relevant source, sink pairs that specifies
+        integer errors which lead to serious bugs that the attackers can
+        leverage to exploit. One type of these pairs can be values come through
+        untrusted input(e.g., socket input, keyboard inputs) and flow into
+        arithmetic operations that triggers integer errors and the other type
+        can be pairs of the location of integers errors into security sensitive
+        places such as arguments for memory allocation functions.
+
+        The followings are the class of integer errors that we are aiming to
+        catch.
+
+        <ul>
+          <li>Integer overflow/underflow (CWE-190, CWE-191)</li>
+          <li>Unexpected Sign Extension (CWE-194)</li>
+          <li>Signed / Unsigned Conversion Error (CWE-195, CWE-196)</li>
+          <li>Numerical Truncation Error (CWE-197)</li>
+          <li>Divide by Zero (CWE-194)</li>
+        </ul>
+
+        The approach aiming to build a system that can provide defend capability
+        against integer errors at runtime and it is implemented as a number of
+        LLVM pass using application source code.
+        </p>
 
         </div>
 
@@ -111,8 +172,10 @@ Released   : 20130326
        </div>
 
 	<div id="footer">
-		<p>Copyright (c) 2013 Sitename.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org/" rel="nofollow">FreeCSSTemplates.org</a>.</p>
-	</div>
+      <p>Copyright (c) 2013 Sitename.com. All rights reserved. Design by <a
+       href="http://www.freecsstemplates.org/"
+      rel="nofollow">FreeCSSTemplates.org</a>.</p>
+    </div>
 </div>
 </body>
 </html>
