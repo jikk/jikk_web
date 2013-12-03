@@ -4,7 +4,7 @@ Design by Free CSS Templates
 http://www.freecsstemplates.org
 Released for free under a Creative Commons Attribution 2.5 License
 
-Name       : Macro Spikes 
+Name       : Macro Spikes
 Description: A two-column, fixed-width design with dark color scheme.
 Version    : 1.0
 Released   : 20130326
@@ -36,35 +36,162 @@ Released   : 20130326
 	</div>
 	<div id="page">
 		<div id="content">
-        <h3><a id="#dbi_study"> A comparison study of Dynamic Binary Instrumentation(DBI)
-          frameworks</a></h3>
-          <p>
-          This project is about comparing different aspects of various
-          DBI framework which includes <a href="">PIN</a>, <a href="">DynamoRIO</a>,
-          and <a href="">Valgrind</a>. These three frameworks are the most
-          representative frameworks vibrantly used from various areas to
-          protect and analyze software programs.
-          
-          As their behavioral and performance implications significantly differ
-          according to each one's design choices and design philosophy, we want
-          to empirically evaluate them using criteria listed below.
-          </p>
-          <ul>
-            <li><b>Userability:</b>the framework's learning curve, the
-          framework's user-friendliness of API, Supports from developer community</li>
-            <li><b>Effectiveness/Capability:</b>framework's ability to
-          instrument and manipulate the target software provided without compromising the
-          execution transparency.</li>
-            <li><b>Efficiency:</b> performance overhead of the framework when it
-          instruments the target software.</li>
-          </ul>
-          <!--
-          <p>Thus far, we performed ...</p>
-          -->
+        <h2>Funded Project</h2>
+          <h3><a href="http://nsl.cs.columbia.edu/projects/minestrone/">
+          MINESTRONE: Identifying and containing software
+          vulnerabilities</a></h3>
 
+          <p>MINESTRONE is a novel architecture that integrates static analysis,
+          dynamic confinement, and code diversification techniques to enable the
+          identification, mitigation and containment of a large class of
+          software vulnerabilities. Our techniques will protect new software, as
+          well as already deployed (legacy) software by transparently inserting
+          extensive security instrumentation.</p>
           
-        </div>
+          <h3><a href="https://sparchs.cs.columbia.edu/sparchs/">SPARCHS:
+          Symbiotic, Polymorphic, Autonomic, Resilient, Clean-slate, Host
+          Security</a></h3>
+          
+          <p>The SPARCHS project is considering a new computer systems design
+          methodology that considers security as a first-order design
+          requirement at all levels, starting from hardware, in addition to the
+          usual design requirements such as programmability, usability, speed,
+          and power/energy efficiency.</p>
+
+          <h2>Research Project</h2>
+
+          <h3><a id="#dbi_study">A comparison study of Dynamic Binary
+          Instrumentation(DBI) frameworks</a></h3>
+          
+          <p> In this project, we perform comparison study that investigates
+          various aspects of three different Dynamic Binary Instrumentation(DBI)
+          frameworks. Oftentimes, one of these becomes system security
+          researcher's choice for instrumentation framework to inline
+          monitoring logic against unknown binaries. Currently, target
+          frameworks for our study include <a
+           href="http://www.pintool.org">PIN</a>, <a
+           href="http://dynamorio.org/">DynamoRIO</a>, and <a
+           href="http://valgrind.org/">Valgrind</a>. These three frameworks are
+          the most representative DBI frameworks actively maintained by research
+          communities.
+
+          As their behavioral and performance implications significantly differ
+          by each one's design philosophy and intended problem domain, we want
+          to empirically evaluate them using criteria listed below.  </p>
+
+          <ul>
+            <li><b>Userability: </b> the framework's learning curve, the
+          framework's user-friendliness of API, Supports from developer
+          community</li>
+            <li><b>Effectiveness/Capability: </b> framework's ability to
+          instrument and manipulate the target software provided without
+          compromising the execution transparency.</li>
+            <li><b>Efficiency: </b> performance overhead of the framework when
+          it instruments the target software.</li>
+        </ul>
+
+        <h3><a id="#taint_measure">Measurement of effectiveness and correctness
+          of dynamic taint tracking</a></h3>
+
+          <p>For past a few years, the technology of Dynamic Taint Analysis(DTA)
+          has gained many attentions from research communities with its
+          applications that span various research areas such as malware
+          analysis, runtime attack detection, detection of information leakages
+          and performance tuning. Albeit its known effectiveness, its
+          correctness in terms of false positives(FPs) or false negatives(FNs)
+          hasn't been studied with cares.
+
+          <p>
+          <img src="images/tm_arch.jpg"  width="700" />
+          <br>
+          </p>
         
+          From this project, we want to tackle the issue of correct and sound
+          tainting with existing DTA implementations. Fo this, we implemented
+          taintedness measurement framework along with input generation system
+          that extend symbolic blackbox fuzzing approach.</p>
+
+          <h3><a id="#hybrid_instr"></a>Dynamic instrumentation framework for
+          sources and binaries</h3>
+        
+          <p>We can implement inline security monitor by instrumenting
+          monitoring logics along with target application's
+          execution. Traditionally, we can employ two different instrumentation
+          approaches based on the availability of the application's source
+          code. The approaches of source-to-source transformation or compilers
+          can be used for the case where we have accesses to the source, while
+          we use virtualization frameworks when we only see binary executables
+          with no source access.
+
+          Pros and cons of each approach are apparent. While the source based
+          approach can provides better performance output optimizing monitoring
+          logics along with the target application as it produce a single binary
+          combining two different context, it has problem supporting libraries
+          that comes without sources. As one can easily expect, it is common to
+          have unknown binaries in its execution environments such as <i>glibc</i>
+          library. 
+
+          In contrast, binary-only approach can trivial meet the goal of full
+          coverages leveraging hypervisor layer with higher overhead switching
+          back and forth two different contexts for the original execution and
+          monitoring logic. 
+
+          However, for most of situations being neither black nor white(neither
+          no source access nor allowance for the entire source base), it calls
+          for development of new instrumentation framework that achieve the full
+          coverage requirement maximizing the benefit of the allowed source
+          access.
+ 
+          In this project, we <a href="http://dynamorio.org/">DynamoRIO</a>
+          plays a role of program loader which differentiates binaries prepared
+          with LLVM-pass which runs for source code to instrument monitoring
+          logics from the rest binaries which requires DynamoRIO's
+          instrumentation to monitoring logic for binaries.
+         </p>
+
+
+        <h3><a id="#number_handling">Runtime integer error detection</a> </h3>
+
+        <p>The problem of detection/prevention for integer error for
+        applications written in C/C++ has long been around but none could come
+        up with complete solution to clear the entire problem domain
+        yet. Mechanical detection of integer error instrumenting application
+        source code can be regarded as a straightforward process. However, what
+        it makes complicated is to figure out code writer's intention as the
+        compiler writers as well as application developers takes advantage of
+        these errors in their code to speed up their applications. The real
+        challenges lies in differentiating real errors from these intended
+        practices.
+
+        In this project, we integrate static and dynamic data flow tracking(DFT)
+        to <a href="">integer error detection system</a> to address this issue
+        of false positive(FP) and false negative(FN) specifically. Using DFT, we
+        define relevant (source, sink) pairs that would differentiate integer
+        errors which lead to serious bugs that the attackers can leverage to
+        exploit. One example of these pairs can be values come through untrusted
+        input(e.g., socket input, keyboard inputs) and flow into arithmetic
+        operations that triggers integer errors. The other example can be pairs
+        of the location of integers errors flows into security sensitive places
+        such as arguments for memory allocation functions.
+
+        The followings are the class of integer errors that we are aiming to
+        catch.
+
+        <ul>
+          <li>Integer overflow/underflow (CWE-190, CWE-191)</li>
+          <li>Unexpected Sign Extension (CWE-194)</li>
+          <li>Signed / Unsigned Conversion Error (CWE-195, CWE-196)</li>
+          <li>Numerical Truncation Error (CWE-197)</li>
+          <li>Divide by Zero (CWE-194)</li>
+        </ul>
+
+        The approach aiming to build a system that can provide defend capability
+        against integer errors at runtime and it is implemented as a number of
+        LLVM pass using application source code.
+        </p>
+
+        </div>
+
 		<div id="sidebar">
         <div id="tbox1">
         <script src="sidebar.js"></script>
@@ -73,8 +200,10 @@ Released   : 20130326
        </div>
 
 	<div id="footer">
-		<p>Copyright (c) 2013 Sitename.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org/" rel="nofollow">FreeCSSTemplates.org</a>.</p>
-	</div>
+      <p>Copyright (c) 2013 Sitename.com. All rights reserved. Design by <a
+       href="http://www.freecsstemplates.org/"
+      rel="nofollow">FreeCSSTemplates.org</a>.</p>
+    </div>
 </div>
 </body>
 </html>
