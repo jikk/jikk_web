@@ -1,0 +1,71 @@
+
+\documentclass[letterpaper, 10pt]{article}
+\topmargin-2.0cm
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[dvips]{color}
+
+% Color Information from -
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_advanced/node13.html
+
+\advance\oddsidemargin-0.65in
+\advance\evensidemargin-1.5cm
+\textheight9.2in
+\textwidth6.75in
+\newcommand\bb[1]{\mbox{\em #1}}
+\def\baselinestretch{1.05}
+
+\newcommand{\hsp}{\hspace*{\parindent}}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+
+\begin{document}
+\thispagestyle{fancy}
+
+% Leave Left and Right Header empty.
+\lhead{}
+\rhead{}
+
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt} 
+\fancyfoot[C]{\footnotesize \textcolor{gray}{http://www.cs.columbia.edu/$\sim$jikk/application}} 
+
+
+\pagestyle{fancy}
+\lhead{\textcolor{gray}{\it Kangkook Jee}}
+\rhead{\textcolor{gray}{\thepage /\pageref{LastPage}}}
+
+% This kind of makes 10pt to 9 pt.
+\begin{small}
+
+%\vspace*{0.1cm}
+\begin{center}
+{\LARGE \bf TEACHING STATEMENT}\\
+\vspace*{0.1cm}
+{\normalsize Kangkook Jee (jikk@cs.columbia.edu)}
+\end{center}
+%\vspace*{0.2cm}
+
+%\begin{document}
+%\centerline {\Large \bf Research Statement for Kangkook Jee}
+%\vspace{0.5cm}
+
+% Write about research interests...
+%\footnotemark
+%\footnotetext{Check This}
+
+What is my teaching philosophy?
+
+What course can I teach?
+\begin{itemize}
+\item basic language courses
+\item senior programming language courses -- C, C++, Java, Python 
+\item senior level system courses -- desktop and mobile operating system,
+  virtualization 
+\item graduate level course: advanced compiler course -- instrumentation for
+  software monitoring and protection.
+\end{itemize}
+
+\end{small}
+\end{document}
+
