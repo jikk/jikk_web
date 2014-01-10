@@ -1,10 +1,10 @@
-
 \documentclass[letterpaper, 10pt]{article}
 \topmargin-2.0cm
 
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\usepackage[dvips]{color}
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 % Color Information from -
 % http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_advanced/node13.html
@@ -34,6 +34,23 @@
 \lhead{\textcolor{gray}{\it Kangkook Jee}}
 \rhead{\textcolor{gray}{\thepage /\pageref{LastPage}}}
 
+%Macros of my own
+\def\libdft{libdft\xspace}
+\def\TFA{TFA\xspace}
+\def\SR{ShadowReplica\xspace}
+
+\newif \ifcomments
+\commentstrue
+
+%\ifcomments
+%\newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
+%\else
+%\newcommand{\jikk}[1]{}
+%\fi
+%
+\newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
+
+
 % This kind of makes 10pt to 9 pt.
 \begin{small}
 
@@ -58,33 +75,100 @@ My main research interest is about protecting/hardening software systems
 against malicious attempts from attackers or gaining more reliability against
 unintended software bugs leveraging the latest research innovations. Recently,
 these innovations are invented from both areas of static and dynamic program
-analyses and I am interested in combining those two different research
-directions so that can serve/complement one another making the technology more
-practical in serving for many real world scenarios.
+analyses and my research interest lies in combining those two different
+research directions so that can serve/complement one another making the
+technology more practical in serving for many real world scenarios.
 
 \subsection*{Background and Current Work}
 % Paragraph 1: A brief paragraph sketching the overarching thematics and topic
-% of your research, situating it disciplinarily.
+% of your research, situating it disciplinary.
 %
 In my research history, I extensively explored various aspects of Data Flow
-Tracking(DFT) for its effectiveness in serving many different areas of research
-as well as making it efficient so that it can more be adopted by users who are
-in need to protect their systems.
+Tracking(DFT) for its effectiveness in serving many different areas of
+research~\cite{libdft:2012vee, tfa:2012ndss, sreplica:2013ccs} as well as
+making it efficient so that it can more be adopted by users who are in need to
+protect their systems.
+
 %
 To improve  performance of the technology, which incurs prohibitive amount
 overhead especially when it is applied to binaries, I developed and utilized
 number of static program analysis technologies so that we can make DFT suitable
 in many real world scenarios.
-%
+% 
 For this, my interested research area includes instrumentation schemes
 leveraging virtualization layer and static program analyses for many different
 substrates which include compiler techniques for programming language
 representations and binary analysis.
 %
-Besides DFT, I also explored other program analysis techniques that can be used
-to strengthen software systems i) software fuzzing -- symbolic execution,
-blackbox/whitebox fuzzing ii) integer error study.
+Besides DFT, my research interest spans number of different topics which are
+aligned to serve for software security and reliability.
+%
+\subsubsection*{DFT systems} 
 
+% libdft
+We implemented \libdft~\cite{libdft:2012vee} which is highly
+optimized/efficient DFT system which runs for binary program executed from
+commodity hardware system.  \libdft supports generic API that helps anyone to
+customize and build tools that serve for different problem domains. 
+%
+\libdft is implemented via instrumenting tracking logics along with individual
+{\tt x86} instructions using tools for VM-hypervisor layer. For \libdft, we
+employed PIN dynamic binary instrumentation~(DBI) framework. High efficiency of
+\libdft achieved by correctly understanding the structural limitations of
+typical DBI instrumentations. Our implementation explicitly addressed this
+issue with highly crafted/customized code that implements tracking logics that
+avoids issues common to tools that leverages DBI frameworks which includes
+EFLAG fill/re-fill, shadow memory management. Its benchmark result showed
+$\sim$10$\times$ - $\sim$11$\times$  slowdown over the native execution when it
+is evaluated against SPEC 2006 CPU benchmark suite which is a significant
+performance improvement over previous DFT implementations.\jikk{Justification
+needed for this statement}
+
+% TFA (Taint Flow Algebra)
+The immediate follow-up work for \libdft is a work~\cite{tfa:2012ndss} which
+decouples tracking logics from the original program logics and represent
+tracking logic as as a specially designed intermediate representation~(IR) of
+\TFA.  Number of optimizations for compiler and DFT specific ones are applied
+to \TFA. Then the optimization result is injected back to the original program. 
+%
+The entire system for \TFA optimization is composed of two different components
+of the static analysis and dynamic runtime. We dedicate the off-line analysis
+phase to perform static analysis to generate the optimized tracking code which
+is applied to the dynamic runtime. As a result we could achieve
+\(\sim\)~2\(\times\) performance improvement over our baseline tool \libdft
+without compromising the correctness~\footnote{In this context, we {\it
+ correctness} mean that the same level of security guarantees as the
+baseline tool which is \libdft} of DFT operations.
+
+% ShadowReplica 
+Regarding DFT logic and the original execution logic
+decoupled/extracted/separated from our \TFA work, \SR attempts to execute each
+from two different cores(CPUs) to gain even further performance improvements.
+Oftentimes, the issue of synchronizing the original application thread and DFT
+analyzer thread prevent the system from achieving expected performance
+improvement. Subsequently, the system cannot be used for detection of malicious
+activities at runtime.
+%
+The communication channel that connects two different context incurs
+prohibitive amount of overhead up to the level where it overtakes the
+parallelization benefits. Our major contribution lies in mitigating
+communication overhead again combining the static and dynamic analysis to
+address the issue.
+%
+\SR system again improves the overhead about  $\sim$2$\times$,  $\sim$4$\times$
+over our previous DFT implementations of \TFA and \libdft respectively,
+achieving  $\sim$2.75$\times$ slowdown over the native execution. 
+
+%What is the contribution from this line of work.
+
+\subsubsection*{Software fuzzing}
+Symbolic execution, whitebox / blackbox fuzzing
+
+\subsubsection*{Integer errors}
+For programs written in C/C++ undefined behaviors
+
+\subsubsection*{Dynamic Binary Instrumentation (DBI)}
+required medium for inlining runtime monitoring 
 
 % Para 2: A summary of the dissertation research. This may replicate to some
 % extent the paragraph on the dissertation in the cover letter but it must have
@@ -120,9 +204,10 @@ can easily generalized to related defense/reliability technologies.
   \item Framework for hybrid instrumentation
   \item Correctness evaluation data flow tracking technologies
 \end{itemize}
-
-
 \end{small}
 
+%refer to http://sites.stat.psu.edu/~surajit/present/bib.htm
+\bibliographystyle{plain}
+\bibliography{res}
 \end{document}
 
