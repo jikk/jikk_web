@@ -1,6 +1,6 @@
 \documentclass[letterpaper, 10pt]{article}
 \topmargin-2.0cm
-
+ 
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{xspace}
@@ -28,7 +28,7 @@
 
 \renewcommand{\headrulewidth}{0pt} \renewcommand{\footrulewidth}{0pt}
 \fancyfoot[C]{\footnotesize
-  \textcolor{gray}{http://www.cs.columbia.edu/$\sim$jikk/application}}
+\textcolor{gray}{http://www.cs.columbia.edu/$\sim$jikk/application}}
 
 \pagestyle{fancy}
 \lhead{\textcolor{gray}{\it Kangkook Jee}}
@@ -42,14 +42,12 @@
 \newif \ifcomments
 \commentstrue
 
-%\ifcomments
-%\newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
-%\else
-%\newcommand{\jikk}[1]{}
-%\fi
-%
+\ifcomments
 \newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
-
+\else
+\newcommand{\jikk}[1]{}
+\fi
+%
 
 % This kind of makes 10pt to 9 pt.
 \begin{small}
@@ -90,7 +88,7 @@ making it efficient so that it can more be adopted by users who are in need to
 protect their systems.
 
 %
-To improve  performance of the technology, which incurs prohibitive amount
+To improve performance of the technology, which incurs prohibitive amount
 overhead especially when it is applied to binaries, I developed and utilized
 number of static program analysis technologies so that we can make DFT suitable
 in many real world scenarios.
@@ -108,7 +106,7 @@ aligned to serve for software security and reliability.
 % libdft
 We implemented \libdft~\cite{libdft:2012vee} which is highly
 optimized/efficient DFT system which runs for binary program executed from
-commodity hardware system.  \libdft supports generic API that helps anyone to
+commodity hardware system. \libdft supports generic API that helps anyone to
 customize and build tools that serve for different problem domains. 
 %
 \libdft is implemented via instrumenting tracking logics along with individual
@@ -119,7 +117,7 @@ typical DBI instrumentations. Our implementation explicitly addressed this
 issue with highly crafted/customized code that implements tracking logics that
 avoids issues common to tools that leverages DBI frameworks which includes
 EFLAG fill/re-fill, shadow memory management. Its benchmark result showed
-$\sim$10$\times$ - $\sim$11$\times$  slowdown over the native execution when it
+$\sim$10$\times$ - $\sim$11$\times$ slowdown over the native execution when it
 is evaluated against SPEC 2006 CPU benchmark suite which is a significant
 performance improvement over previous DFT implementations.\jikk{Justification
 needed for this statement}
@@ -128,7 +126,7 @@ needed for this statement}
 The immediate follow-up work for \libdft is a work~\cite{tfa:2012ndss} which
 decouples tracking logics from the original program logics and represent
 tracking logic as as a specially designed intermediate representation~(IR) of
-\TFA.  Number of optimizations for compiler and DFT specific ones are applied
+\TFA. Number of optimizations for compiler and DFT specific ones are applied
 to \TFA. Then the optimization result is injected back to the original program. 
 %
 The entire system for \TFA optimization is composed of two different components
@@ -155,11 +153,14 @@ parallelization benefits. Our major contribution lies in mitigating
 communication overhead again combining the static and dynamic analysis to
 address the issue.
 %
-\SR system again improves the overhead about  $\sim$2$\times$,  $\sim$4$\times$
+\SR system again improves the overhead about $\sim$2$\times$, $\sim$4$\times$
 over our previous DFT implementations of \TFA and \libdft respectively,
-achieving  $\sim$2.75$\times$ slowdown over the native execution. 
-
-%What is the contribution from this line of work.
+achieving $\sim$2.75$\times$ slowdown over the native execution. 
+%What is the contribution from this line of work -- high level perspectives
+\begin{itemize}
+    \item Experience with popular research topics of DFT whose core architectural specifics are shared with inlining system of the same kind. 
+    \item Perfect/ideal alignment of static and dynamic analysis which serves/complements one another.
+\end{itemize}
 
 \subsubsection*{Software fuzzing}
 Symbolic execution, whitebox / blackbox fuzzing
@@ -173,7 +174,7 @@ required medium for inlining runtime monitoring
 % Para 2: A summary of the dissertation research. This may replicate to some
 % extent the paragraph on the dissertation in the cover letter but it must have
 % more detail about the methods, the theoretical foundations, and most of all,
-% the core arguments.  Here, give a chapter summary, approximately one sentence
+% the core arguments. Here, give a chapter summary, approximately one sentence
 % per chapter.
 \subsubsection*{Dissertation Research}
 Along with line of my research topics of my journey about making DFT practical
@@ -194,17 +195,19 @@ in commodity applications by addressing the issue of high overheads.
 \subsubsection*{Symbolic Execution}
 
 
-\subsection*{Security System Architecture ---  A Research Agenda}
+\subsection*{Security System Architecture --- A Research Agenda}
 Even though my research focus in the past mostly leaned toward the topic of DFT
 and related technologies, this contributions and limitations from my experience
 can easily generalized to related defense/reliability technologies.
 
 \begin{itemize}
-  \item Hardware component
-  \item Framework for hybrid instrumentation
-  \item Correctness evaluation data flow tracking technologies
+ \item Hardware component
+ \item Framework for hybrid instrumentation
+ \item Correctness evaluation data flow tracking technologies
 \end{itemize}
 \end{small}
+
+\newpage
 
 %refer to http://sites.stat.psu.edu/~surajit/present/bib.htm
 \bibliographystyle{plain}
