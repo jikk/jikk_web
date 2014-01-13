@@ -9,6 +9,7 @@ all: res.pdf tea.pdf cv.pdf
 res.pdf: res.tex res.bib
 	${PDFLATEX} $<
 	${BIBTEX} res
+	${PDFLATEX} $<
 
 tea.pdf: tea.tex
 	${PDFLATEX} $<
