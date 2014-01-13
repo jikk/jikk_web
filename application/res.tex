@@ -1,4 +1,3 @@
-
 \documentclass[letterpaper, 10pt]{article}
 \topmargin-2.0cm
 
@@ -86,8 +85,9 @@ technology more practical in serving for many real world scenarios.
 %
 In my research history, I extensively explored various aspects of Data Flow
 Tracking(DFT) for its effectiveness in serving many different areas of
-research~\cite{libdft, tfa, sr} as well as making it efficient so that it can
-more be adopted by users who are in need to protect their systems.
+research~\cite{libdft:2012vee, tfa:2012ndss, sreplica:2013ccs} as well as
+making it efficient so that it can more be adopted by users who are in need to
+protect their systems.
 
 %
 To improve  performance of the technology, which incurs prohibitive amount
@@ -106,10 +106,10 @@ aligned to serve for software security and reliability.
 \subsubsection*{DFT systems} 
 
 % libdft
-We implemented \libdft~\cite{libdft} which is highly optimized/efficient DFT
-system which runs for binary program executed from commodity hardware system.
-\libdft supports generic API that helps anyone to customize and build tools
-that serve for different problem domains. 
+We implemented \libdft~\cite{libdft:2012vee} which is highly
+optimized/efficient DFT system which runs for binary program executed from
+commodity hardware system.  \libdft supports generic API that helps anyone to
+customize and build tools that serve for different problem domains. 
 %
 \libdft is implemented via instrumenting tracking logics along with individual
 {\tt x86} instructions using tools for VM-hypervisor layer. For \libdft, we
@@ -125,11 +125,11 @@ performance improvement over previous DFT implementations.\jikk{Justification
 needed for this statement}
 
 % TFA (Taint Flow Algebra)
-The immediate follow-up work for \libdft is a work~\cite{tfa} which decouples
-tracking logics from the original program logics and represent tracking logic
-as as a specially designed intermediate representation~(IR) of \TFA.  Number of
-optimizations for compiler and DFT specific ones are applied to \TFA. Then the
-optimization result is injected back to the original program. 
+The immediate follow-up work for \libdft is a work~\cite{tfa:2012ndss} which
+decouples tracking logics from the original program logics and represent
+tracking logic as as a specially designed intermediate representation~(IR) of
+\TFA.  Number of optimizations for compiler and DFT specific ones are applied
+to \TFA. Then the optimization result is injected back to the original program. 
 %
 The entire system for \TFA optimization is composed of two different components
 of the static analysis and dynamic runtime. We dedicate the off-line analysis
@@ -137,8 +137,8 @@ phase to perform static analysis to generate the optimized tracking code which
 is applied to the dynamic runtime. As a result we could achieve
 \(\sim\)~2\(\times\) performance improvement over our baseline tool \libdft
 without compromising the correctness~\footnote{In this context, we {\it
-correctness} mean that the same level of security guarantees as the baseline
-tool which is \libdft} of DFT operations.
+ correctness} mean that the same level of security guarantees as the
+baseline tool which is \libdft} of DFT operations.
 
 % ShadowReplica 
 Regarding DFT logic and the original execution logic
@@ -175,13 +175,23 @@ required medium for inlining runtime monitoring
 % more detail about the methods, the theoretical foundations, and most of all,
 % the core arguments.  Here, give a chapter summary, approximately one sentence
 % per chapter.
-\subsubsection*{}
+\subsubsection*{Dissertation Research}
+Along with line of my research topics of my journey about making DFT practical
+in commodity applications by addressing the issue of high overheads.
+
 
 % Para 3: A brief description of the contribution of the dissertation research
 % to your field or fields, and a summary of publications associated with the
 % dissertation research, including a plan for the book, if you are in a book
 % field.
-\subsubsection*{}
+\subsubsection*{Contributions}
+
+% Part 4: some other research areas that I'm interested in. 
+\subsubsection*{Integer Error Handling}
+
+\subsubsection*{Improving Dynamic Binary Instrumentation (DBI)}
+
+\subsubsection*{Symbolic Execution}
 
 
 \subsection*{Security System Architecture ---  A Research Agenda}
@@ -194,9 +204,10 @@ can easily generalized to related defense/reliability technologies.
   \item Framework for hybrid instrumentation
   \item Correctness evaluation data flow tracking technologies
 \end{itemize}
-
-
 \end{small}
 
+%refer to http://sites.stat.psu.edu/~surajit/present/bib.htm
+\bibliographystyle{plain}
+\bibliography{res}
 \end{document}
 

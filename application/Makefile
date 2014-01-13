@@ -1,9 +1,20 @@
+BIBTEX=bibtex
 PDFLATEX=pdflatex
 
 all: res.pdf tea.pdf cv.pdf
 
-%.pdf : %.tex
+#%.pdf : %.tex
+#	${PDFLATEX} $<
+
+res.pdf: res.tex res.bib
+	${PDFLATEX} $<
+	${BIBTEX} res
+
+tea.pdf: tea.tex
+	${PDFLATEX} $<
+
+cv.pdf: cv.tex
 	${PDFLATEX} $<
 
 clean:
-	rm -f *.pdf *.aux *.log
+	rm -f *.pdf *.aux *.log *.blg
