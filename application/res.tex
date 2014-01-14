@@ -137,12 +137,12 @@ statement}
 The immediate follow-up work is \TFAFull~(\TFA)~\cite{tfa:2012ndss} which
 indicates a specially designed IR(intermediate representation) that represents
 DFT tracking logics extracted from the original program binary.  Number of
-compiler optimization techiniques as well as DFT specific ones are applied to
+compiler optimization techniques as well as DFT specific ones are applied to
 \TFA. Then the optimization result is inserted back to the original program. 
 %
 Even with the highly crafted/customized tracking logics that we invented for
 \libdft, it is not yet close to the optimal and suffers from a good deal of
-overhead which hinders DFT system's adoptation to production systems. We could
+overhead which hinders DFT system's adaptation to production systems. We could
 identify two fundamental the sources of in-optimality\jikk{?} inherent to all
 previous DFT implementations including ours. These are about lacking in
 understandings about {\it i)} global context of DFT tracking {\it ii)} DFT
@@ -151,12 +151,12 @@ semantics.
 %
 To address these issues, we developed the system that is composed of two
 different components. The one is for the static analysis to prepare the
-optimized tracking logics from dedicated offline/analysis pahse and the other
+optimized tracking logics from dedicated off-line/analysis phase and the other
 is for dynamic runtime that enforces optimized DFT logics to the original
 program \jikk{that we want to analyze or protect} at runtime.
 %
 As a result, TFA could achieve \(\sim\)~2\(\times\) performance improvement
-over  our baseline tool(\libdft) whenit is evaluated against the same set of
+over  our baseline tool(\libdft) when it is evaluated against the same set of
 standard benchmark suites without compromising the correctness~\footnote{In
         this context, by {\it correctness}, we want to ensure the same level of
 security guarantees that the baseline tool \libdft can provide.} of DFT
@@ -165,72 +165,56 @@ operations.
 % ShadowReplica 
 Given that \TFA decouples/separates DFT logics from the original program
 execution logics for optimization, \SR project extends this approach a step
-further to gain more performance improvement by parallelizing two different
-contexts utilizing redudant cores(CPUs) common in these days computer system
-architectures. Of course, we are not the first one were who aligned toward the
-direction of parallelized analysis, but the many of provious approaches failed
-to achieve expected performance gains mostly because of high communcation
-overhead. Oftentimes, the amount of communcation masked the parallelization
-benefit makes the approach not suitable for runtime detection of malicious
-activities. This subsequently results in resource over-usage.
+further to gain more performance improvement by running two different contexts
+from two different cores(CPUs). 
 %
-The core contribution of \SR lies in explicitly addressing the issues of high
-communcation cost.
-
-The communication channel that connects two different context incurs
-prohibitive amount of overhead up to the level where it overtakes the
-parallelization benefits. Our major contribution lies in mitigating
-communication overhead again combining the static and dynamic analysis to
-address the issue.
+Of course, we are not the first one were who are aligned toward the direction
+of parallelized analysis, but the many of previous proposals failed to achieve
+expected performance gain mostly due to the high communication overhead
+connecting the original program execution and DFT analysis context.
+Oftentimes, the cost for communication overwhelms the parallelization benefit
+and it results in requiring too much of resources to make the system suitable
+for online deployment. 
+%
+The main contribution of \SR project lies in inventing a system that defends
+against malicious activities at runtime by directly addressing the issue of
+high communication overhead. Different from previous proposals, the system only
+requires a single analysis thread per an application thread and its analysis
+thread which eventually executes DFT logic represented in \TFA runs about the
+same or faster than the application thread resulting in making synchronization
+easier between these two different contexts.
+%
+In \SR project, we again take advantage of static analysis  {\it i)} to have
+DFT logic extracted from the target binary and represent them in \TFA
+representation and {\it ii)} to minimize the volume and frequency requirement
+of data transfers. As seen from \TFA, \SR also ensures the same of
+security/correctness guarantees as our baseline tool provides.
 %
 \SR system again improves the overhead about $\sim$2$\times$, $\sim$4$\times$
 over our previous DFT implementations of \TFA and \libdft respectively,
-achieving $\sim$2.75$\times$ slowdown over the native execution. 
+achieving $\sim$2.75$\times$ slowdown over the native execution.
+%
+As an interesting side effect, even though it uses two CPUs to improve its
+response time, \SR consumes the same or less amount of CPU cycles than that of
+comparable in-lined DFT implementation~(in our case \TFA) to perform the same
+DFT analysis. \jikk{The size of \SR's instrumentation for relevant event
+collection is smaller than that of in-lined DFT analysis. With smaller sized
+analysis code, underlying DBI framework reduce the amount CPU cycles required
+for the context switch.}
+
 %What is the contribution from this line of work -- high level perspectives
 
-\begin{itemize}
-    \item Experience with popular research topics of DFT whose core
-    architectural specifics are shared with inlining system of the same
-    kind. 
-    \item Perfect/ideal alignment of static and dynamic analysis which
-    serves/complements one another.  
-\end{itemize}
-
-
-\subsubsection*{Software fuzzing}
-Symbolic execution, whitebox / blackbox fuzzing
-
-\subsubsection*{Integer errors}
-For programs written in C/C++ undefined behaviors
-
-\subsubsection*{Dynamic Binary Instrumentation (DBI)}
-required medium for inlining runtime monitoring 
-
-% Para 2: A summary of the dissertation research. This may replicate to some
-% extent the paragraph on the dissertation in the cover letter but it must have
-% more detail about the methods, the theoretical foundations, and most of all,
-% the core arguments. Here, give a chapter summary, approximately one sentence
-% per chapter.
-\subsubsection*{Dissertation Research}
-Along with line of my research topics of my journey about making DFT practical
-in commodity applications by addressing the issue of high overheads.
-
-
-% Para 3: A brief description of the contribution of the dissertation research
-% to your field or fields, and a summary of publications associated with the
-% dissertation research, including a plan for the book, if you are in a book
-% field.
-\subsubsection*{Contributions}
-
-% Part 4: some other research areas that I'm interested in. 
-\subsubsection*{Integer Error Handling}
-
-\subsubsection*{Improving Dynamic Binary Instrumentation (DBI)}
-
-\subsubsection*{Symbolic Execution}
-
-
-\subsection*{Security System Architecture --- A Research Agenda}
+During my efforts to improve DFT implementations, I could build up in depth
+experience with popular research topics of DFT. 
+%
+To make it closer to real-world deployment, we actively utilized the static
+analysis to help/complement the expensive dynamic analysis. 
+%
+As many of architectural specifics of DFT system are common to different kinds
+of dynamic analysis~(\ie Memcheck), we strongly believe that lessons we've
+learned from our journey can be applied to other research areas.
+ 
+\subsection*{Practical Security System Architecture --- A Research Agenda}
 Even though my research focus in the past mostly leaned toward the topic of DFT
 and related technologies, this contributions and limitations from my experience
 can easily generalized to related defense/reliability technologies.
@@ -241,6 +225,47 @@ can easily generalized to related defense/reliability technologies.
  \item Correctness evaluation data flow tracking technologies
 \end{itemize}
 \end{small}
+
+% Some other research areas that I'm interested in. 
+\subsection*{Other research interests} \subsubsection*{Dynamic Binary
+Instrumentation (DBI)} In many DFT implementation including ours, VM-based
+instrumentation becomes a important medium required for in-lining custom
+analysis and often becomes the major source of performance slowdown. 
+%
+In this projects, we aim to produce a survey report that compares three most
+popular DBI implementations(PIN~\cite{}, Valgrind~\cite{}, DynamoRIO~\cite{})
+with our own metrics of {\it i)} efficient {\it ii)} usability and {\it iii}  
+capability.
+
+\subsubsection*{Software fuzzing}
+
+Deeply interested in number of different static analysis techniques that would
+help building reliable software systems. Both white-box~(with source access),
+black-box(without access to source code). Symbolic execution and formal
+verification techniques.
+
+\subsubsection*{Integer errors} 
+
+For programs written in integer error is notorious for its trickiness to be
+correct and write integer error free code. Even thought the problem has long
+been around, no one could come up with the complete solution to this problem
+and take a high rank from vulnerability list. 
+%
+The real trickiness lies not in mechanically detecting integer errors but in
+identify the real intention of developer since some of integer errors
+(overflow, type conversion etc) planted intentionally to make code achieving
+developer's goals.
+%
+We developed a system integrated DFT system with integer error checking system
+to watch/observe for two different kind of information flows {\it i)} the one
+that connects the source of untrusted input, and the sink of integer error
+point~(integer overflow, sign/unsigned extension, type conversions) {\it ii)}
+the other that connects the source of integer error point and the sink of the
+argument of sensitive calls(malloc, strcpy, etc.)
+% 
+This system is built to be compliant(?) to the requirement of IARPA funded
+project and it passed phase 1, and phase 2 evaluations which contains $\sim$
+300 different integer error cases.
 
 \newpage
 
