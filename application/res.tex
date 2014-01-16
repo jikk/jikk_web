@@ -71,42 +71,48 @@
 %\footnotetext{Check This}
 
 % Say that research work has been both theoretical and practical.
-My main research interest is about protecting/hardening software systems
-against malicious attempts from attackers or gaining more reliability against
-unintended software bugs leveraging the latest research innovations. Recently,
-these innovations are invented from both areas of static and dynamic program
-analyses and my research interest lies in combining those two different
-research directions so that can serve/complement one another making the
-technology more practical in serving for many real world scenarios.
+My long-term research interest lies in {\it i)} building security systems that
+protect/harden unknown software program making it immune to software failures
+caused either by active exploitation of malicious attackers or by invocation of
+unintended developer bugs and {\it ii)} making these technologies practical,
+suitable for production deployment by addressing the issue of high overhead.
+%
+To achieve the goal of building reliable software and make it practical, I
+leverages recent innovations from different software substrates which encompass
+static and dynamic approaches. Specifically, throughout my research history, I
+have been interested in combining those two approaches to address the high
+overhead problem. 
+%
+Although, my main research contributions are concretized in the course of
+developing and improving well-known security system of data flow tracking~(DFT), I
+am also interested in other techniques related to software reliability which
+include whitebox/blackbox fuzzing and building a system that defends against
+integer error. 
 
-\subsection*{Background and Current Work}
+\subsection*{Data Flow Tracking(DFT) systems} 
 % Paragraph 1: A brief paragraph sketching the overarching thematics and topic
 % of your research, situating it disciplinary.
 %
-In my research history, I extensively explored various aspects of Data Flow
-Tracking(DFT) for its effectiveness in serving many different areas of
+In my research history, I extensively explored various aspects of DFT systems
+for its effectiveness in serving many different areas of
 research~\cite{libdft:2012vee, tfa:2012ndss, sreplica:2013ccs} as well as
-making it efficient so that it can more be adopted by users who are in need to
-protect their systems.
-
+making it efficient so that it can more be adopted by users who want to use the
+technology.
 %
-To improve performance of the technology, which incurs prohibitive amount
-overhead especially when it is applied to binaries, I developed and utilized
-number of static program analysis technologies so that we can make DFT suitable
-in many real world scenarios.
-% 
-For this, my interested research area includes instrumentation schemes
-leveraging virtualization layer and static program analyses for many different
-substrates which include compiler techniques for programming language
-representations and binary analysis.
+Typical DFT system composed of three different types of operations {\it i)}
+tagging unstrusted inputs {\it ii)} propagating tag values associated to
+variables(memory locations) along with program executions {\it iii)} checking
+for unintended usages of tagged data. Our implementations in-lines these
+operations using VM-based instrumentation framework so that we can apply it to
+COTS binaries making us achieving complete coverage.
 %
-Besides DFT, my research interest spans number of different topics which are
-aligned to serve for software security and reliability.
-%
-\subsubsection*{DFT systems} 
-\jikk{explain a bit of DFT system basics}
+Besides implementing DFT system that accurately operates, I have been invented
+number of techniques to resolve the high overhead issue known to inherent to
+tools based on VM-based instrumentation and this is where one can find my core
+research contributions.
 
 % libdft
+\subsubsection*{\libdft}
 With respect to the number of DFT related research outputs, we first
 implemented \libdft~\cite{libdft:2012vee} which is highly optimized/efficient
 DFT system runs for binary programs executed from {\tt x86} commodity hardware
@@ -134,6 +140,7 @@ time we introduced the system.\jikk{more justification needed for this
 statement}
 
 % TFA (Taint Flow Algebra)
+\subsubsection*{\TFAFull~(\TFA)}
 The immediate follow-up work is \TFAFull~(\TFA)~\cite{tfa:2012ndss} which
 indicates a specially designed IR(intermediate representation) that represents
 DFT tracking logics extracted from the original program binary.  Number of
@@ -163,10 +170,10 @@ security guarantees that the baseline tool \libdft can provide.} of DFT
 operations.
 
 % ShadowReplica 
-Given that \TFA decouples/separates DFT logics from the original program
-execution logics for optimization, \SR project extends this approach a step
-further to gain more performance improvement by running two different contexts
-from two different cores(CPUs). 
+\subsubsection*{\SR} Given that \TFA decouples/separates DFT logics from the
+original program execution logics for optimization, \SR~\cite{sreplica:2013ccs}
+project extends this approach a step further to gain more performance
+improvement by running two different contexts from two different cores(CPUs). 
 %
 Of course, we are not the first one were who are aligned toward the direction
 of parallelized analysis, but the many of previous proposals failed to achieve
@@ -203,7 +210,7 @@ analysis code, underlying DBI framework reduce the amount CPU cycles required
 for the context switch.}
 
 %What is the contribution from this line of work -- high level perspectives
-
+\subsubsection*{Contributions}
 During my efforts to improve DFT implementations, I could build up in depth
 experience with popular research topics of DFT. 
 %
@@ -218,6 +225,9 @@ learned from our journey can be applied to other research areas.
 Even though my research focus in the past mostly leaned toward the topic of DFT
 and related technologies, this contributions and limitations from my experience
 can easily generalized to related defense/reliability technologies.
+
+Correctness issue as well as overhead issue.  Our definition of data flow
+matches to thing what people expects?
 
 \begin{itemize}
  \item Hardware component
