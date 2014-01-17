@@ -127,7 +127,7 @@ examplary implementation that we implemented with \libdft and we can definitely
 have more of this kind}.
 %
 It is implemented via inlining DFT logic for individual {\tt x86} instructions
-\jikk{which would deliver meta-information (\ie taintedness for DFT) from one
+\jikk{which would delivermeta-information (\ie taintedness for DFT) from one
 operand to another } levage tools from VM-hypervisor layer. For
 instrumentation, we employed PIN dynamic binary instrumentation~(DBI)
 framework. High efficiency of \libdft achieved by correctly understanding the
@@ -145,12 +145,13 @@ time we introduced the system.\jikk{more justification needed for this
 statement}
 
 % TFA (Taint Flow Algebra)
-\subsubsection*{\TFAFull: Representation for compiler and DFT-specific optimizations}
-The immediate follow-up work is \TFAFull~(\TFA)~\cite{tfa:2012ndss} which
-indicates a specially designed IR(intermediate representation) that represents
-DFT tracking logics extracted from the original program binary.  Number of
-compiler optimization techniques as well as DFT specific ones are applied to
-\TFA. Then the optimization result is inserted back to the original program. 
+\subsubsection*{\TFAFull: Representation for compiler and DFT-specific
+optimizations} The immediate follow-up work is
+\TFAFull~(\TFA)~\cite{tfa:2012ndss} which indicates a specially designed
+IR(intermediate representation) that represents DFT tracking logics extracted
+from the original program binary.  Number of compiler optimization techniques
+as well as DFT specific ones are applied to \TFA. Then the optimization result
+is inserted back to the original program. 
 %
 Even with the highly crafted/customized tracking logics that we invented for
 \libdft, it is not yet close to the optimal and suffers from a good deal of
@@ -228,64 +229,86 @@ As many of architectural specifics of DFT system are common to different kinds
 of dynamic analysis~(\ie Memcheck), we strongly believe that lessons we've
 learned from our journey can be applied to other research areas.
  
-\subsection*{A research agenda: Accurate and Practical Security System
-Architecture}
-\jikk{here I need something similar to research statement.}
-I will talk about long-term(short term) research agenda and interests.
+\subsection*{Research Agenda: Accurate and Practical Security System
+Architecture} 
 %
-In general interested in 
-\subsubsection*{Even more performance}
-Even with significant performance improvement that our research could achieve
-for DFT systems, I should admit that this is not yet close to the level where
-industry and research community  consider applicable for a production
-deployment.
+I am interested in the area of the system security in general that serve for
+enhancement of software system reliability and I have earned in depth knowledge
+about a number of technologies help me achieving the goal throughout my
+research career. 
 %
-There is even a saying around research communities whenever its overhead
-becomes larger than $5\%$ the security system would not be adapted as a
-production system.~\cite{ccs2013:invited_talk}
+The followings are research topics that I am currently working on or keeping as
+long-term items. This will help you have a flavor of what I have in my mind as
+a research vision or agenda. 
 %
-Two major overhead sources that we identified are {\it i)} the the cost for
-VM-based instrumentation and {\it ii)} the cost for shadow memory area
-management ~(occurs when it translates real address to it counter-part shadow
-address).
+\subsubsection*{Overhead is still too high} 
 %
-Currently, I have two different approaches to address these issues. The one is
-about dedicating a specially designed hardware component to assist parallel
-execution of \SR and the other is about proposing an instrumentation framework
-that combines compiler-based and binary-only instrumentation frameworks which
-so as to maximize the allowed~(partial) source code accesses.
+Even with the meaningful amount of performance improvement that our research
+could achieve for DFT systems, I should admit that we have not yet reached the
+level where industry and research community would agree it is adoptable. 
+% - the following may be redundant.
+There is a consensus around research communities that whatever benefit the
+security system would bring to its users, $5\%$ overhead is a threshold that
+would prevent the system being adapted as a production
+system.~\cite{ccs2013:invited_talk}
 %
-I will briefly discuss about details about each approach.
+For most in-lining security systems including DFT systems, I could pin down two
+major overhead sources; {\it i)} the cost for VM-based instrumentation and {\it
+ii)} the cost for shadow memory management ~(mainly occurs as it translates
+real address to it counter-part shadow address).
+%
+Currently, I have two proposals to address these issues. The one resorts to aid
+from hardware component and the other is a software only approach that
+introduces a new concept of hybrid instrumentation framework. 
 
-{\bf Hardware-aided \SR} Although \SR attempted to minimize the size of the
-code~(event collector) instrumented to the application, the cost for original
-application execution along with instrumented event collector code turned out
-to be the biggest source of overall slow-down. Besides this cost, shadow memory
-translation performed from analysis thread also incurs high overhead causing
-high volume of CPU cache traffics. 
+%designed hardware component to assist parallel execution of \SR and the other
+%is about proposing an instrumentation framework that combines compiler-based
+%and binary-only instrumentation frameworks which so as to maximize the
+%allowed~(partial) source code accesses.
+%%
+%I will briefly discuss about details about each approach.
 %
-I want to propose a system the addresses both issues by introducing additional
-pipeline stage to log required information and a unit for the address
-translation. The important design goal for this project is to make hardware
-assistance essential and minimal so as it can also be used to implement other
-analysis tools besides DFT by modifying software counterpart.
 
-{\bf A Framework for Hybrid Instrumentation} In contrast to the previous idea,
-this is a software only system that proposes a new instrumentation framework
-that aims to maximize the benefit of available source access without loosing
-complete support for any of execution environment. This approach introduced
-number of interesting challenges such as supporting uniform interface that
-encompasses compiler~(LLVM) pass based instrumentation and  DBI~(DynamoRIO)
-based instrumentation and managing two different instrumentation context from a
-single execution unit.  
-\subsubsection*{DFT accuracy}
-Although DFT has gained many attentions from research communities for its
-effectiveness, its correctness in terms of false positives(FPs) or false
-negatives(FNs) has not been studied with cares. From this project, we want to
-tackle the issue of correct and sound tainting with existing DFT
-implementations. Fo this, we implemented taintedness measurement framework
-along with input generation system that extend symbolic blackbox fuzzing
-approach.
+{\bf Hardware-aided \SR} Although \SR minimizes the size of the code
+instrumented, the cost for original application execution along with
+instrumented code (event collector) still takes up the large portion of
+slowdown.  Besides this, shadow memory translation done from analysis thread
+also accounts for slowdown due to high volume of traffics for shared CPU
+caches. 
+%
+Currently, I am working on a system the addresses these issues by introducing
+another pipeline stage that records required information and transfer it to
+another core which would eventually replace the in-lined event collector and
+communication channel. Another component we are implementing is a new
+instruction help performs real-to-shadow address translation. The important
+design criteria for this project is to make additional hardware minimal and
+flexible so as it can also be used to other analysis tools other than DFT by 
+simply modifying its software counterpart.
+
+{\bf A Framework for Hybrid Instrumentation} In contrast to hardware-aided \SR,
+it is a software only system that proposes a new instrumentation framework that
+maximize the benefit of allowed(partial) source access still supporting
+binaries come with no source access. 
+%
+This hybrid approach introduced number of interesting research questions which
+include supporting uniform interface that encompasses compiler~(LLVM) pass
+based instrumentation and  DBI~(DynamoRIO) based instrumentation and managing
+two different instrumentation context from a single execution unit. 
+%
+Intuition behind this idea is that in many\jikk{or most} cases, we at least
+have access to partial access to the source of the entire execution environment
+although it is not complete. I believe that once we implement it correctly, not
+only DFT systems but also many other security mechanism will be benefited from
+this.
+
+\subsubsection*{DFT accuracy} 
+%
+Although DFT has gained many attentions from research communities for its known
+effectiveness, its correctness in terms of false positives(FPs) and false
+negatives(FNs) has not been explored thoroughly. From this project, we
+introduce a new measurement methodology as well as a framework that implements
+the methodology by evaluating correctness and soundness of DFT systems.
+%
 
 % Some other research areas that I'm interested in. 
 \subsection*{Other research interests} 
