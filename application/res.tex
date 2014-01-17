@@ -84,8 +84,13 @@ have been interested in combining those two approaches to address the high
 overhead problem. 
 %
 Although, my main research contributions are concretized in the course of
-developing and improving well-known security system of data flow tracking~(DFT), I
-am also interested in other techniques related to software reliability which
+developing and improving well-known security system of data flow
+tracking~(DFT), the system has many architectural characteristics common to
+else security systems.  Thus, I believe that wisdoms/insights I learned from
+the stream of research is generic enough to be applied to the area of system
+security in general. \jikk{this statement should be refined further.}
+%
+I am also interested in other techniques related to software reliability which
 include whitebox/blackbox fuzzing and building a system that defends against
 integer error. 
 
@@ -100,7 +105,7 @@ making it efficient so that it can more be adopted by users who want to use the
 technology.
 %
 Typical DFT system composed of three different types of operations {\it i)}
-tagging unstrusted inputs {\it ii)} propagating tag values associated to
+tagging untrusted inputs {\it ii)} propagating tag values associated to
 variables(memory locations) along with program executions {\it iii)} checking
 for unintended usages of tagged data. Our implementations in-lines these
 operations using VM-based instrumentation framework so that we can apply it to
@@ -112,7 +117,7 @@ tools based on VM-based instrumentation and this is where one can find my core
 research contributions.
 
 % libdft
-\subsubsection*{\libdft}
+\subsubsection*{\libdft: Fine grained DFT system for COTS binaries}
 With respect to the number of DFT related research outputs, we first
 implemented \libdft~\cite{libdft:2012vee} which is highly optimized/efficient
 DFT system runs for binary programs executed from {\tt x86} commodity hardware
@@ -140,7 +145,7 @@ time we introduced the system.\jikk{more justification needed for this
 statement}
 
 % TFA (Taint Flow Algebra)
-\subsubsection*{\TFAFull~(\TFA)}
+\subsubsection*{\TFAFull: Representation for compiler and DFT-specific optimizations}
 The immediate follow-up work is \TFAFull~(\TFA)~\cite{tfa:2012ndss} which
 indicates a specially designed IR(intermediate representation) that represents
 DFT tracking logics extracted from the original program binary.  Number of
@@ -170,10 +175,12 @@ security guarantees that the baseline tool \libdft can provide.} of DFT
 operations.
 
 % ShadowReplica 
-\subsubsection*{\SR} Given that \TFA decouples/separates DFT logics from the
-original program execution logics for optimization, \SR~\cite{sreplica:2013ccs}
-project extends this approach a step further to gain more performance
-improvement by running two different contexts from two different cores(CPUs). 
+\subsubsection*{\SR: System for parallelized execution of DFT analysis} 
+%
+Given that \TFA decouples/separates DFT logics from the original program
+execution logics for optimization, \SR~\cite{sreplica:2013ccs} project extends
+this approach a step further to gain more performance improvement by running
+two different contexts from two different cores(CPUs). 
 %
 Of course, we are not the first one were who are aligned toward the direction
 of parallelized analysis, but the many of previous proposals failed to achieve
@@ -221,23 +228,69 @@ As many of architectural specifics of DFT system are common to different kinds
 of dynamic analysis~(\ie Memcheck), we strongly believe that lessons we've
 learned from our journey can be applied to other research areas.
  
-\subsection*{Practical Security System Architecture --- A Research Agenda}
-Even though my research focus in the past mostly leaned toward the topic of DFT
-and related technologies, this contributions and limitations from my experience
-can easily generalized to related defense/reliability technologies.
+\subsection*{A research agenda: Accurate and Practical Security System
+Architecture}
+\jikk{here I need something similar to research statement.}
+I will talk about long-term(short term) research agenda and interests.
+%
+In general interested in 
+\subsubsection*{Even more performance}
+Even with significant performance improvement that our research could achieve
+for DFT systems, I should admit that this is not yet close to the level where
+industry and research community  consider applicable for a production
+deployment.
+%
+There is even a saying around research communities whenever its overhead
+becomes larger than $5\%$ the security system would not be adapted as a
+production system.~\cite{ccs2013:invited_talk}
+%
+Two major overhead sources that we identified are {\it i)} the the cost for
+VM-based instrumentation and {\it ii)} the cost for shadow memory area
+management ~(occurs when it translates real address to it counter-part shadow
+address).
+%
+Currently, I have two different approaches to address these issues. The one is
+about dedicating a specially designed hardware component to assist parallel
+execution of \SR and the other is about proposing an instrumentation framework
+that combines compiler-based and binary-only instrumentation frameworks which
+so as to maximize the allowed~(partial) source code accesses.
+%
+I will briefly discuss about details about each approach.
 
-Correctness issue as well as overhead issue.  Our definition of data flow
-matches to thing what people expects?
+{\bf Hardware-aided \SR} Although \SR attempted to minimize the size of the
+code~(event collector) instrumented to the application, the cost for original
+application execution along with instrumented event collector code turned out
+to be the biggest source of overall slow-down. Besides this cost, shadow memory
+translation performed from analysis thread also incurs high overhead causing
+high volume of CPU cache traffics. 
+%
+I want to propose a system the addresses both issues by introducing additional
+pipeline stage to log required information and a unit for the address
+translation. The important design goal for this project is to make hardware
+assistance essential and minimal so as it can also be used to implement other
+analysis tools besides DFT by modifying software counterpart.
 
-\begin{itemize}
- \item Hardware component
- \item Framework for hybrid instrumentation
- \item Correctness evaluation data flow tracking technologies
-\end{itemize}
-\end{small}
+{\bf A Framework for Hybrid Instrumentation} In contrast to the previous idea,
+this is a software only system that proposes a new instrumentation framework
+that aims to maximize the benefit of available source access without loosing
+complete support for any of execution environment. This approach introduced
+number of interesting challenges such as supporting uniform interface that
+encompasses compiler~(LLVM) pass based instrumentation and  DBI~(DynamoRIO)
+based instrumentation and managing two different instrumentation context from a
+single execution unit.  
+\subsubsection*{DFT accuracy}
+Although DFT has gained many attentions from research communities for its
+effectiveness, its correctness in terms of false positives(FPs) or false
+negatives(FNs) has not been studied with cares. From this project, we want to
+tackle the issue of correct and sound tainting with existing DFT
+implementations. Fo this, we implemented taintedness measurement framework
+along with input generation system that extend symbolic blackbox fuzzing
+approach.
 
 % Some other research areas that I'm interested in. 
-\subsection*{Other research interests} \subsubsection*{Dynamic Binary
+\subsection*{Other research interests} 
+%
+\subsubsection*{Dynamic Binary
 Instrumentation (DBI)} In many DFT implementation including ours, VM-based
 instrumentation becomes a important medium required for in-lining custom
 analysis and often becomes the major source of performance slowdown. 
@@ -277,6 +330,7 @@ This system is built to be compliant(?) to the requirement of IARPA funded
 project and it passed phase 1, and phase 2 evaluations which contains $\sim$
 300 different integer error cases.
 
+\end{small}
 \newpage
 
 %refer to http://sites.stat.psu.edu/~surajit/present/bib.htm
