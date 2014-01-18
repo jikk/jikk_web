@@ -78,65 +78,64 @@ unintended developer bugs and {\it ii)} making these technologies practical,
 suitable for production deployment by addressing the issue of high overhead.
 %
 To achieve the goal of building reliable software and make it practical, I
-leverages recent innovations from different software substrates which encompass
-static and dynamic approaches. Specifically, throughout my research history, I
-have been interested in combining those two approaches to address the high
-overhead problem. 
+leverages recent innovations from different software substrates. Specifically,
+I have been interested in combining static and dynamic analysis techniques to
+serve for a single goal of the practical security system. 
 %
-Although, my main research contributions are concretized in the course of
-developing and improving well-known security system of data flow
-tracking~(DFT), the system has many architectural characteristics common to
-else security systems.  Thus, I believe that wisdoms/insights I learned from
-the stream of research is generic enough to be applied to the area of system
-security in general. \jikk{this statement should be refined further.}
+My main research contributions are concretized over past a few year as I
+developed and improved well-known security system of data flow tracking~(DFT).
+Although my research have focused on a specific system, I believe the
+wisdom/insight that learned from it can still benefit the area of system
+security in general since DFT share many architectural characteristics with
+else security architectures.  
 %
-I am also interested in other techniques related to software reliability which
-include whitebox/blackbox fuzzing and building a system that defends against
-integer error. 
+Besides DFT and the same family of security solution, I am also interested in
+other techniques related to software reliability which include
+whitebox/blackbox fuzzing and building a system that defends against integer
+error. 
 
-\subsection*{Data Flow Tracking(DFT) systems} 
+\subsection*{Data Flow Tracking(DFT) System Innovations} 
 % Paragraph 1: A brief paragraph sketching the overarching thematics and topic
 % of your research, situating it disciplinary.
 %
-In my research history, I extensively explored various aspects of DFT systems
-for its effectiveness in serving many different areas of
+DFT has been my main research topic which I extensively explored various
+aspects of DFT system for its effectiveness in serving many different areas of
 research~\cite{libdft:2012vee, tfa:2012ndss, sreplica:2013ccs} as well as
 making it efficient so that it can more be adopted by users who want to use the
 technology.
 %
-Typical DFT system composed of three different types of operations {\it i)}
-tagging untrusted inputs {\it ii)} propagating tag values associated to
-variables(memory locations) along with program executions {\it iii)} checking
-for unintended usages of tagged data. Our implementations in-lines these
-operations using VM-based instrumentation framework so that we can apply it to
-COTS binaries making us achieving complete coverage.
+Typical DFT system composed of three different operations {\it i)} tagging
+input variables come in though any untrusted sources {\it ii)} propagating tag
+values associated to variables along with program executions {\it iii)}
+checking for unintended usages of tagged data/variable. Our implementation
+injects these operations using VM-based instrumentation framework so that DFT
+can be applied to COTS binaries.
 %
-Besides implementing DFT system that accurately operates, I have been invented
-number of techniques to resolve the high overhead issue known to inherent to
-tools based on VM-based instrumentation and this is where one can find my core
-research contributions.
+Besides implementing DFT system that correctly operates, I invented number of
+optimizations to alleviate its high overhead which is known to be inherent to
+DFT and systems of the same family which is regarded as my main research
+contribution.
 
 % libdft
-\subsubsection*{\libdft: Fine grained DFT system for COTS binaries}
-With respect to the number of DFT related research outputs, we first
-implemented \libdft~\cite{libdft:2012vee} which is highly optimized/efficient
-DFT system runs for binary programs executed from {\tt x86} commodity hardware
-system. \libdft provides generic API that helps anybody who want to customize
-and build tools that serve for their own problem domains.\jikk{DTA is an
-examplary implementation that we implemented with \libdft and we can definitely
-have more of this kind}.
+\subsubsection*{\libdft: High performance fine-grained DFT system for COTS binaries}
+
+\libdft~\cite{libdft:2012vee} is our initial prototype for high performance DFT
+system of byte granularity that works for {\it x86} binaries. 
 %
-It is implemented via inlining DFT logic for individual {\tt x86} instructions
-\jikk{which would delivermeta-information (\ie taintedness for DFT) from one
-operand to another } levage tools from VM-hypervisor layer. For
-instrumentation, we employed PIN dynamic binary instrumentation~(DBI)
-framework. High efficiency of \libdft achieved by correctly understanding the
-structural limitations of DBI-based inlining approaches. \libdft addresses this
-issues by introducing optimal tracking codes customized for different types of
-{\tt x86} instructions to avoids aforementioned issues. Examples of these
-issues include i) the cost required for context switching between the target
-application and DBI/analysis contexts ii) Design and efficient management of
-shadow memory area and so on. 
+It supports generic API that enables users to customize and build tools that
+serve for their own demands. 
+%
+It is implemented by injecting DFT logic for individual taint-propagating
+instructions leveraging VM-based instrumentation framework. 
+%
+Key to \libdft's performance improvement lies in understanding the structural
+limitations of VM instrumentation layer as well as precise definition of taint
+propagation semantics for each instruction. \libdft  addresses these issues by
+introducing optimal tracking codes customized for different types of {\tt x86}
+instructions to avoids aforementioned issues. Examples of overhead issues include
+{\it i)} the cost required for context switching between the target application
+and DBI/analysis contexts {\it ii)} design and efficient management of shadow
+memory area and so on. 
 %
 Evaluation result showed $\sim$10$\times$ - $\sim$11$\times$ slowdown over the
 native execution for a number of standard benchmark suites and this was a
@@ -217,18 +216,7 @@ collection is smaller than that of in-lined DFT analysis. With smaller sized
 analysis code, underlying DBI framework reduce the amount CPU cycles required
 for the context switch.}
 
-%What is the contribution from this line of work -- high level perspectives
-\subsubsection*{Contributions}
-During my efforts to improve DFT implementations, I could build up in depth
-experience with popular research topics of DFT. 
-%
-To make it closer to real-world deployment, we actively utilized the static
-analysis to help/complement the expensive dynamic analysis. 
-%
-As many of architectural specifics of DFT system are common to different kinds
-of dynamic analysis~(\ie Memcheck), we strongly believe that lessons we've
-learned from our journey can be applied to other research areas.
- 
+
 \subsection*{Research Agenda: Accurate and Practical Security System
 Architecture} 
 %
@@ -301,34 +289,70 @@ although it is not complete. I believe that once we implement it correctly, not
 only DFT systems but also many other security mechanism will be benefited from
 this.
 
-\subsubsection*{DFT accuracy} 
+\subsubsection*{Evaluation framework the soundness of DFT systems} 
 %
 Although DFT has gained many attentions from research communities for its known
-effectiveness, its correctness in terms of false positives(FPs) and false
-negatives(FNs) has not been explored thoroughly. From this project, we
-introduce a new measurement methodology as well as a framework that implements
-the methodology by evaluating correctness and soundness of DFT systems.
+effectiveness, its soundness issue in terms of correct information flow has not
+been explored thoroughly and the question of errors(false positives or false
+negatives) remains unanswered. From this project, we introduce a new
+methodology that evaluates the soundness of DFT systems and  a prototype that
+implements the methodology.
 %
+The entire frameework composed of two sub-compoents of {\it i)} taintedness
+measurement component that evaluates individual information flow for its
+correctness and {\it ii)} input generation system that guides the measurement
+component by the approach of symbolic execution.
+%
+We are planning to apply the methodology to evalute number of different DFT
+systems implemented for Android operating system.
 
+%What is the contribution from this line of work -- high level perspectives
+\subsubsection*{Contributions}
+During my efforts to improve DFT implementations, I could build up in depth
+experience with popular research topics of DFT. 
+%
+To make it closer to real-world deployment, we actively utilized the static
+analysis to help/complement the expensive dynamic analysis. 
+%
+As many of architectural specifics of DFT system are common to different kinds
+of dynamic analysis~(\ie Memcheck), we strongly believe that lessons we've
+learned from our journey can be applied to other research areas.
+ 
 % Some other research areas that I'm interested in. 
 \subsection*{Other research interests} 
 %
-\subsubsection*{Dynamic Binary
-Instrumentation (DBI)} In many DFT implementation including ours, VM-based
-instrumentation becomes a important medium required for in-lining custom
-analysis and often becomes the major source of performance slowdown. 
+Besides DFT, I am interested in number of research topics which related to
+system reliability in a broader sense.
+
+\subsubsection*{A Comparison Study of Dynamic Binary Instrumentation(DBI)
+frameworks}
 %
-In this projects, we aim to produce a survey report that compares three most
-popular DBI implementations(PIN~\cite{}, Valgrind~\cite{}, DynamoRIO~\cite{})
-with our own metrics of {\it i)} efficient {\it ii)} usability and {\it iii}  
-capability.
+In this project, we perform comparison study that investigates various aspects
+of three different Dynamic Binary Instrumentation(DBI) frameworks. Oftentimes,
+one of these becomes system security researcher's choice for instrumentation
+framework to inline monitoring logic against unknown binaries. Currently,
+target frameworks for our study include PIN, DynamoRIO, and Valgrind. These
+three frameworks are the most representative DBI frameworks actively maintained
+by research communities. As their behavioral and performance implications
+significantly differ by each one's design philosophy and intended problem
+domain, we want to empirically evaluate them using criteria listed below.
 
-\subsubsection*{Software fuzzing}
+\begin{itemize}
+        \item {\bf Userability:} the framework's learning curve, the framework's
+           user-friendliness of API, Supports from developer community 
+   \item {\bf Effectiveness/Capability:} framework's ability to instrument and
+            manipulate the target software provided without compromising the
+            execution transparency.  
+    \item {\bf Efficiency:} performance overhead of the framework when it instruments
+    the target software.  
+\end{itemize}
 
-Deeply interested in number of different static analysis techniques that would
-help building reliable software systems. Both white-box~(with source access),
-black-box(without access to source code). Symbolic execution and formal
-verification techniques.
+%\subsubsection*{Software fuzzing}
+%
+%Deeply interested in number of different static analysis techniques that would
+%help building reliable software systems. Both white-box~(with source access),
+%black-box(without access to source code). Symbolic execution and formal
+%verification techniques.
 
 \subsubsection*{Integer errors} 
 
