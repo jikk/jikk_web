@@ -128,29 +128,29 @@ serve for their own demands.
 It is implemented by injecting DFT logic for individual taint-propagating
 instructions leveraging VM-based instrumentation framework. 
 %
-Key to \libdft's performance improvement lies in understanding the structural
-limitations of VM instrumentation layer as well as precise definition of taint
-propagation semantics for each instruction. \libdft  addresses these issues by
-introducing optimal tracking codes customized for different types of {\tt x86}
-instructions to avoids aforementioned issues. Examples of overhead issues include
-{\it i)} the cost required for context switching between the target application
-and DBI/analysis contexts {\it ii)} design and efficient management of shadow
-memory area and so on. 
+Key to \libdft's performance improvement lies in understanding precise
+definition of taint propagation semantics for {\it x86} instruction set as well
+as the structural limitations of VM instrumentation layer. \libdft  addresses
+these issues by introducing optimal tracking codes customized for different
+types of instructions to avoids aforementioned issues. Specific considerations
+that we made for the implementation include {\it i)} minimization of the cost
+required for context switching between the target application and DBI/analysis
+contexts {\it ii)} design and efficient management of shadow memory area and so
+on. 
 %
-Evaluation result showed $\sim$10$\times$ - $\sim$11$\times$ slowdown over the
-native execution for a number of standard benchmark suites and this was a
-significant performance improvement over previous DFT implementations by the
-time we introduced the system.\jikk{more justification needed for this
-statement}
+Evaluation for the prototype shows $\sim$10$\times$ - $\sim$11$\times$
+slowdown over the native execution for a number of standard benchmark suites
+and this was a significant performance improvement over previous DFT
+implementations by the time we introduced the system.\jikk{more justification
+needed for this statement}
 
 % TFA (Taint Flow Algebra)
-\subsubsection*{\TFAFull: Representation for compiler and DFT-specific
-optimizations} The immediate follow-up work is
-\TFAFull~(\TFA)~\cite{tfa:2012ndss} which indicates a specially designed
-IR(intermediate representation) that represents DFT tracking logics extracted
-from the original program binary.  Number of compiler optimization techniques
-as well as DFT specific ones are applied to \TFA. Then the optimization result
-is inserted back to the original program. 
+\subsubsection*{Principled Optimizations for DFT}
+
+\TFAFull~(\TFA)~\cite{tfa:2012ndss} is a specially designed IR(intermediate
+representation) that captures DFT tracking logics extracted from the original
+program binary. Against this representation, we apply number of compiler
+optimization techniques as well as DFT specific ones.
 %
 Even with the highly crafted/customized tracking logics that we invented for
 \libdft, it is not yet close to the optimal and suffers from a good deal of
