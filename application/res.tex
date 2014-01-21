@@ -1,7 +1,7 @@
 \documentclass[letterpaper, 10pt]{article}
 \topmargin-2.0cm
 
-\usepackage{fancyhdr}
+        \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{xspace}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
@@ -42,7 +42,7 @@
 \def \ie{i.e.,\xspace}
 
 \newif \ifcomments
-\commentstrue
+%\commentstrue
 
 \ifcomments
 \newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
@@ -204,21 +204,29 @@ in making synchronization between two different contexts easier.
 %
 In \SR project, we again dedicate static analysis phase {\it i)} to have DFT
 logic extracted from the target application binary and represent them in \TFA
-and {\it ii)} to minimize the volume and frequency of the communication
+{\it ii)} to minimize the volume and frequency of the communication
 requirement.
+%
+Architectural consideration is required for the communication channel design
+otherwise it would easily become a performance bottleneck by having two threads
+compete for L1/L2 caches.
+
+%
+% Communication channel easily became a performance bottleneck if it is
+% designed with no in depth knowledges about CPU and its shared caches.
 %
 % \SR again ensures the same level of security/correctness guarantees as our
 % baseline tool.
 %
 As a result, \SR framework could improve the overhead by $\sim$2$\times$,
-$\sim$4$\times$ over \TFA and \libdft respectively when it is evaluated for
-standard benchmark suites, achieving $\sim$2.75$\times$ slowdown over the
+$\sim$4$\times$ over \TFA and \libdft respectively when it is evaluated for the
+same standard benchmark suites, achieving $\sim$2.75$\times$ slowdown over the
 native execution.
 %
-As an interesting side effect of applying the \SR approach, even though it
-utilizes additional CPUs for better response time, the framework consumes the
-same or less amount of CPU cycles than that of comparable in-lined DFT
-implementation~(in this case \TFA) for equivalent DFT analysis.
+As an interesting side effect of \SR, even though it utilizes additional CPUs
+for better response time, the entire framework consumes the same or less amount
+of CPU cycles than that of comparable in-lined DFT implementation~(in this case
+\TFA) for equivalent DFT analysis.
 %
 In this case, the benefit of having smaller instrumented code for event
 collection~(when it is compared to that of in-lined DFT analysis) and its
@@ -226,7 +234,7 @@ subsequent performance gains for VM-based instrumentation in context management
 outran the additional cost required to establish the communication channel
 connecting the application and analysis threads.
 
-\subsection*{Research Agenda: Accurate and practical security architecture}
+\subsection*{Research Agenda: Practical and accurate security architecture}
 %
 My main research interest lies in the area of the system security in general
 that serve for enhancement of software system reliability and I have earned in
@@ -262,7 +270,7 @@ framework.
 
 {\bf Hardware-assisted \SR} Although \SR minimizes the size of the code
 instrumented, the cost for original application execution along with
-instrumented code for event collecton still takes up the large portion of the
+instrumented code for event collection still takes up the large portion of the
 system's overall slowdown. Second to this, the cost for shadow memory
 translation accounts for large portion traffics for calculations and CPU cache
 pressures.
@@ -283,17 +291,17 @@ that maximize the benefit of available~(partial) source access still supporting
 COTS binaries.
 %
 This framework is established by applying different schemes of the
-compiler-based(LLVM) instrumentation and VM-based(PIN DBI) instrumentations to
-source code and binary respectively.
+compiler-based~(LLVM) instrumentation and VM-based~(PIN DBI) instrumentations
+to source code and binary respectively.
 %
 This hybrid approach introduced number of interesting research questions of
 combining two different instrumentation contexts into a single execution unit
 and support uniform API interface.
 %
 Intuition behind this idea is that in most cases, we have partial accesses to
-source base and With comiler-based instrumentation, we can implement DFT system
-severals of times faster system than using VM-based instrumentation for COTS
-binaries.
+source base and With compiler-based instrumentation, we can implement DFT
+system severals of times faster system than using VM-based instrumentation for
+COTS binaries.
 %
 We believe that this approach will benefit not only DFT systems but also many
 other system security architectures if we implement it correctly.
@@ -301,17 +309,17 @@ other system security architectures if we implement it correctly.
 \subsubsection*{Evaluation framework the soundness of DFT systems}
 %
 Although DFT has gained many attentions from research communities for its known
-effectiveness, its soundness issue in terms of correct information flow has not
-been explored thoroughly and the question about the existence and frequency of
-incorrect flows~(false positives or false negatives) remains unanswered. From
-this work, me and number of collaborators introduce a new methodology to
-evaluate the soundness of DFT systems and a prototype framework implementation
-of the methodology.
+effectiveness, its {\it soundness} issue in terms of correct information flow
+has not been explored thoroughly and the question about the existence and
+frequency of incorrect flows~(false positives or false negatives) remains
+unanswered. From this work, me and number of collaborators introduce a new
+methodology to evaluate the soundness of DFT systems and a prototype framework
+implementation of the methodology.
 %
-The entire frameework composed of two sub-compoents of {\it i)} taintedness
+The entire framework composed of two sub-components of {\it i)} taintedness
 measurement component that evaluates different information flows and {\it ii)}
-the input generation system that guides the measurement component levarging the
-approach of symbolic execution. \jikk{some more texts needed.}
+the input generation system that guides the measurement component leveraging
+the approach of symbolic execution. \jikk{some more texts needed.}
 %
 We are planning to apply the methodology to evalute number of different DFT
 systems implemented for Android operating system.
@@ -319,82 +327,78 @@ systems implemented for Android operating system.
 % Some other research areas that I'm interested in.
 \subsection*{Other research interests}
 %
-Besides DFT, I am interested in number of research topics which related to
+Besides DFT, I am interested in number of research topics also related to
 system reliability in a broader sense.
 
-\subsubsection*{A Comparison Study of Dynamic Binary Instrumentation(DBI)
-frameworks}
+\subsubsection*{A comparison study of DBI frameworks for security applications}
 %
-In this project, we perform comparison study that investigates various aspects
-of three different Dynamic Binary Instrumentation(DBI) frameworks. Oftentimes,
-one of these becomes system security researcher's choice for instrumentation
-framework to inline monitoring logic against unknown binaries. Currently,
-target frameworks for our study include PIN, DynamoRIO, and Valgrind. These
-three frameworks are the most representative DBI frameworks actively maintained
-by research communities. As their behavioral and performance implications
+Oftentimes, security researchers choose one of the following three Dynamic
+Binary Instrumentation~(DBI) frameworks -- PIN, DynamoRIO, and Valgrind -- as
+their instrumentation medium when they need to in-line security logic to COTS
+binaries.
+%
+In this project, we carry out a comparison study that investigates various
+aspects of these  frameworks. As their behavioral and performance implications
 significantly differ by each one's design philosophy and intended problem
-domain, we want to empirically evaluate them using criteria listed below.
-
-\begin{itemize}
-        \item {\bf Userability:} the framework's learning curve, the framework's
-           user-friendliness of API, Supports from developer community
-   \item {\bf Effectiveness/Capability:} framework's ability to instrument and
-            manipulate the target software provided without compromising the
-            execution transparency.
-    \item {\bf Efficiency:} performance overhead of the framework when it instruments
-    the target software.
-\end{itemize}
-
-%\subsubsection*{Software fuzzing}
+domain, we propose number of criteria \jikk{Userability,
+Effectiveness/capability, efficiency} to empirically evaluate these frameworks.
 %
-%Deeply interested in number of different static analysis techniques that would
-%help building reliable software systems. Both white-box~(with source access),
-%black-box(without access to source code). Symbolic execution and formal
-%verification techniques.
+The goal of the project is to provide a guideline for users to make proper
+choice when they need to use DBI that meets for their systems.
 
-\subsubsection*{Integer errors}
+\subsubsection*{Runtime integer error detection}
 
-For programs written in integer error is notorious for its trickiness to be
-correct and write integer error free code. Even thought the problem has long
-been around, no one could come up with the complete solution to this problem
-and take a high rank from vulnerability list.
+The problem of detection/prevention for integer error for applications written
+in C/C++ has long been around but none could come up with complete solution to
+clear the entire problem domain yet. 
 %
-The real trickiness lies not in mechanically detecting integer errors but in
-identify the real intention of developer since some of integer errors
-(overflow, type conversion etc) planted intentionally to make code achieving
-developer's goals.
+To mechanically detect integer errors by instrumenting application source code
+is not a difficult process but to figure out code writer's intention is a
+tricky one as the compiler writers and application developers takes advantage
+of these error intentionally to speed up their applications.
 %
-We developed a system integrated DFT system with integer error checking system
-to watch/observe for two different kind of information flows {\it i)} the one
-that connects the source of untrusted input, and the sink of integer error
-point~(integer overflow, sign/unsigned extension, type conversions) {\it ii)}
-the other that connects the source of integer error point and the sink of the
-argument of sensitive calls(malloc, strcpy, etc.)
+We integrate static and dynamic data flow tracking~(DFT) to a typical integer
+error checker to address the issue of false positive~(FP) and false
+negative~(FN) specifically. Using DFT, we define relevant {\it source, sink}
+pairs that would differentiate errors which would lead to exploitable bugs from
+intended practices. One example for the pair can be the place for untrusted
+input~(e.g., socket input, keyboard inputs) and a location for arithmetic
+operation that triggers an integer error. The other example can be pairs of the
+location of integers errors flows into security sensitive places such as
+arguments for memory allocation functions.
 %
-This system is built to be compliant(?) to the requirement of IARPA funded
-project and it passed phase 1, and phase 2 evaluations which contains $\sim$
-300 different integer error cases.
+To differentiate exploitable bugs from intended practices, we integrated static
+and dynamic DFT systems to a typical integer error checker to watch/observe for
+two different kind of information flows {\it i)} a flow that connects the
+source of untrusted input, and the sink of integer error arithmetic~(integer
+overflow, sign/unsigned extension, type conversions) {\it ii)} a flow that
+connects the source of integer error point and the sink of the argument of
+sensitive calls~({\tt malloc}, {\tt strcpy}, etc.)
 
+The approach aiming to build a system that can provide defend capability
+against integer errors at runtime and it is implemented as a LLVM pass.
 
 %What is the contribution from this line of work -- high level perspectives
-\subsection*{Contributions}
-During my efforts to improve DFT implementations, I could build up in depth
-experience with popular research topics of DFT.
-%
-To make it closer to real-world deployment, we actively utilized the static
-analysis to help/complement the expensive dynamic analysis.
-%
-As many of architectural specifics of DFT system are common to different kinds
-of dynamic analysis~(\ie Memcheck), we strongly believe that lessons we've
-learned from our journey can be applied to other research areas.
+\subsection*{Summary}
 
-
+In the course of my research, I could establish in depth experience about DFT
+systems hot system security topics that shares its core characteristics with
+many other security system architectures.
+%
+In effort to make the technology closer to the production deployment, I also
+invented number of optimization techniques and frameworks composed of static
+and dynamic components that establish feedback loop.
+%
+My future research plan mainly focuses on improve DFT systems for it efficiency
+as well as correctness.
+%
+Besides DFT, I am also interested in system security topics related to hardening
+software systems and make those immune to exploitable defects or unintended bugs. 
 
 \end{small}
-\newpage
+%\newpage
 
 %refer to http://sites.stat.psu.edu/~surajit/present/bib.htm
 \bibliographystyle{plain}
 \bibliography{res}
 \end{document}
-
