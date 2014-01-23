@@ -9,10 +9,10 @@
 % Color Information from -
 % http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_advanced/node13.html
 
-\advance\oddsidemargin-0.65in
-\advance\evensidemargin-1.5cm
+\advance\oddsidemargin-1in
+%\advance\evensidemargin-0.65in
 \textheight9.2in
-\textwidth6.75in
+\textwidth6.9in
 \newcommand\bb[1]{\mbox{\em #1}}
 \def\baselinestretch{1.05}
 
@@ -236,7 +236,19 @@ The followings are research topics that I am currently working on or keeping as
 future topics which would help readers to have better understanding about my
 long-term research agenda.
 %
-\subsubsection*{\SR for general instrumentation platform}
+\subsubsection*{Generalization of \SR approach} 
+%
+DFT is an instance of security analysis that resort to VM-based instrumentation
+to in-line its logic to COTS binaries and suffers from high overhead.
+%
+Currently, we are working on a project that extends \SR approach to define
+common API support other analyses expecting to have similar performance gain as
+DFT did. 
+%
+As a first step, the project will begin to support other analyses of Control
+Flow Integrity~(CFI) and memory integrity tool~(similar to Memcheck) then we
+will look for more security analyses for the generalization of the approach. 
+%
 \subsubsection*{Mitigation of still too high overhead}
 %
 Even with the substantial amount of performance improvement that our research
@@ -257,8 +269,8 @@ counterpart shadow address).
 %
 Currently, I am working on projects of two different kinds to address these
 issues. The first one resorts to additional hardware component and the second
-one proposes a new hybrid instrumentation framework, a software only
-solution that combines source-based and binary-only instrumentation.
+one proposes a new hybrid instrumentation framework, a software only solution
+that combines source-based and binary-only instrumentation.
 
 {\bf Hardware-assisted \SR} Although \SR minimizes the size of the code
 instrumented, the cost for original application execution along with
