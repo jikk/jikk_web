@@ -7,6 +7,7 @@
 \usepackage{lastpage}
 \usepackage[dvips]{color}
 \usepackage{graphicx}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 % Color Information from -
 % http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_advanced/node13.html
@@ -17,6 +18,15 @@
 \textwidth6.75in
 \newcommand\bb[1]{\mbox{\em #1}}
 \def\baselinestretch{1.05}
+
+\newif \ifcomments
+%\commentstrue
+
+\ifcomments
+\newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
+\else
+\newcommand{\jikk}[1]{}
+\fi
 
 \newcommand{\hsp}{\hspace*{\parindent}}
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
@@ -58,7 +68,7 @@ scalable products.
 
 \subsubsection*{In class teaching experiences}
 
-During my PhD, I taught Comlumbia University's COMS3103-3: Programming Langauge
+During my PhD, I taught Columbia University's COMS3103-3: Programming Language
 Python\footnote{\url{http://www.cs.columbia.edu/~jikk/teaching/3101-3/index.html}}.
 %
 % The course begin with 22 students and 14 students completed the course.  for
@@ -107,20 +117,49 @@ Compensating for a challenging task of doing a class from the beginning to the
 end, the course evaluation
 result\footnote{\url{http://www.cs.columbia.edu/~jikk/teaching/3101-3/evaluation.html}}
 performed by student were encouraging, especially for non-naive English speaker
-as I am. In a nutshell, students rated 4.45/5 for overall quality of the course
-and 4.64/5 for amount they learned from the class.
+as I am. In a nutshell, students rated 4.45/5 for overall course quality and
+4.64/5 for amount they learned from the class.
 
-\subsubsection*{Designed courses} 
+%CS as a moving target
+\subsubsection*{Designing new courses} 
 
-I have number of courses that I am outlining which I want to teach in near
-future. First one is another language course about C++. Besides hugeness and
-complications  It is holding a unique position in terms of efficiency
-near-native performance and migration 
+CS as an academic area and its many sub-fields are still young and vibrantly
+evolving. Therefore, it is required to timely design and offer new courses that
+reflect recent trends/changes/updates without loosing the connections to
+fundamental theories supporting the topic. \jikk{improve it} From here, I will
+introduce brief descriptions for a couple of new course offerings.
+%
 
-%Course that I'm capable of/interested in teaching.
-As my major research interest lies in the area of system security utilizing 
-techniques from number of core CS topics -- Programming language, Operating
-system, and Security System architectures.
+{\bf C++ and new standard~(C++11)} In the history of programming languages, C++
+occupies a unique position and it enters into interesting new stage with its
+recent announcement for a new standard(C++11) and concrete roadmap projecting a
+decade ahead which are well appreciated by community.
+%Although many complain for its syntax being too complex and its features being
+%not organized and only being grossly accumulated over time.  But, there is few
+%alternative when we look for the programming language that supports the
+%low-level access and close-to native performance in a scalable way.
+%
+%Based C language, reaching out to absorb high-level language concepts
+%including OOP paradigm, C++ enters interesting new stage with its recent
+%announcement for a new standard(C++11) and concrete roadmap projecting a
+%decade ahead which are well appreciated by community.
+%
+By having a course about C++ and its new standard, we can expect students not
+only to pick up a language its newly added features but also to understand how
+a low level language~(based on C) reaches out to implements high level paradigm
+of OOP. 
+
+{\bf Advanced compiler course: Instrumentations from source to binary} 
+%What else courses I'm capable of/interested in teaching.
+Throughout my research career, I explored software instrumentation techniques
+from different software stacks. 
+%
+Stages of compiling a source code into a binary and loading it into a memory
+space for execution provide instrumentation opportunities.
+
+a source code is first translated into compiler IR to be a target for
+optimizations. IR is translated into object file and linker    complied to
+generate binaries.
 
 %\begin{figure}[tb]
 %	\centering
@@ -129,18 +168,19 @@ system, and Security System architectures.
 %	\label{fig:decoupling}
 %\end{figure}
 
-I can teach wide ranges of CS core curriculum.
-\begin{itemize}
-\item Introduction to Computer Science
-\item Programming language courses -- C, C++, Java, Python 
-\item Senior level system courses -- desktop and mobile operating system,
-  programming language.
-\item Graduate level course: advanced compiler course -- instrumentation for
-  software monitoring and protection.
-\end{itemize}
+%I can teach wide ranges of CS core curriculum.
+%\begin{itemize}
+%\item Introduction to Computer Science
+%\item Programming language courses -- C, C++, Java, Python 
+%\item Senior level system courses -- desktop and mobile operating system,
+%  programming language.
+%\item Graduate level course: advanced compiler course -- instrumentation for
+%  software monitoring and protection.
+%\end{itemize}
+%
 
-Designing graduate level course 
-
+\subsubsection*{Summary}
+here is a section for summary.
 \end{small}
 \end{document}
 
