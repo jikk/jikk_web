@@ -131,8 +131,8 @@ introduce brief descriptions for a couple of new course offerings.
 %
 
 {\bf C++ and new standard~(C++11)} In the history of programming languages, C++
-occupies a unique position and it enters into interesting new stage with its
-recent announcement for a new standard(C++11) and concrete roadmap projecting a
+occupies a unique position and it opens up interesting new stage with its
+recent announcement for a new standard~(C++11) and a solid roadmap projecting a
 decade ahead which are well appreciated by community.
 %Although many complain for its syntax being too complex and its features being
 %not organized and only being grossly accumulated over time.  But, there is few
@@ -145,39 +145,28 @@ decade ahead which are well appreciated by community.
 %decade ahead which are well appreciated by community.
 %
 By having a course about C++ and its new standard, we can expect students not
-only to pick up a language its newly added features but also to understand how
-a low level language~(based on C) reaches out to implements high level paradigm
-of OOP. 
+only to lean a language and its newly added features but also to understand how
+a low level language~(based on C) reaches out to have high level language
+concepts in place. 
 
 {\bf Advanced compiler course: Instrumentations from source to binary} 
-%What else courses I'm capable of/interested in teaching.
+% What else courses I'm capable of/interested in teaching.
 Throughout my research career, I explored software instrumentation techniques
-from different software stacks. 
+from different software stacks/substrates/layers which are deeply related to
+steps we take to compile a source to build a binary and load it for execution. 
 %
-Stages of compiling a source code into a binary and loading it into a memory
-space for execution provide instrumentation opportunities.
+As a source first being compiled into objects, it exposes its internal
+representations of AST and IR as a instrumentation target. We can use {\it
+linker} component for MPO. 
 
-a source code is first translated into compiler IR to be a target for
-optimizations. IR is translated into object file and linker    complied to
-generate binaries.
 
-%\begin{figure}[tb]
-%	\centering
-%	\includegraphics[width=0.5\linewidth]{figs/inst0.pdf}
-%	\caption{Insturmentation}
-%	\label{fig:decoupling}
-%\end{figure}
-
-%I can teach wide ranges of CS core curriculum.
-%\begin{itemize}
-%\item Introduction to Computer Science
-%\item Programming language courses -- C, C++, Java, Python 
-%\item Senior level system courses -- desktop and mobile operating system,
-%  programming language.
-%\item Graduate level course: advanced compiler course -- instrumentation for
-%  software monitoring and protection.
-%\end{itemize}
+, link objects to produce binaries, and
+loading these into the memory space for execution. Occasionally, during
+execution, shared objects can also be linked dynamically.
 %
+Each of these stages open up opportunities for instrumentation. For instance,
+compiler internal representations of abstract syntax tree~(AST) and
+intermediate Representation~(IR)
 
 \subsubsection*{Summary}
 here is a section for summary.
