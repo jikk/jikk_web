@@ -8,6 +8,7 @@
 \usepackage[dvips]{color}
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{xspace}
 
 % Color Information from -
 % http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_advanced/node13.html
@@ -27,6 +28,8 @@
 \else
 \newcommand{\jikk}[1]{}
 \fi
+
+\def\ie{i.e.,\xspace}
 
 \newcommand{\hsp}{\hspace*{\parindent}}
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
@@ -55,7 +58,7 @@
 \begin{center} {\LARGE \bf TEACHING STATEMENT}\\ \vspace*{0.1cm} {\normalsize
 Kangkook Jee (jikk@cs.columbia.edu)} \end{center}
 % Begin with my teaching philosophy.
-University education should provide chances for student to cultivate their
+University education should provide opportunities for student to cultivate their
 potentials to succeed in their future careers as a competent computer science
 professionals.  
 %
@@ -130,7 +133,7 @@ fundamental theories supporting the topic. \jikk{improve it} From here, I will
 introduce brief descriptions for a couple of new course offerings.
 %
 
-{\bf C++ and new standard~(C++11)} In the history of programming languages, C++
+{\bf C++ and new standard~(C++11):} In the history of programming languages, C++
 occupies a unique position and it opens up interesting new stage with its
 recent announcement for a new standard~(C++11) and a solid roadmap projecting a
 decade ahead which are well appreciated by community.
@@ -149,24 +152,23 @@ only to lean a language and its newly added features but also to understand how
 a low level language~(based on C) reaches out to have high level language
 concepts in place. 
 
-{\bf Advanced compiler course: Instrumentations from source to binary} 
+{\bf Instrumentation techniques from source to runtime:} 
 % What else courses I'm capable of/interested in teaching.
 Throughout my research career, I explored software instrumentation techniques
 from different software stacks/substrates/layers which are deeply related to
 steps we take to compile a source to build a binary and load it for execution. 
 %
-As a source first being compiled into objects, it exposes its internal
-representations of AST and IR as a instrumentation target. We can use {\it
-linker} component for MPO. 
-
-
-, link objects to produce binaries, and
-loading these into the memory space for execution. Occasionally, during
-execution, shared objects can also be linked dynamically.
+As {\it sources} first being compiled into {\it objects} , it exposes its
+internal representations of AST and IR as a instrumentation target. 
 %
-Each of these stages open up opportunities for instrumentation. For instance,
-compiler internal representations of abstract syntax tree~(AST) and
-intermediate Representation~(IR)
+Link-time-optimization~(LTO) also provides another instrumentation opportunity
+at build phase. % as we {\it link} objects to produce a binary. 
+%
+At runtime, we can consider tools from different levels for the
+instrumentations; \ie {\it program loader} or {\it VM-hypervisor} of different
+types.
+%
+This course will be considered as a advanced compiler course aiming to deliver 
 
 \subsubsection*{Summary}
 here is a section for summary.
