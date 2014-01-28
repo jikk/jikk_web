@@ -21,7 +21,7 @@
 \def\baselinestretch{1.05}
 
 \newif \ifcomments
-%\commentstrue
+\commentstrue
 
 \ifcomments
 \newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
@@ -45,7 +45,7 @@
 \renewcommand{\footrulewidth}{0pt} 
 
 \fancyfoot[C]{\footnotesize
-\textcolor{gray}{http://www.cs.columbia.edu/$\sim$jikk/application}} 
+        \textcolor{gray}{http://www.cs.columbia.edu/$\sim$jikk/application}} 
 
 \pagestyle{fancy}
 \lhead{\textcolor{gray}{\it Kangkook Jee}}
@@ -58,14 +58,16 @@
 \begin{center} {\LARGE \bf TEACHING STATEMENT}\\ \vspace*{0.1cm} {\normalsize
 Kangkook Jee (jikk@cs.columbia.edu)} \end{center}
 % Begin with my teaching philosophy.
-University education should provide opportunities for student to cultivate their
+University education should provide opportunities for students to cultivate their
 potentials to succeed in their future careers as a competent computer science
 professionals.  
 %
 As an CS educator, I focus on preparing students with principled understanding
-about fundamental/theoretical CS topics along with known best practices both
-from academia and industry for them to learn how to create reliable and
-scalable products.
+about fundamental/theoretical CS topics adopting known best practices both
+from academia and industry.
+
+\jikk{improve intro to match with conclusion.}
+
 
 %I enjoy human interactions in the course of teaching.
 
@@ -77,9 +79,9 @@ Python\footnote{\url{http://www.cs.columbia.edu/~jikk/teaching/3101-3/index.html
 % The course begin with 22 students and 14 students completed the course.  for
 % failing to set appropriate level for assignment.
 %
-Although it was my first university level teaching experience, I enjoyed much
-from the whole process of building a course from scratch, deliver prepared
-materials, and making interactions with students.
+Although it was my first university level teaching experience, I deeply enjoyed 
+for the whole process of building a course from scratch, deliver prepared
+materials, making interactions with students, and evaluating their progresses.
 % 
 The course is largely composed of two distinct phases. The first one is about
 language fundamentals while the second one focuses on specific topics/modules
@@ -103,7 +105,7 @@ students.
 %
 I also realized that it requires  substantial amount of time and effort to
 write a new set of assignments each time given that students always can search
-for solutions for recycled problems. 
+for solutions for known problem sets. 
 %
 Regarding a class project, students were to made teams of 3 $\sim$ 4 members to
 conduct to a project relevant to their research interest.
@@ -116,12 +118,11 @@ creative and reached out beyond my expectation.
 % done by English literature major.
 %
 
-Compensating for a challenging task of doing a class from the beginning to the
-end, the course evaluation
+Compensating a challenging task of doing a class from the beginning to the end,
+the course evaluation
 result\footnote{\url{http://www.cs.columbia.edu/~jikk/teaching/3101-3/evaluation.html}}
-performed by student were encouraging, especially for non-naive English speaker
-as I am. In a nutshell, students rated 4.45/5 for overall course quality and
-4.64/5 for amount they learned from the class.
+performed by student were encouraging. In a nutshell, students rated 4.45/5 for
+overall course quality and 4.64/5 for amount they learned from the class.
 
 %CS as a moving target
 \subsubsection*{Designing new courses} 
@@ -158,20 +159,38 @@ Throughout my research career, I explored software instrumentation techniques
 from different software stacks/substrates/layers which are deeply related to
 steps we take to compile a source to build a binary and load it for execution. 
 %
-As {\it sources} first being compiled into {\it objects} , it exposes its
-internal representations of AST and IR as a instrumentation target. 
+As {\it sources} first being compiled into {\it objects} , compilers expose its
+internal representations of AST and IR as a instrumentation target.
 %
 Link-time-optimization~(LTO) also provides another instrumentation opportunity
-at build phase. % as we {\it link} objects to produce a binary. 
+at link time. % as we {\it link} objects to produce a binary. 
 %
-At runtime, we can consider tools from different levels for the
+On execution, we can consider tools from different levels for the
 instrumentations; \ie {\it program loader} or {\it VM-hypervisor} of different
 types.
 %
-This course will be considered as a advanced compiler course aiming to deliver 
+This course will be considered as a one that cover advanced compiler topics
+focusing on delivering end-to-end concepts for program compilation and
+execution model and instrumenation approach to build various system monitoring
+purposes.
+
+Besides aforementioned topics, I am eager to different courses from any level
+of CS disiplines. Interested/specialized teaching topic would include courses
+for programming language theory, operating systems, network and system
+security.
 
 \subsubsection*{Summary}
-here is a section for summary.
+
+In my view, university educators should maximize face-to-face experience with
+their students and build/design each course as a result of those interactions
+reflecting students demand without loosing track of updated research and
+industry trend.
+%
+Based on encouraging result from my past teaching experience, I am looking
+forward to have a chance to meet with students and share my experience and
+knowledge. 
+
+
 \end{small}
 \end{document}
 
