@@ -21,7 +21,7 @@
 \def\baselinestretch{1.05}
 
 \newif \ifcomments
-\commentstrue
+%\commentstrue
 
 \ifcomments
 \newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
@@ -29,7 +29,7 @@
 \newcommand{\jikk}[1]{}
 \fi
 
-\def\ie{i.e.,\xspace}
+\def\ie{i.e.\xspace}
 
 \newcommand{\hsp}{\hspace*{\parindent}}
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
@@ -60,84 +60,84 @@ Kangkook Jee (jikk@cs.columbia.edu)} \end{center}
 % Begin with my teaching philosophy.
 University education should provide opportunities for students to cultivate
 their potentials to succeed in their future careers as a competent computer
-science professionals.  
+science professional.  
 %
-As an CS educator, I focus on preparing students with principled understanding
-about fundamental/theoretical CS topics adopting best practices both from
-academia and industry. Core to this process, courses should be built based on
-inter-actions. 
-\jikk{improve intro to match with conclusion.}
+As a CS educator, I focus on helping students equipped with a principled
+understanding about fundamental CS topics adopting best practices both from
+academia and industry.
+%
+To achieve the goal, I lay emphasis on establishing an active communication
+channel that connects the educator and students.
 
-
-%I enjoy human interactions in the course of teaching.
-
+% I enjoy human interactions in the course of teaching.
+\vspace{-2pt}
 \subsubsection*{In class teaching experiences}
 
 During my PhD, I taught Columbia University's COMS3103-3: Programming Language
 Python\footnote{\url{http://www.cs.columbia.edu/~jikk/teaching/3101-3/index.html}}.
 %
-% The course begin with 22 students and 14 students completed the course.  for
+% The course begin with 22 students and 14 students completed the course. For
 % failing to set appropriate level for assignment.
 %
-Although it was my first university level teaching experience, I deeply enjoyed 
-for the whole process of building a course from scratch, deliver prepared
-materials, making interactions with students, and evaluating their progresses.
+Although it was my first university level teaching experience, I deeply enjoyed
+the whole process of building a course from the scratch, deliver prepared
+materials, making interactions, and evaluating student progresses.
 % 
-The course is largely composed of two distinct phases. The first one is about
-language fundamentals while the second one focuses on specific topics/modules
-relevant to student's interest. Establishing the latter was especially
-challenging since the class comprised undergraduates, MS and PhD students from
-diverse disciplines of CS, economics, philosophy, English literature and so on.
+The course is largely composed of two distinct phases. The first part is about
+language fundamentals while the second part focuses on specific topics relevant
+to the student's interest. Establishing the latter was relatively challenging
+since the class comprised undergraduates, MS and PhD students from diverse
+disciplines of CS, economics, philosophy, English literature and so on.
 %
-I began the semester surveying to know about students' expectation and the
-background and I also attempted to maximize to face-to-face interaction with
-each student throughout the semester.
+Surveying to know about student's expectation and their background at the
+beginning of the semester, I put effort in maximizing interactions with
+students in and out of the classroom.\jikk{as well as providing
+definite/direct/concrete help in solving each student's problem.}
 % 
-Students were to fulfill four homework assignments and a class project to
-complete the course. 
+For the course, students were to fulfill four homework assignments and a class
+project to complete the course. 
 %
-Assignments were designed not only to assess student's comprehension about
-course materials but also to introduce primitive CS concepts to non-major
-students.
+The assignments were designed not only to assess the student's comprehension
+with course materials, but also to familiarize non-major students with basic CS
+concepts.
 %
 % basic data structures such as queue and stack as well as an algorithmic
 % concept of TSP were used.
 %
-I also realized that it requires  substantial amount of time and effort to
-write a new set of assignments each time given that students always can search
-for solutions for known problem sets. 
+Given that students always can search for solutions for re-used problem sets,
+writing new ones for each assignment required a substantial amount of time and
+effort. 
 %
-Regarding a class project, students were to made teams of 3 $\sim$ 4 members to
+Regarding a class project, students were to team up with 3 $\sim$ 4 members to
 conduct to a project relevant to their research interest.
 %
-It was an exciting experience to find out that many of project output were so
-creative and reached out beyond my expectation.
+It was an exciting experience to see many project outputs being mature and
+creative reaching out beyond my expectation.
 %
 % Some impressive example include search engine for Columbia university, NLP
 % project that establishes character network extraction analyzing novel text
 % done by English literature major.
 %
 
-Compensating a challenging task of doing a class from the beginning to the end,
-the course evaluation
+Compensating a challenging task of doing a class, the course evaluation
 result\footnote{\url{http://www.cs.columbia.edu/~jikk/teaching/3101-3/evaluation.html}}
-performed by student were encouraging. In a nutshell, students rated 4.45/5 for
-overall course quality and 4.64/5 for amount they learned from the class.
+done by student were encouraging. In a nutshell, students rated 4.45/5 for
+overall course quality and 4.64/5 for the amount they learned from the class.
 
+\vspace{-2pt}
 %CS as a moving target
 \subsubsection*{Designing new courses} 
 
 CS as an academic area and its many sub-fields are still young and vibrantly
-evolving. Therefore, it is required to timely design and offer new courses that
-reflect recent trends/changes/updates without loosing the connections to
-fundamental theories supporting the topic. \jikk{improve it} From here, I will
-introduce brief descriptions for a couple of new course offerings.
-%
+evolving. Therefore, it is required to design and offer new courses that
+reflect recent updates without losing the connections to fundamental theories
+supporting the topic. From here, I will introduce two course ideas that I want
+to teach in a near future. 
 
-{\bf C++ and new standard~(C++11):} In the history of programming languages, C++
-occupies a unique position and it opens up interesting new stage with its
-recent announcement for a new standard~(C++11) and a solid roadmap projecting a
-decade ahead which are well appreciated by community.
+{\bf C++ and new standard~(C++11):} In the history of programming languages,
+C++ occupies a unique position and it faced an interesting new stage as it
+has recently announced a new standard~(C++11) and a solid roadmap projecting a
+decade ahead.
 %Although many complain for its syntax being too complex and its features being
 %not organized and only being grossly accumulated over time.  But, there is few
 %alternative when we look for the programming language that supports the
@@ -149,47 +149,43 @@ decade ahead which are well appreciated by community.
 %decade ahead which are well appreciated by community.
 %
 By having a course about C++ and its new standard, we can expect students not
-only to lean a language and its newly added features but also to understand how
-a low level language~(based on C) reaches out to have high level language
-concepts in place. 
+only to learn a language and its newly added features, but also to understand
+how a low level language~(based on C) embraces high level language concepts. 
 
-{\bf Instrumentation techniques from source to runtime:} 
+{\bf Instrumentation techniques from the source to the runtime:} 
 % What else courses I'm capable of/interested in teaching.
 Throughout my research career, I explored software instrumentation techniques
-from different software stacks/substrates/layers which are deeply related to
-steps we take to compile a source to build a binary and load it for execution. 
+from different software layers which are deeply related to the steps we take to
+compile a source to build a binary and load it for execution. 
 %
-As {\it sources} first being compiled into {\it objects} , compilers expose its
-internal representations of AST and IR as a instrumentation target.
+As {\it sources} first being compiled into {\it objects}, compilers expose its
+internal representations of AST and IR as an instrumentation target.
 %
-Link-time-optimization~(LTO) also provides another instrumentation opportunity
-at link time. % as we {\it link} objects to produce a binary. 
+Link-time-optimization~(LTO) provide another instrumentation opportunity as a
+linker takes {\it objects} to generate {\it output binary}. 
 %
-On execution, we can consider tools from different levels for the
-instrumentations; \ie {\it program loader} or {\it VM-hypervisor} of different
-types.
+On execution time, we can consider tools of varying levels; \ie {\it program
+loader} or {\it VM-hypervisor} of different types.
 %
-This course will be considered as a one that cover advanced compiler topics
-focusing on delivering end-to-end concepts for program compilation and
-execution model and instrumenation approach to build various system monitoring
-purposes.
+This one will be considered as  advanced compiler course focusing on delivering
+concepts for program compilation and runtime execution as well as
+instrumentation approaches to write various security/reliability monitors.
 
-Besides aforementioned topics, I am eager to different courses from any level
-of CS disiplines. Interested/specialized teaching topic would include courses
-for programming language theory, operating systems, network and system
+Besides aforementioned topics, I am eager to teach courses of varying levels
+of CS discipline. Interested and specialized teaching topics would include
+programming language theory, operating systems, network and system
 security.
 
 \subsubsection*{Summary}
 
-In my view, university educators should maximize face-to-face experience with
-their students and build/design each course as a result of those interactions
+In my view, university educators should maximize the face-to-face experience
+with their students and design each course as a result of those interactions,
 reflecting students demand without loosing track of updated research and
 industry trend.
 %
-Based on encouraging result from my past teaching experience, I am looking
+Based on encouraging result of my past teaching experience, I am looking
 forward to have a chance to meet with students and share my experience and
 knowledge. 
-
 
 \end{small}
 \end{document}
