@@ -70,37 +70,54 @@
 %\footnotemark
 %\footnotetext{Check This}
 
-% Abstract that states about my research theme.  Say that research work has
-% been both theoretical and practical.
-My long-term research goal lies in {\it i)} building security systems that
-would harden unknown software programs by making it immune to software failures
-caused either by active exploitation of malicious attackers or unintended
-discovery of developer bugs and {\it ii)} making these technologies efficient
-and practical by addressing the issue of high overhead.
-%
-To achieve the goal, I leveraged a number of recent research innovations
-designed for different software system stacks. Specifically, I have been
-interested in combining static and dynamic analysis to address the issue of
-high overhead.
-%
+As the entire computing industry rapidly evolving, the task of building secure
+and  reliable computing environment is getting harder and harder most notably
+for failing to satisfy the following properties simultaneously.
+
+\begin{itemize}
+
+        \item {\bf Effectiveness} in detecting and preventing wide range of
+                attack vectors immune to software failures caused either by
+                active exploitation of malicious attackers or unintended
+                discovery of developer bugs.
+
+        \item {\bf Efficiency} by incurring minimal amount of overhead(e.g.,
+                power, response time) for its deployment.
+
+        \item {\bf Coverage} in providing end-to-end protection. \jikk{the
+                entire software execution stack} 
+
+\end{itemize}
+
+Making the situation worse, the current move towards mobile and cloud computing
+is only exacerbating the problem and this is a space where my research interest
+lies in.
+
 My main research contributions have been concretized over the past a few years
 as I developed and improved well-known security system of data flow
-tracking~(DFT). Although my research have focused on a specific security
-architecture, I believe that the insights that I learned can benefit the area
-of system security in general since DFT share many architectural
-characteristics with other security architectures.
+tracking~(DFT) supporting software binaries for coverage.
 %
-Besides DFT and the same family of security solutions, I am also interested in
-other techniques related to software reliability, which include
-whitebox/blackbox fuzzing and a system that defends against integer error.
+To address the issue of high overhead, inherent to the systems of the same
+kind, I leveraged a number of recent research innovations from different
+software system layers. Specifically, I have been interested in combining
+static and dynamic analysis to address the issue of high overhead.
+%
+Although my research have focused on a specific security architecture, I
+believe that the insights that I learned can benefit the area of system
+security in general since DFT share many architectural characteristics with
+other security architectures.
+
+In the next few pages I describe my past works, current interest, and future
+research directions in system security.
+
 
 \subsection*{Data Flow Tracking(DFT) System Innovations}
 % Paragraph 1: A brief paragraph sketching the overarching thematics and topic
 % of your research, situating it disciplinary.
 %
 DFT has been my main research topic which I extensively explored various
-aspects of the technology for its {\it effectiveness} in serving many different
-topics of research as well as for its {\it efficiency} in making it more
+aspects of the technology for its {\bf effectiveness} in serving many different
+topics of research as well as for its {\bf efficiency} in making it more
 adopted by production systems.
 %
 Typical DFT system is composed of three different operations {\it i)} {\it
@@ -109,7 +126,8 @@ propagating} tag values associated to the variables as the program executed
 {\it iii)} {\it checking} for unintended usages of tagged variables. Our DFT
 implementations injects these operations using VM-based instrumentation
 framework, which is PIN Dynamic Binary Instrumentation~(DBI) framework, to
-apply the technology to COTS binaries.
+apply the technology to COTS binaries pursuing the complete {\bf coverage} of
+software execution stack.
 %
 Besides implementing DFT system that correctly operates, I invented number of
 novel optimizations and architectures that alleviates its excessive slowdown
