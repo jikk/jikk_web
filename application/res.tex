@@ -122,8 +122,9 @@ adopted by production systems.
 Typical DFT system is composed of three different operations {\it i)} {\it
 tagging} input variables come in though any untrusted sources {\it ii)} {\it
 propagating} tag values associated to the variables as the program executed
-{\it iii)} {\it checking} for unintended usages of tagged variables. Our DFT
-implementations injects these operations using VM-based instrumentation
+{\it iii)} {\it checking} for unintended usages of tagged variables. 
+%
+Our DFT implementations injects these operations using VM-based instrumentation
 framework, which is PIN Dynamic Binary Instrumentation~(DBI) framework, to
 apply the technology to COTS binaries pursuing the complete {\bf coverage} of
 software execution stack.
@@ -141,10 +142,10 @@ software}
 \libdft~\cite{libdft:2012vee} is our initial prototype implementation for DFT
 that propagates tag values in byte granularity.
 %
-It supports generic API that enables users to customize and build tools up to
-their own research/protection demands and implements process level
-protection~(not system-wide) by injecting DFT logic for individual
-taint-propagating instructions leveraging VM-based instrumentation framework.
+With its generic API, \libdft enables users to build tools that satisfies each
+one's demand. It implements a process-level protection~(not system-wide) by
+injecting DFT logic for individual taint-propagating instructions leveraging
+VM-based instrumentation framework.
 %
 Core to \libdft's performance improvement is in understanding the precise
 definition of taint propagation semantics for {\it x86} instruction set as well
