@@ -72,7 +72,8 @@
 
 As the entire computing industry rapidly evolving, the task of building secure
 and  reliable computing environment is getting harder and harder most notably
-for failing to satisfy the following properties simultaneously.
+for failing to have security systems that satisfy the following properties
+simultaneously.
 
 \begin{itemize}
 
@@ -89,9 +90,8 @@ for failing to satisfy the following properties simultaneously.
 
 \end{itemize}
 
-Making the situation worse, the current move towards mobile and cloud computing
-is only exacerbating the problem and this is a space where my research interest
-lies in.
+%Making the situation worse, the current move towards mobile and cloud computing
+%is only exacerbating the problem and this is a space where my research is in.
 
 My main research contributions have been concretized over the past a few years
 as I developed and improved well-known security system of data flow
@@ -107,8 +107,8 @@ believe that the insights that I learned can benefit the area of system
 security in general since DFT share many architectural characteristics with
 other security architectures.
 
-In the next few pages I describe my past works, current interest, and future
-research directions in system security.
+In the next few paragraphs I describe my past works, current interest, and
+future research directions in system security.
 
 
 \subsection*{Data Flow Tracking(DFT) System Innovations}
@@ -123,17 +123,18 @@ adopted by production systems.
 Typical DFT system is composed of three different operations {\it i)} {\it
 tagging} input variables come in though any untrusted sources {\it ii)} {\it
 propagating} tag values associated to the variables as the program executed
-{\it iii)} {\it checking} for unintended usages of tagged variables. Our DFT
-implementations injects these operations using VM-based instrumentation
+{\it iii)} {\it checking} for unintended usages of tagged variables. 
+%
+Our DFT implementations injects these operations using VM-based instrumentation
 framework, which is PIN Dynamic Binary Instrumentation~(DBI) framework, to
 apply the technology to COTS binaries pursuing the complete {\bf coverage} of
-software execution stack.
+the entire execution stack.
 %
 Besides implementing DFT system that correctly operates, I invented number of
 novel optimizations and architectures that alleviates its excessive slowdown
-which is inherent to DFT implementations for COTS binaries and security systems
-of the same kind. And this is what I consider as the main contribution of my
-research.
+which is inherent to DFT implementations for COTS binaries and system security
+tools of the same kind. And this is what I consider as the main contribution of
+my research.
 
 % libdft
 \subsubsection*{\libdft: High performance fine-grained DFT system for COTS
@@ -149,7 +150,9 @@ taint-propagating instructions leveraging VM-based instrumentation framework.
 %
 Core to \libdft's performance improvement is in understanding the precise
 definition of taint propagation semantics for {\it x86} instruction set as well
-as the structural limitations of VM-based instrumentation layer. \libdft
+as the structural limitations of VM-based instrumentation layer. 
+%
+\libdft
 addresses these issues by introducing optimal tracking codes customized for
 different types of {\it x86} instructions. Two main considerations that we made
 for the implementation are {\it i)} minimization of the cost required for
