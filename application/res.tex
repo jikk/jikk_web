@@ -90,13 +90,12 @@ addresses the following properties simultaneously.
 
 \end{itemize}
 
-Making the situation worse, unforeseeable nature of the computing paradigm
-evolution only exacerbates the problem as it constantly re-defines our notion
-about the computing environment.
+The rapid evolution of computer systems only exacerbates the problem as it
+constantly re-defines our notion about the computing environment.
 %
 Many industry vendors as well as research communities have driven the
-innovations in this line of research for building secure and reliable system.
-This is the space in which my research interest is.
+innovations in this line of research with no success thus far and this is the
+space in which my research interest is.
 
 My main research contributions have been concretized over the past a few years
 as I developed and improved well-known security architecture of data flow
@@ -112,6 +111,41 @@ the insights that I learned can benefit the area of system security in general
 since DFT shares many architectural characteristics with other security
 architectures.
 
+In addition to making improvements for the runtime security architectures~(\ie
+DFT), I have broader interests in topics related to secure and reliable
+software system design.
+%
+First of all, it is crucial to improve static analysis techniques such whitebox
+and blackbox software fuzzing to assist developers as well as security
+professionals. 
+%
+We also need to have a better educational system to teach students about
+various issues related to security.
+%
+In my view, the goal of building such a system can be attained not by any
+single research direction but by holistic consideration of a number of
+different approaches including aforementioned ones.
+
+My long-term research will focus on design and implementation of the security
+architecture which would impact everyone's computing life by providing secure
+and reliable service with no or if any, minimal amount of the runtime overhead.
+To achieve this, I will take advantage of the static analysis techniques to
+improve the dynamic defense measures. 
+%
+%The other way around, executions from dynamic component would guide the static
+%counterpart to achieve better coverage and accuracy.
+%
+%Complementing one another, I am confident that we are getting closer to the
+%goal of building secure and reliable system effective in countering wide range
+%of attack vectors~(often unpredictable) only requiring minimal amount of
+%overhead. 
+%
+Providing such service with complete coverage~(e.g., support for COTS
+binaries and for full execution stack) is another research focus.
+%
+From my research outputs thus far, I believe that I opened up the possibility
+in this direction of research.
+
 In the next few paragraphs, I describe my past works, current interests, and
 future research directions in the area of system security.
 
@@ -124,15 +158,15 @@ aspects of the technology for its {\bf effectiveness} in serving many different
 problem domains as well as for its {\bf efficiency} in making it more adoptable
 to consumer and production systems.
 %
-Typical DFT system is composed of three different operations; {\it i)} {\it
-tagging} input variables come in though any untrusted sources, {\it ii)} {\it
-propagating} tag values associated to the variables as the program executed,
-{\it iii)} {\it checking} for unintended usages of tagged variables. 
+%Typical DFT system is composed of three different operations; {\it i)} {\it
+%tagging} input variables come in though any untrusted sources, {\it ii)} {\it
+%propagating} tag values associated to the variables as the program executed,
+%{\it iii)} {\it checking} for unintended usages of tagged variables. 
 %
 Our DFT implementations inject these operations using VM-based instrumentation
-framework, which is PIN Dynamic Binary Instrumentation~(DBI), to apply the
-technology to COTS binaries with no source access for the complete {\bf
-coverage} of the entire execution stack.
+framework, which is PIN Dynamic Binary Instrumentation~(DBI)~\cite{pin}, to
+apply the technology to COTS binaries with no source access for the complete
+{\bf coverage} of the entire execution stack.
 %
 Besides implementing DFT system that correctly operates, I invented number of
 novel optimizations and architectures that alleviate its excessive slowdown
@@ -141,8 +175,8 @@ of the same kind. And this is what I consider as the main contribution of my
 research.
 
 % libdft
-\subsubsection*{\libdft: High performance fine-grained DFT system for COTS
-software}
+%\subsubsection*{\libdft: High performance fine-grained DFT system for COTS
+%software}
 
 \libdft~\cite{libdft:2012vee} is our initial prototype implementation for DFT
 that propagates tag values in byte granularity.
@@ -173,7 +207,7 @@ the time we introduced the system.\jikk{more justification needed for this
 statement}
 
 % TFA (Taint Flow Algebra)
-\subsubsection*{\TFA: A framework for principled optimizations for DFT}
+%\subsubsection*{\TFA: A framework for principled optimizations for DFT}
 
 Even with the highly crafted tracking logics that we invented for \libdft, its
 operation still remained sub-optimal for not being able to address the
@@ -205,7 +239,7 @@ security guarantee that the baseline tool~(\libdft) would provide.} of DFT
 operations.
 
 % ShadowReplica
-\subsubsection*{\SR: A framework for parallelized execution of DFT}
+%\subsubsection*{\SR: A framework for parallelized execution of DFT}
 %
 Given that \TFA represents DFT logics extracted from the original program to
 apply a number of optimization approaches, \SR~\cite{sreplica:2013ccs} extends
@@ -251,7 +285,7 @@ collection~(when it is compared to the size of code of in-lined DFT analysis)
 and its subsequent performance saving surpassed the extra CPU cycles paid to
 establish the communication channel and exchange data between two threads.
 
-\subsection*{Current research: Practical and accurate security architecture}
+\subsection*{Current research} %: Practical and accurate security architecture}
 %
 %My main research interest lies in the area of the system security in general
 %that serves for the safety and reliability of software systems and I could
@@ -259,15 +293,19 @@ establish the communication channel and exchange data between two threads.
 %technologies throughout my research career.
 %
 The followings are research topics that I am currently working on or keeping as
-short-term research topics which would help readers to have better
-understanding about my research direction.
+short-term research topics that focus on enhancing runtime defense
+architectures by {\it i)} improving instrumentation layer to reduce overhead
+and {\it ii)} evaluating the accuracy of their operation. 
+
+%would help readers to have better understanding about my research direction.
 
 \subsubsection*{A comparison study of DBI frameworks for security applications}
 %
 Oftentimes, security researchers choose one of the following three Dynamic
-Binary Instrumentation~(DBI) frameworks -- PIN, DynamoRIO, and Valgrind -- as
-their instrumentation medium when they need to in-line their
-security/monitoring logic to COTS binaries.
+Binary Instrumentation~(DBI) frameworks -- PIN~\cite{pin},
+DynamoRIO~\cite{dynamo}, and Valgrind~\cite{valgrind} -- as their
+instrumentation medium when they need to in-line their security/monitoring
+logic to COTS binaries.
 %
 In this project, we carry out a comparison study that investigates various
 aspects of DBI frameworks. As their behavioral and performance implications
@@ -289,8 +327,8 @@ common API support other analyses expecting to have similar performance gain as
 DFT did. 
 %
 As a first step, the project will support Control Flow Integrity~(CFI) and
-memory integrity tool~(similar to Memcheck), then we will look for more
-security analyses.
+memory integrity tool~\cite{memcheck}, then we will look for more security
+analyses.
 
 \subsubsection*{Further performance acceleration approaches}
 %
@@ -367,44 +405,6 @@ the symbolic execution approach.\jikk{some more texts needed.}
 In this project, we are planning to apply the methodology to evaluate a number
 of different DFT systems implemented for Android operating system.
 
-%
-% What am I going to do for next 10, 20 years.  Discuss about my research
-% vision 
-%
-% ain't just enumerating another research interests?
-\subsection*{Research agenda}
-%
-Besides making improvements for the runtime security architectures~(i.e., DFT
-and its same kind), I have broader interests in topics related to secure and
-reliable software system design.
-%
-First of all, it is crucial to improve static analysis techniques such whitebox
-and blackbox software fuzzing to assist developers as well as security
-professionals. 
-%
-We also need to have a better educational system to train competent CS
-professionals well aware of various security related issues.
-%
-In my view, the goal of building such a system can be attained not by any
-single research direction but by holistic consideration of all aforementioned
-approaches and some others.
-
-My long-term research will take advantage of the static analysis techniques to
-improve the dynamic defense measures. 
-%
-The other way around, executions from dynamic component would guide the static
-counterpart to achieve better coverage and accuracy.
-%
-Complementing one another, I am confident that we are getting closer to the
-goal of building secure and reliable system effective in countering wide range
-of attack vectors~(often unpredictable) only requiring minimal amount of
-overhead. Providing such service with complete coverage~(e.g., support for COTS
-binaries and for full execution stack) is another design focus.
-%
-From my research outputs thus far, I believe that I opened up the possibility
-in this direction of research.
-
-%What is the contribution from this line of work -- high level perspectives
 \subsection*{Summary} 
 %
 In the course of my research, I could establish in depth experience and insight
@@ -424,7 +424,7 @@ serve for the single goal of secure and reliable system design.
 
 \end{small} 
 
-\newpage
+%\newpage
 
 %refer to http://sites.stat.psu.edu/~surajit/present/bib.htm
 \bibliographystyle{plain}
