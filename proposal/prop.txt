@@ -1,0 +1,39 @@
+A thesis proposal should contain (and maybe even be structured as):
+
+- a description of the problem in enough detail to clearly state the thesis
+  proposition (next item)
+
+- a proper, concise thesis proposition; this is not an abstract statement like
+  "we're going to investigate the malicious insider problem", but something
+along the lines of "our hypothesis is that the use of XYZ technology in
+environment Z under constraints Q can identify insider attackers with
+probability Z" --- obviously, the fewer qualifiers the better, but you also
+need to be accurate; since this is a thesis proposal, we will cut you some
+slack -- but it's in *your* best interest to think hard about this, since it is
+the anchor point of your whole thesis (and the next few years' worth of work
+for you); quantifiable metrics are ideal elements of a hypothesis
+
+- a description of the related work, how it does not solve the problem, and how
+  your hypothesis has not been tested before
+    - preferably using the metrics that were previously mentioned/defined (and
+      justified)
+
+- preliminary results (if any) that indicate that you have reason to believe
+  that the hypothesis might be true
+
+- additional experiments that you will run (or, more generally, work you will
+  do) to prove that the hypothesis holds
+
+- what you'll need to build (in terms of systems or resources/data/access) to
+  run said experiments (and what you've already built)
+
+- what happens if you can't run some of these experiments, or if they give you
+  "bad" results --- what's your failover?
+
+- what are the expected contributions, keeping in mind that each major
+  contribution must demonstrate novelty, non-triviality, practicality, and
+usefulness (so, "first", "best", "only" are good adjectives here)
+
+- how long you expect all this to take
+
+-Angelos

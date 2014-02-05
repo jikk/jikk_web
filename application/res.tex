@@ -115,8 +115,8 @@ In addition to making improvements for a dynamic security system, I have a
 broader interest in research topics related to secure and reliable software
 environment.
 %
-First of all, it is crucial to improve static analysis techniques such whitebox
-and blackbox software fuzzing to assist developers as well as security
+First of all, it is crucial to improve static analysis techniques such as
+whitebox and blackbox software fuzzing to assist developers as well as security
 professionals. 
 %
 We also need to improve educational system to have our students better
@@ -126,7 +126,7 @@ In my view, the goal of building secure computing environment can be attained
 not by any single research direction but by holistic consideration of a number
 of different approaches including aforementioned ones.
 
-My long-term research will focus on design and implementation of the security
+My long-term research will be about design and implementation of the security
 architecture which would impact everyone's computing life by providing trusted
 computing service at the expense of the negligible runtime slowdown.  
 %
@@ -142,12 +142,12 @@ counterpart to achieve better coverage and accuracy.
 %overhead. 
 %
 Providing such service with complete coverage~(e.g., support for COTS binaries
-and for full execution stack) is another design focus.
+and for full execution stack) is another design goal.
 %
 From my research results thus far, I believe that I have already opened up the
 promising perspectives in this research direction.
 
-In the next few paragraphs, I describe my past works, current interests, and
+In the next a few paragraphs, I describe my past works, current interests, and
 future research directions in the area of system security.
 
 \subsection*{Data Flow Tracking(DFT) System Innovations}
@@ -164,9 +164,9 @@ to consumer and production systems.
 %propagating} tag values associated to the variables as the program executed,
 %{\it iii)} {\it checking} for unintended usages of tagged variables. 
 %
-Our DFT implementations inject these operations using VM-based instrumentation
+Our DFT implementations inject their operations using VM-based instrumentation
 framework, which is PIN Dynamic Binary Instrumentation~(DBI)~\cite{pin}, to
-apply the technology to COTS binaries with no source access~(complete {\bf
+apply the technology to COTS binaries with no source access~({\bf
 coverage}).
 %
 Besides implementing DFT system that correctly operates, I invented number of
@@ -256,17 +256,17 @@ program and the extracted DFT logics from two separate CPU cores.
 The main contribution of \SR project lies in addressing the issue of high
 communication overhead and proposing a framework  to defend against any
 software failures/exploitations at runtime. Different from previous proposals,
-the system only requires a single additional analysis thread per an application
-thread and the latter~(one that executes optimized \TFA representation) runs at
-the same or faster speed than that of the former making synchronization between
-two different contexts easier.
+the system only requires a single analysis thread per an application thread and
+the analysis thread that executes TFA representation runs at the same or faster
+speed than the application thread making synchronization between two different
+threads easier.
 %
 In \SR project, we again dedicate static analysis phase {\it i)} to have DFT
-logic extracted from the target application and represent them in \TFA
-\xspace{\it ii)} to minimize the volume and frequency of the communication
+logic extracted from the target application and represent them in \TFA\xspace
+{\it ii)}  to minimize the volume and frequency of the communication
 requirement connecting two threads.
 %
-Architectural consideration is also crucial in designing the communication
+Architectural consideration also matters in designing the communication
 channel, otherwise the channel would become a performance bottleneck as it
 fails to schedule two threads competing for the shared resource of CPU caches.
 %
@@ -328,7 +328,7 @@ Currently, we are working on a project that extends \SR approach by defining
 common API to support other analyses expecting to have similar performance gain
 as DFT did. 
 %
-As a first step, the project will support Control Flow Integrity~(CFI) and
+As a first step, it will support Control Flow Integrity~(CFI) and
 memory integrity tool~\cite{memcheck}, then we will look for more security
 analyses.
 
@@ -376,12 +376,13 @@ proposes a new instrumentation framework that maximize the benefit of
 available~(partial) source access still supporting COTS binaries.
 %
 This combines two different instrumentation approaches into a single framework.
-We use LLVM compiler and DynamoRIO DBI to support source-based and binary-only
-instrumentation respectively.
+We use LLVM compiler pass and DynamoRIO DBI to support source-based and
+binary-only instrumentation respectively.
 %
 This hybrid approach introduces number of interesting research challenges that
-include how to maintain a single execution context integrating two very different
-instrumentation approaches and support uniform API interface to users. 
+include how to maintain a single execution context integrating two very
+different instrumentation approaches and support uniform API interface to
+users. 
 
 %
 %Intuition behind this idea is that in most cases, we have partial accesses to
@@ -418,7 +419,7 @@ invented number of novel optimization techniques and frameworks that combine
 static and dynamic analysis approaches.
 %
 Besides DFT, I am also interested in topics that would harden software systems
-and make those immune to exploitable defects or unintended bugs. 
+and make them immune to exploitable defects or unintended bugs. 
 
 For my future research, I am eager to broaden my research experience
 exploring various static and dynamic analysis techniques combining these to
