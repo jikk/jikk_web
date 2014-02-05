@@ -78,15 +78,15 @@ addresses the following properties simultaneously.
 
         \item {\bf Effectiveness} in detecting and preventing software failures
                 caused either by active exploitation of malicious attackers or
-                unintended discovery of developer bugs.
+                unintended disclosure of developer bugs.
 
-        \item {\bf Efficiency} by incurring minimal amount of resource
+        \item {\bf Efficiency} by having minimal amount of resource
                 overhead~(e.g., power, response time) to make the security
                 solution adoptable to the production environment.
 
         \item {\bf Coverage} in providing end-to-end protection. For instance,
                 security system should protect the entire software execution
-                stack covering COTS binaries with no source access.
+                stack supporting COTS binaries with no source access.
 
 \end{itemize}
 
@@ -94,57 +94,58 @@ The rapid evolution of computer systems only exacerbates the problem as it
 constantly re-defines our notion about the computing environment.
 %
 Many industry vendors as well as research communities have driven the
-innovations in this line of research with no success thus far and this is the
+innovations in this line of research and this is the
 space in which my research interest is.
 
 My main research contributions have been concretized over the past a few years
 as I developed and improved well-known security architecture of data flow
 tracking~(DFT) that supports COTS binaries with no source access.
 %
-To address the issue of high overhead, inherent to the systems of the same
-kind, I leveraged a number of recent research innovations from different
-software system layers. Specifically, I have been interested in combining
-static and dynamic analysis approaches to address the issue of high overhead.
+To address the issue of high overhead inherent to the systems of the same kind,
+I leveraged a number of recent research innovations from different software
+system layers. Specifically, I have been interested in combining static and
+dynamic analysis approaches.
 %
-Although my research have focused on a specific architecture, I believe that
-the insights that I learned can benefit the area of system security in general
-since DFT shares many architectural characteristics with other security
-architectures.
+Although my research have focused on a specific security system of DFT, I
+believe that the insights that I learned from it can benefit the area of system
+security in general since DFT shares many architectural characteristics with
+other security systems.
 
-In addition to making improvements for the runtime security architectures~(\ie
-DFT), I have broader interests in topics related to secure and reliable
-software system design.
+In addition to making improvements for a dynamic security system, I have a
+broader interest in research topics related to secure and reliable software
+environment.
 %
 First of all, it is crucial to improve static analysis techniques such whitebox
 and blackbox software fuzzing to assist developers as well as security
 professionals. 
 %
-We also need to have a better educational system to teach students about
-various issues related to security.
+We also need to improve educational system to have our students better
+understandings about various security and reliability issues. 
 %
-In my view, the goal of building such a system can be attained not by any
-single research direction but by holistic consideration of a number of
-different approaches including aforementioned ones.
+In my view, the goal of building secure computing environment can be attained
+not by any single research direction but by holistic consideration of a number
+of different approaches including aforementioned ones.
 
 My long-term research will focus on design and implementation of the security
-architecture which would impact everyone's computing life by providing secure
-and reliable service with no or if any, minimal amount of the runtime overhead.
-To achieve this, I will take advantage of the static analysis techniques to
-improve the dynamic defense measures. 
+architecture which would impact everyone's computing life by providing trusted
+computing service at the expense of the negligible runtime slowdown.  
 %
-%The other way around, executions from dynamic component would guide the static
-%counterpart to achieve better coverage and accuracy.
+The approach that I am currently focusing on is to take advantage of the static
+analysis techniques to improve the dynamic defense measures. 
+%
+The other way around, executions from dynamic component would guide the static
+counterpart to achieve better coverage and accuracy.
 %
 %Complementing one another, I am confident that we are getting closer to the
 %goal of building secure and reliable system effective in countering wide range
 %of attack vectors~(often unpredictable) only requiring minimal amount of
 %overhead. 
 %
-Providing such service with complete coverage~(e.g., support for COTS
-binaries and for full execution stack) is another research focus.
+Providing such service with complete coverage~(e.g., support for COTS binaries
+and for full execution stack) is another design focus.
 %
-From my research outputs thus far, I believe that I opened up the possibility
-in this direction of research.
+From my research results thus far, I believe that I have already opened up the
+promising perspectives in this research direction.
 
 In the next few paragraphs, I describe my past works, current interests, and
 future research directions in the area of system security.
@@ -165,14 +166,13 @@ to consumer and production systems.
 %
 Our DFT implementations inject these operations using VM-based instrumentation
 framework, which is PIN Dynamic Binary Instrumentation~(DBI)~\cite{pin}, to
-apply the technology to COTS binaries with no source access for the complete
-{\bf coverage} of the entire execution stack.
+apply the technology to COTS binaries with no source access~(complete {\bf
+coverage}).
 %
 Besides implementing DFT system that correctly operates, I invented number of
 novel optimizations and architectures that alleviate its excessive slowdown
-which is inherent to DFT implementations for binaries and system security tools
-of the same kind. And this is what I consider as the main contribution of my
-research.
+which is inherent to DFT and system security tools of the same kind. And this
+is what I consider as the main contribution of my research.
 
 % libdft
 %\subsubsection*{\libdft: High performance fine-grained DFT system for COTS
@@ -232,7 +232,7 @@ the original program at runtime.
 % may want to mention about 'feedback loop' connecting two components.
 %
 As a result, TFA could achieve \(\sim\)~2\(\times\) performance improvement
-over  our baseline tool(\libdft) when it is evaluated against the same set of
+over  our baseline tool~(\libdft) when it is evaluated against the same set of
 standard benchmark suites without compromising the correctness\footnote{In
         this context, by {\it correctness}, we ensure the same level of the
 security guarantee that the baseline tool~(\libdft) would provide.} of DFT
@@ -268,21 +268,21 @@ requirement connecting two threads.
 %
 Architectural consideration is also crucial in designing the communication
 channel, otherwise the channel would become a performance bottleneck as it
-fails to schedule two threads for their shared resource of CPU caches.
+fails to schedule two threads competing for the shared resource of CPU caches.
 %
 As a result, \SR framework could improve the overhead by $\sim$2$\times$,
 $\sim$4$\times$ over \TFA and \libdft respectively when it is evaluated for the
 same standard benchmark suites, achieving $\sim$2.75$\times$ slowdown over the
 native execution.
 
-Interestingly, although \SR takes up additional CPUs to achieve better
-performance, the entire framework consumes the same or less amount of CPU
-cycles than that of comparable in-lined DFT implementation~(in this case \TFA)
-for the same analysis.
+Interestingly, although \SR uses additional CPUs for better performance, the
+entire framework consumes the same or less amount of CPU cycles~(or powers)
+than that of comparable in-lined DFT implementation~(\TFA) for the same
+analysis.
 %
 In this case, the benefit of having smaller instrumented code for event
 collection~(when it is compared to the size of code of in-lined DFT analysis)
-and its subsequent performance saving surpassed the extra CPU cycles paid to
+and its subsequent performance saving surpassed the extra CPU cycles it pays to
 establish the communication channel and exchange data between two threads.
 
 \subsection*{Current research} %: Practical and accurate security architecture}
@@ -292,10 +292,12 @@ establish the communication channel and exchange data between two threads.
 %have accumulated in depth insights and experiences about number of
 %technologies throughout my research career.
 %
-The followings are research topics that I am currently working on or keeping as
-short-term research topics that focus on enhancing runtime defense
-architectures by {\it i)} improving instrumentation layer to reduce overhead
-and {\it ii)} evaluating the accuracy of their operation. 
+
+I briefly describe my ongoing research to improve dynamic security systems~(\ie
+DFT and of the same kind). The efforts are made in twofolds.  The one is to enhance
+instrumentation layer mainly to address the overhead issue. The other is to
+implement a measurement framework that evaluates the accuracy of dynamic
+security systems. 
 
 %would help readers to have better understanding about my research direction.
 
@@ -303,28 +305,28 @@ and {\it ii)} evaluating the accuracy of their operation.
 %
 Oftentimes, security researchers choose one of the following three Dynamic
 Binary Instrumentation~(DBI) frameworks -- PIN~\cite{pin},
-DynamoRIO~\cite{dynamo}, and Valgrind~\cite{valgrind} -- as their
+DynamoRIO~\cite{dynamorio}, and Valgrind~\cite{valgrind} -- as their
 instrumentation medium when they need to in-line their security/monitoring
 logic to COTS binaries.
 %
 In this project, we carry out a comparison study that investigates various
-aspects of DBI frameworks. As their behavioral and performance implications
-significantly differ by each one's design philosophy and intended problem
-domain, we propose number of criteria~(e.g., Userability,
-Effectiveness/capability, efficiency) to empirically evaluate these frameworks.
+aspects of these DBI frameworks. As their behavioral and performance
+implications significantly differ by each one's design philosophy and intended
+problem domain, we propose number of criteria~(e.g., userability,
+effectiveness, capability, and efficiency) to empirically evaluate.
+
 %
 The goal of the project is to provide a guideline for users who want to find a
-instrumentation framework that meets for their demand.
+instrumentation framework that serves for their demand.
 
 \subsubsection*{General architecture of parallelized analysis} 
 %
-DFT is an instance of security architecture that resort to VM-based
-instrumentation to in-line its logic to COTS binaries and suffers from high
-overhead.
+DFT is an instance of security system that resorts to VM-based instrumentation
+and suffers from high overhead.
 %
-Currently, we are working on a project that extends \SR approach to define
-common API support other analyses expecting to have similar performance gain as
-DFT did. 
+Currently, we are working on a project that extends \SR approach by defining
+common API to support other analyses expecting to have similar performance gain
+as DFT did. 
 %
 As a first step, the project will support Control Flow Integrity~(CFI) and
 memory integrity tool~\cite{memcheck}, then we will look for more security
@@ -343,7 +345,7 @@ their production systems.
 %system.~\cite{ccs2013:invited_talk}
 %
 For DFT implementation and else security architectures of the same kind, I
-could pin down two major overhead sources; {\it i)} the cost for VM-based
+could indicate two major overhead sources; {\it i)} the cost for VM-based
 instrumentation and {\it ii)} the cost for shadow memory management~(mainly
 occurs as it translates real address to it counterpart shadow address).
 %
@@ -352,7 +354,7 @@ issues. The first one resorts to additional hardware component and the second
 one proposes a new hybrid instrumentation framework, a software only solution
 that combines source-based and binary-only instrumentation.
 
-{\bf Hardware-assisted \SR} 
+{\bf Hardware-assisted \SR:} 
 %
 %Although \SR minimizes the size of the code instrumented, the cost for
 %original application execution along with instrumented code for event
@@ -360,16 +362,16 @@ that combines source-based and binary-only instrumentation.
 %Second to this, the cost for shadow memory translation also incur
 %non-negligible amount of computations.
 %
-We are working on a system that introduces another pipeline stage to the
-existing CPU architecture that records required information and transfer it to
-another core. This would eventually replace the in-lined event collector and
-connecting communication channel of \SR. Another H/W component we need is a new
-instruction that would assist real-to-shadow address translation. The important
-design criteria for this project is to keep additional hardware component
-minimal and flexible so as it can be extended to support other kinds of
-analysis with simple modification from software layer.
+This is a H/W system that introduces another pipeline stage to record required
+information and transfer it to a different core. This would eventually replace
+the in-lined event collector and connecting communication channel of \SR.
+Another H/W component that we need is a new instruction that would assist
+real-to-shadow address translation. The important design criteria for this
+project is to maintain the additional hardware component minimal and flexible
+so as it can be extended to support different types of analysis with simple
+modification from software layer.
  
-{\bf Hybrid instrumentation framework} This is a software only approach that
+{\bf Hybrid instrumentation framework:} This is a software only approach that
 proposes a new instrumentation framework that maximize the benefit of
 available~(partial) source access still supporting COTS binaries.
 %
@@ -379,8 +381,8 @@ instrumentation respectively.
 %
 This hybrid approach introduces number of interesting research challenges that
 include how to maintain a single execution context integrating two very different
-instrumentation approaches and support uniform API interface to support
-building different kinds of analysis.
+instrumentation approaches and support uniform API interface to users. 
+
 %
 %Intuition behind this idea is that in most cases, we have partial accesses to
 %source base feasible for compiler-based instrumentation known to be several
