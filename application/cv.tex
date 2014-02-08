@@ -110,23 +110,19 @@ B.Sc. majoring Mathematics minoring Computer Science & {\it  Mar 2001}
 \end{tabular*}
 \end{tabbing}
 
-\subsubsection*{CURRENT STATUS}
-\begin{list}{}{}
-\item Citizen of South Korea.
-\end{list}
-
 \subsubsection*{RESEARCH INTERESTS}
 %\hrule
 %\vspace{0.2cm}
 
 \begin{list}{}{}
 % Do I have to specifically mention DFT or Symbolic execution?
-\item My research interest lies in designing the security architecture that
-        protects software systems either from active exploitation of malicious
-        attackers or unintended disclosures of developer errors. To implement
-        architectures that enhance defense capabilities of software systems, I
-        leverage innovations from different software system layers, i.e., VM
-        hypervisor, OS kernel, program compiler and so on.  
+\item My research interest lies in the design and implementation of the
+        reliable and secure software systems that would protect users either
+        from active exploitation of malicious attackers or unintended
+        disclosures of developer bugs. To implement the architecture that
+        enhance defense capabilities of software systems, I leverage
+        innovations from different CS fields, i.e., VM hypervisor, OS kernel,
+        program compiler and so on.
 %
 \end{list}
 
@@ -160,59 +156,42 @@ B.Sc. majoring Mathematics minoring Computer Science & {\it  Mar 2001}
 \begin{itemize}
 \item {\bf Master Student Research Assistant, Columbia University}, Sep 2007 - May 2008.
 
-  {\bf Application Community}, (Jan 2007 - Aug 2009): Designed and implemented
-  distributed security architecture that segments defense and protection
-  responsibility across the large number of hosts connected via the Internet.
-  This architecture leverages the software mono-culture. The insight behind
-  this approach is to alleviates the high overhead common to the most existing
-  dynamic security solutions without compromising the defense capability.
+  {\bf Application Community}, (Jan 2007 - Aug 2009): In this project, we
+  leverage the software mono-culture to design and implement distributed
+  security architecture that segments defense and protection responsibility
+  across the large number of hosts connected via the Internet.
+%  
+  %  The insight behind this approach is to alleviates the high overhead common
+  %  to the most existing dynamic security solutions without compromising the
+  %  defense capability.
 
 \vspace{0.1cm}
 \item  {\bf Graduate Research Assistant, Columbia University}, June 2008 - Current.
 
-%   {\bf MINESTRONE: IDENTIFYING AND CONTAINING SOFTWARE VULNERABILITIES} (
-%   IARPA project, 08/2010 - 07/2014): MINESTRONE is a novel architecture that integrates
-%   static analysis, dynamic confinement, and code diversification techniques to
-%   enable the identification, mitigation and containment of a large class of
-%   software vulnerabilities. Our techniques will protect new software, as well as
-%   already deployed (legacy) software by transparently inserting extensive
-%   security instrumentation. \\
-%
-%   {\bf SPARCHS: Symbiotic, Polymorphic, Autonomic, Resilient, Clean-slate, Host
-%     Security} (DARPA CRASH project, 10/2010 - 09/2014): The SPARCHS project is
-%   considering a new computer systems design methodology that considers security
-%   as a first-order design requirement at all levels, starting from hardware, in
-%   addition to the usual design requirements such as programmability, usability,
-%   speed, and power/energy efficiency.
-
-  {\bf libdft}, (Jan 2010 - Dec 2011): Dynamic data flow tracking (DFT) deals
-  with tagging and tracking data of interest as they propagate during program
-  execution.  We presented libdft, a dynamic DFT framework that unlike previous
-  work is at once fast, reusable, and works with commodity software and
+  {\bf libdft}, (Jan 2010 - Dec 2011): libdft is a dynamic {\it DFT framework},
+  unlike previous work, fast, reusable, and works with commodity software and
   hardware. libdft provides an API for building DFT-enabled tools that work on
   unmodified binaries, running on common operating systems and hardware, thus
   facilitating research and rapid prototyping.\\
 
-  {\bf Taint Flow Algebra}, (Jan 2010 - Dec 2011): Our intuition is to separate
-  the program logic from the corresponding tracking logic, extracting the
-  semantics of the latter and abstracting them using an intermediate
-  representation(IR) of Taint Flow Algebra. We then apply optimization
-  techniques to eliminate redundant tracking logic and minimize interference
-  with the target program. Our optimizations are directly applicable to
-  binary-only software and do not require any high level semantics.
-  Furthermore, they do not require additional resources to improve performance,
-  neither do they restrict or remove functionality.\\
+  {\bf Taint Flow Algebra}, (Jan 2010 - Dec 2011): The project separate the
+  program logic from the corresponding DFT logic, extracting the semantics of
+  the latter and abstracting them using an intermediate representation(IR) of
+  Taint Flow Algebra which becomes a target for compiler-based and DFT specific
+  optimizations. \\
 
   {\bf ShadowReplica}, (Jan 2012 - June 2013): ShadowReplica is a new and
   efficient approach for accelerating DFT and other shadow memory-based
   analyses, by decoupling analysis from execution and utilizing spare CPU cores
-  to run them in parallel. DFT is run in parallel by a shadow thread that is
-  spawned for each application thread, and the two communicate using a shared
-  data structure. We avoid the problems suffered by previous approaches, by
-  introducing an off-line application analysis phase that utilizes both static
-  and dynamic analysis approaches to generate optimized code for decoupling
-  execution and implementing DFT, while it also minimizes the amount of
-  information needed for communication between two threads.\\
+  to run them in parallel. DFT is executed in parallel by a shadow thread that
+  is spawned for each application thread, and the two communicate using a
+  shared data structure. \\
+  
+%  We avoid the problems suffered by previous approaches, by
+%  introducing an off-line application analysis phase that utilizes both static
+%  and dynamic analysis approaches to generate optimized code for decoupling
+%  execution and implementing DFT, while it also minimizes the amount of
+%  information needed for communication between two threads.\\
 
   %  {\bf Comparison Study for Different Dynamic Binary Instrumentation(DBI)
   %  Systems}, (Jan 2001 - Mar 2002): From a network designer's perspective a
@@ -231,35 +210,38 @@ B.Sc. majoring Mathematics minoring Computer Science & {\it  Mar 2001}
   tracking(DFT) to integer error detection system to address this issue of false
   positive(FP) and false negative(FN) specifically. Using DFT, we define
   relevant (source, sink) pairs that would differentiate integer errors which
-  lead to serious bugs that the attackers can leverage to exploit. One example
-  of these pairs can be values come through untrusted input(e.g., socket input,
-  keyboard inputs) and flow into arithmetic operations that triggers integer
-  errors. The other example can be pairs of the location of integers errors
-  flows into security sensitive places such as arguments for memory allocation
-  functions. \\
+  lead to serious bugs that the attackers can leverage to exploit. \\
+  
+%  One example
+%  of these pairs can be values come through untrusted input(e.g., socket input,
+%  keyboard inputs) and flow into arithmetic operations that triggers integer
+%  errors. The other example can be pairs of the location of integers errors
+%  flows into security sensitive places such as arguments for memory allocation
+%  functions. \\
+
 \end{itemize}
 
-\subsection*{GOVERNMENT PROJECTS}
-\hrule
-\vspace{0.1cm}
-\begin{itemize}
-   \item[]
-   {\bf MINESTRONE: IDENTIFYING AND CONTAINING SOFTWARE VULNERABILITIES} \\
-   (IARPA project, 08/2010 - 07/2014): MINESTRONE is a novel architecture that
-   integrates static analysis, dynamic confinement, and code diversification
-   techniques to enable the identification, mitigation and containment of a
-   large class of software vulnerabilities. Our techniques will protect new
-   software, as well as already deployed (legacy) software by transparently
-   inserting extensive security instrumentation. \\
-
-   \item[]
-   {\bf SPARCHS: Symbiotic, Polymorphic, Autonomic, Resilient, Clean-slate, Host
-     Security}\\ 
-   (DARPA CRASH project, 10/2010 - 09/2014): The SPARCHS project is considering
-   a new computer systems design methodology that considers security as a
-   first-order design requirement at all levels, starting from hardware, in
-   addition to the usual design requirements such as programmability,
-   usability, speed, and power/energy efficiency.  \end{itemize}
+%\subsection*{GOVERNMENT PROJECTS}
+%\hrule
+%\vspace{0.1cm}
+%\begin{itemize}
+%   \item[]
+%   {\bf MINESTRONE: IDENTIFYING AND CONTAINING SOFTWARE VULNERABILITIES} \\
+%   (IARPA project, 08/2010 - 07/2014): MINESTRONE is a novel architecture that
+%   integrates static analysis, dynamic confinement, and code diversification
+%   techniques to enable the identification, mitigation and containment of a
+%   large class of software vulnerabilities. Our techniques will protect new
+%   software, as well as already deployed (legacy) software by transparently
+%   inserting extensive security instrumentation. \\
+%
+%   \item[]
+%   {\bf SPARCHS: Symbiotic, Polymorphic, Autonomic, Resilient, Clean-slate, Host
+%     Security}\\ 
+%   (DARPA CRASH project, 10/2010 - 09/2014): The SPARCHS project is considering
+%   a new computer systems design methodology that considers security as a
+%   first-order design requirement at all levels, starting from hardware, in
+%   addition to the usual design requirements such as programmability,
+%   usability, speed, and power/energy efficiency.  \end{itemize}
 
 %\vspace{0.1cm}
 \subsection*{TEACHING EXPERIENCE}
@@ -270,7 +252,7 @@ B.Sc. majoring Mathematics minoring Computer Science & {\it  Mar 2001}
 
 \item {\bf Instructor.} COMS 3103-3: Programming Languages: Python, Fall 2013,
   Columbia University.\\
-  14 on-campus students (Course rating 4.45/5.00)
+  14 on-campus students (Course rating: 4.45/5.00)
 
 \item {\bf Teaching Assistant.} COMS 4701: Artificial Intelligence, Prof. Sal
   Stolfo, Spring 2013, Columbia University.
@@ -350,11 +332,12 @@ ISBN-0738491799 March 2005
   Jun. 2012, IBM Thomas J. Watson Research Center.
 \end{enumerate}
 
-\subsection*{LANGUAGES}
+\subsection*{PERSONAL STATUS}
 \hrule
 \vspace{0.2cm}
 \begin{list}{}{}
 	\item  Proficient in English and Korean.
+    \item  Citizen of South Korea.
 \end{list}
 
 %\newpage
@@ -366,7 +349,7 @@ ISBN-0738491799 March 2005
 \hrule
 \vspace{0.2cm}
 
-\subsubsection*{FROM ACADEMIA}
+%\subsubsection*{FROM ACADEMIA}
 \begin{footnotesize}
 
 \begin{multicols}{2} 
@@ -387,7 +370,6 @@ Dept. of Computer Science \\
 New York NY 10027 \\
 Phone: (212) 939-7012 \\
 junfeng@cs.columbia.edu \\
-\columnbreak
 
 \noindent
 Prof. Roxana Geambasu\\
@@ -397,6 +379,16 @@ Dept. of Computer Science \\
 New York NY 10027 \\
 Phone: (212) 939-7099 \\
 roxana@cs.columbia.edu \\
+\columnbreak
+
+\noindent
+Prof. Steve M. Bellovin \\
+Professor \\
+Dept. of Computer Science \\
+1214 Amsterdam Ave. Mailcode 0401
+New York NY 10027 \\
+Phone: (212) 939-7099 \\
+smb@cs.columbia.edu \\
 
 \noindent
 Prof. Georgios Portokalidis \\
@@ -404,7 +396,9 @@ Assistant Professor \\
 Castle Point on Hudson \\
 Hoboken, NJ 07030 \\
 Phone: (201) 216-8249 \\
- georgios.portokalidis@stevens.edu \\
+georgios.portokalidis@stevens.edu \\
+
+  
 \end{multicols}
 
 \end{footnotesize}
