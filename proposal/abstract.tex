@@ -1,47 +1,51 @@
 % !TEX root = proposal.tex
 \begin{abstract}
 
-While our everyday dependency to the computer-based services gets more and more
-significant, it is becoming more difficult to protect it from attackers
-motivated for increased revenue, and equipped with wide range of attack vectors
-for their malicious activities.
-%
-A common way to harden software systems against these attempts is to in-line
-security and monitoring logics and let them be executed simultaneously.
-%
-Being very effective in defending against malicous attempts or unexpected
-disclosure of developer bugs, he issue of  high overhead is the most serious
-issue regarding the approach as it hinders production system adoptation.
+%While our everyday dependency to the computer-based services gets more and more
+%significant, it is becoming more difficult to protect it from attackers
+%motivated for increased revenue, and equipped with wide range of attack vectors
+%for their malicious activities.
 
-%From my past research experience, I specifically focused on this issue of
-%excessive slowdown leveraing innovations from different CS fields --
-%programming language theory, operating systems.
+%
+A common way to harden software systems against failures due to malicious
+attempts from attackers or unexpected disclosure of developer bugs, is to
+in-line security and monitoring logics to be executed simultaneously.
+%
+Being effective in defending against these failures, the approaches based on
+in-line monitors have suffered from inherent issue of too high overhead which
+subsequently hinders the approach's production system adoptation.
 
-One most interesting/promising approach to be considered is to
-parallelized/decoupled execution of monitoring logics along with the original
-program to reduce the runtime interference/metigation to the original
-application thread and achieve lower latency.
+Addressing the issue, a number of proposals for parallel execution arose from
+the past proposals,
+%that decouples two different contexts~(the one for the original execution and
+%the other for monitoring logics) and let each run from different CPU cores
+%arose from the past proposals, 
+but most of them have failed to be a practical solution most notably for having
+too high communication cost between two threads(contexts).
 %
-However, many past parallelization research have failed to be a practical
-solution for number of reason but most notably not addressing to too high
-communcation cost.
-%
-Addressing the issue, I implemented a framework that parallelize  Data flow
-Tracking~(DFT) minimizing the amount of communcation required between the
-original and analysis thread.
+%Addressing the issue, I implemented a framework that parallelize  Data flow
+%Tracking~(DFT) minimizing the amount of communcation required between the
+%original and analysis thread.
 
-From this thesis proposal,  we want to propose a framework that first defines
-the minimal and required amount of information needed from the original
-application to be used from analysis thread to restore the entire monitoring
-context. 
+From this document, I want to propose a methodology that defines the optimal
+amount of information needed from the original execution required to restore
+the correct monitoring context from another thread.
 %
-Then I want to confirm the idea by generalization  to implement other types of
-analysis.
+One intermediate result, I presented a system that parallelize DFT analysis,
+which implements the methodology from offline static analysis which in turn
+could achieve x2.75 slowdown over native execution when it is evaluated for
+SPEC 2006 CPU benchmarks.
 %
-Furthermore, we will implement a couple of frameworks to be used to improve or
-replace the current instrumentation layer. This way, we can confirm again that
-the validity of hyperthosis being effective regardless of its instrumenation
-layer.
+Generalizing the approach, I am planning to advance the research direction to
+see how can we apply the approach so that dfferent type of ananalyses by
+defining a guide and anc common API. 
+%
+As a next step, we will explore design choices available for
+instrumentation/in-lining layer required for event collection and communcation.
+This direction of research will i) improve VM-based instrumentation
+which is currently employed ii) propose H/W component to support
+parallelized analysis in broad/general sense.
+
 
 %%
 %While our everyday dependency to the computer-based services gets more and more
