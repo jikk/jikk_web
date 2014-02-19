@@ -4,6 +4,7 @@
 \usepackage{epsfig}
 \usepackage{times}
 \usepackage{amsmath}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 % <http://psl.cs.columbia.edu/phdczar/proposal.html>:
 %
@@ -23,6 +24,16 @@
 \evensidemargin 0.0in
 \textheight     9.0in
 \textwidth      6.5in
+
+% enable/disable
+\newif \ifcomments
+\commentstrue
+
+\ifcomments
+    \newcommand{\jikk}[1]{{-\textcolor{red}{#1}-}}
+\else
+    \newcommand{\jikk}[1]{}
+\fi
 
 \title{Towards Building an Effective and Efficient Secure System
 Infrastructure}

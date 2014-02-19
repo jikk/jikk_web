@@ -7,90 +7,46 @@
 %for their malicious activities.
 
 %
-A common way to harden software systems against failures due to malicious
+One way to harden the software system against failures, due to malicious
 attempts from attackers or unexpected disclosure of developer bugs, is to
-in-line security and monitoring logics to be executed simultaneously.
+in-line security and monitoring logics to programs that we want to protect and
+execute simultaneously.
 %
 Being effective in defending against these failures, the approaches based on
-in-line monitors have suffered from inherent issue of too high overhead which
-subsequently hinders the approach's production system adoptation.
+in-line monitors have suffered from an inherent issue of too high overhead
+which subsequently hinders the approaches adaptation to production systems.
 
-Addressing the issue, a number of proposals for parallel execution arose from
-the past proposals,
-%that decouples two different contexts~(the one for the original execution and
-%the other for monitoring logics) and let each run from different CPU cores
-%arose from the past proposals, 
-but most of them have failed to be a practical solution most notably for having
-too high communication cost between two threads(contexts).
-%
-%Addressing the issue, I implemented a framework that parallelize  Data flow
-%Tracking~(DFT) minimizing the amount of communcation required between the
-%original and analysis thread.
+Addressing the issue, a line of approaches that parallelizes the original
+execution and monitoring logic arose from the past proposals, but most of them
+have failed to be a practical solution for many reasons, but most notably for
+having too high communication cost connecting two distinct contexts.
 
-From this document, I want to propose a methodology that defines the optimal
-amount of information needed from the original execution required to restore
-the correct monitoring context from another thread.
+From this thesis, I introduce a methodology that will improve the parallel
+analysis by defining the minimal but sufficient amount of information needed
+from the original execution to restore the correct monitoring context from
+another thread,  
 %
-One intermediate result, I presented a system that parallelize DFT analysis,
-which implements the methodology from offline static analysis which in turn
-could achieve x2.75 slowdown over native execution when it is evaluated for
-SPEC 2006 CPU benchmarks.
-%
-Generalizing the approach, I am planning to advance the research direction to
-see how can we apply the approach so that dfferent type of ananalyses by
-defining a guide and anc common API. 
-%
-As a next step, we will explore design choices available for
-instrumentation/in-lining layer required for event collection and communcation.
-This direction of research will i) improve VM-based instrumentation
-which is currently employed ii) propose H/W component to support
-parallelized analysis in broad/general sense.
+and the optimality of the approach will be confirmed by the formal analysis
+based on the information theory. \jikk{should think about it. more carefully.}
 
+From my past research experience, I implemented a prototype implementation of
+the approach for DFT analysis, which leveraged the off-line static analysis and
+in turn could achieve $\sim$ $\times$2.10 speed-up over the previous DFT
+implementation requiring the less amount of CPU cycles.
 
-%%
-%While our everyday dependency to the computer-based services gets more and more
-%significant, it is becoming more difficult to protect it from attackers
-%motivated for increased revenue, and equipped with wide range of attack vectors
-%for their malicious activities.
-%%
-%Number of different security systems have been proposed to defend software
-%systems against such threats, but none has succeeded yet for a number of
-%reasons. 
-%% effectiveness issue
-%Firstly, some security measures are not capable of protecting softwares against
-%certain attack methods or being accurate in defining malicious activities.
-%% efficiency issue
-%Secondly, some other measures can counter most of attack vectors with
-%reasonable accuracy but it incurs non-negligible amount of overhead and
-%prevents wide adaptation. 
+Generalizing the approach, I will extend the approach so as it can benefit the
+different type of analyses~(CFI, Memory Integrity Tool) to gain the similar
+performance improvement as DFT did from my past research experience. 
 %
-%In my past efforts to build a security system that address the aforementioned
-%issues, I developed and improved a security system of DFT by leveraging
-%VM-based instrumentation to in-line its monitoring logics. 
-%%
-%Even with the substantial amount of performance improvement my work could make
-%for DFT system, I should admit that it has not yet reached to the point where
-%industry and research community would consider it as adoptable to their
-%production systems.
-%
-%In this document, I propose a number of research directions that would address
-%aforementioned issues.
-%%
-%% by exploring various design choice from different layers of computer systems
-%% and establishing a measurement framework that evaluates the accuracy of the
-%% security system.
-%%
-%Our past innovations for DFT can be further enhanced leveraging opportunities
-%available from different layers of the computer system. I will also verify that
-%we can build an evaluation framework that would systematically infer invariants
-%regarding correctness of DFT operations.
-%%
-%% filling gap between semantic understanding and instruction level
-%% implementations.
-%%
-%Lastly, I will confirm that these experience can be generalized and extended to
-%implement different security measures.
-%%
+For this, I will also establish a classification framework to identify in-line
+analyses that can be benefited from the approach.
 
+As a next step, we will explore design choices to improve the instrumentation
+layer that in-lines event collection and communication logics taking advantage
+of innovations from the proposed approach.
+%
+%For this, I will {\it i)} improve VM-based instrumentation which is currently
+%employed {it ii)} propose a H/W based architecture that support the our
+%approach to parallelize in-line analysis.  \\
 
 \end{abstract}
