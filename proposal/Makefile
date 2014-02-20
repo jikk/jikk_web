@@ -9,7 +9,7 @@ proposal: bbl
 bbl: proposal.tex proposal.bib
 	rm -rf proposal.bbl
 	latex proposal
-	-bibtex proposal
+	bibtex proposal
 	latex proposal
 	latex proposal
 

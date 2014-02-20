@@ -41,15 +41,61 @@ any commodity vendors that implements this kind of in-line monitors.
 %
     \item {\bf VM-based instrumentation:}  This approach leverages widely
 adopted VM-hypervisor for instrumentation. As this approach overcomes the
-coverage issue supporting unknown(COTS) binaries and users can modify and
-update their monitoring logics so as to fulfill defense
-requirements\jikk{awkward!}.
+coverage issue supporting unknown(COTS) binaries and users can freely modify
+and update their monitoring logics, the approach incurs to much runtime
+overhead.
 
 \end{itemize}
 %
-These approaches in general, being effective in defending software systems
-against aforementioned threats, often suffer from excessive amount of overhead
-incurred due to {\it i)} instrumentation cost {\it ii)} defense/monitoring
-logic itself.
+The approach based on VM-based instrumentation, being effective in defending
+software systems against aforementioned threats, is regarded as the most
+promising for its ability to address limitation of other approaches -- coverage
+and flexibility. 
+%
+However the approach suffers from excessive amount of slowdown and the sources
+for the overhead are {\it i)} instrumentation cost needed to maintain two
+different contexts {\it ii)} cycles for defense/monitoring logic itself.
+%
 
+The idea of parallel analysis that decouples the original application and
+analysis logics and executes these contexts from different execution
+units~(threads) has risen from past research to minimize the runtime overhead.  
+%
+We have two different approaches based on process replication and subset state
+propagation.
+%
+The cost for the communication connecting two threads tends to be too
+high/excessive for both approaches, subsequently masks/overwhelms/cancels the
+parallelization benefit and often make it slower than comparable in-lined
+analysis. Its side-effects include
+
+\begin{itemize} \item n analyzer threads.  \item synchronization becomes too
+difficult.  \item not suitable for online/runtime analysis. In turn, some are
+purely positioned themselves as an off-line solution.  \end{itemize}
+
+%Preliminary result -- explain ShadowReplica, TFA, libdft
+From my previous research~\cite{ShadowReplica, TFA}, I proposed a system that
+directly addresses the issue of too high communication overhead for an analysis
+of Data Flow Tracking~(DFT). The system identifies minimal but necessary
+elements from the original executions and then establishes a framework that
+applies number of optimizations to properly compress the runtime communication
+which eventually contributes to {\it i)} minimize the mitigation of event
+collection to the original execution, {\it ii)} minimize the communication
+traffic, and {\it iii)} make the analysis thread run faster than the original
+thread.
+
+%what this proposal is about.
+From this document, I propose an approach that generalizes my previous work
+that defines the minimal amount of information required from arbitrary program
+execution applicable to restore wider range of in-lined monitors from another
+threads.
+%
+For this, I provide framework for to categorize available in-line
+monitors~\cite{CAB} with number of abstractions for necessary/implemented
+functionalities common to these analyses which, I expect, would help us to
+define common API exposed to users to implement their own parallelized
+analysis.
+%
+Then, I investigate the general and specific optimizations applicable to each
+analyses.
 

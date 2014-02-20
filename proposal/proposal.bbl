@@ -1,3 +1,9 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{dft}
+Vasileios~P. Kemerlis, Georgios Portokalidis, Kangkook Jee, and Angelos~D.
+  Keromytis.
+\newblock Libdft: Practical dynamic data flow tracking for commodity systems,
+  2012.
 
 \end{thebibliography}
