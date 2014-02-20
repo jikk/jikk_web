@@ -2,13 +2,54 @@
 \section{Introduction} 
 \label{sec:intro}
 
-Protecting software system is a challenging task especially when it comes as a
-form of binary not allowing accesses to its sources.
+Protecting software system is a challenging task. 
+%
+Attack vectors available to attackers are often unknown and this leads to
+incapable of defending zero day attacks.
+%
+Developers make mistakes in their codes.
+
 % Securing/positioning the document -- needs elaboration.
 %
 In respond to these problems, we have seen many proposals that
 inject/instrument one or more type of monitoring logics~\cite{cfi, memcheck,
 dft} against the program that we want to protect and let them run
-simultaneously.
+simultaneously to defend against various types of unexpected behaviors.
+%
+Research has been exploring three different approaches to instrument/in-line
+monitoring logics to implement in-line monitors.
+%
+Number of criteria to compare and evaluate different approaches. efficiency,
+coverage, flexibility(general ?).
+
+\begin{itemize}
+%
+    \item {\bf Source code based:} Leveraging different representations exposed
+in the process of program build. Abstract Syntax Tree~(AST) or compiler
+specific Intermediate Representations~(IR) can be an instrumentation target.
+This approach is reasonably fast incurring about or less than $\sim$ 2$\times$
+overhead, but it can encounter an issue related to code {\it coverage} as in
+most case we only have a partial source access about program's execution
+environment for having 3rd party libraries~(\ie libc) that come as binaries.
+%
+    \item {\bf Hardware assisted:} This approach leverages hardware add-ons to
+instrument monitoring defense logics to a runtime execution and it is the most
+efficient approach being able to achieve near-to-native performance. The
+approach is not flexible as users cannot modify monitoring logics once it is
+fixed/burned/encoded to hardware. This is also not general as we have not seen
+any commodity vendors that implements this kind of in-line monitors.
+%
+    \item {\bf VM-based instrumentation:}  This approach leverages widely
+adopted VM-hypervisor for instrumentation. As this approach overcomes the
+coverage issue supporting unknown(COTS) binaries and users can modify and
+update their monitoring logics so as to fulfill defense
+requirements\jikk{awkward!}.
+
+\end{itemize}
+%
+These approaches in general, being effective in defending software systems
+against aforementioned threats, often suffer from excessive amount of overhead
+incurred due to {\it i)} instrumentation cost {\it ii)} defense/monitoring
+logic itself.
 
 
