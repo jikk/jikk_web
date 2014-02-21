@@ -1,0 +1,124 @@
+\documentclass[letterpaper, 10pt]{article}
+\topmargin-2.0cm
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+% Color Information from -
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex_advanced/node13.html
+
+\advance\oddsidemargin-1in
+%\advance\evensidemargin-0.65in
+\textheight9.2in
+\textwidth6.9in
+\newcommand\bb[1]{\mbox{\em #1}}
+\def\baselinestretch{1.05}
+
+\newcommand{\hsp}{\hspace*{\parindent}}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+
+\begin{document}
+\thispagestyle{fancy}
+
+% Leave Left and Right Header empty.
+\lhead{}
+\rhead{}
+
+\renewcommand{\headrulewidth}{0pt} \renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize
+\textcolor{gray}{http://www.cs.columbia.edu/$\sim$jikk/application}}
+
+\pagestyle{fancy}
+\lhead{\textcolor{gray}{\it Kangkook Jee}}
+\rhead{\textcolor{gray}{\thepage /\pageref{LastPage}}}
+
+%Macros of my own
+\def\libdft{libdft\xspace}
+\def\TFAFull{Taint Flow Algebra\xspace}
+\def\TFA{TFA\xspace}
+\def\SR{ShadowReplica\xspace}
+\def\ie{i.e.,\xspace}
+
+\newif \ifcomments
+%\commentstrue
+
+\ifcomments
+\newcommand{\jikk}[1]{{---\textcolor{red}{#1}---}}
+\else
+\newcommand{\jikk}[1]{}
+\fi
+%
+
+%\vspace*{0.1cm}
+\begin{center}
+{\LARGE \bf RESEARCH STATEMENT}\\
+\vspace*{0.1cm}
+{\normalsize Kangkook Jee (jikk@cs.columbia.edu)}
+\end{center}
+
+The task of {\bf building secure and reliable computer system} is getting
+harder most notably for failing to propose a security system that addresses the
+following properties simultaneously.
+
+\begin{itemize}
+
+        \item {\it Effectiveness} in detecting and preventing software failures
+                caused either by active exploitation of malicious attackers or
+                unintended disclosure of developer bugs.
+
+        \item {\it Efficiency} by having minimal amount of resource
+                overhead~(e.g., power, response time) to make the security
+                solution adoptable to the production environment.
+
+        \item {\it Coverage} in providing end-to-end protection. For instance,
+                security system should protect the entire software execution
+                stack supporting COTS binaries with no source access.
+
+\end{itemize}
+
+The rapid evolution of computer systems only exacerbates the problem as it
+constantly re-defines our notion about the computing environment. Many industry
+vendors as well as research communities have driven the innovations in the
+research area of reliable and secure system. This is the space in which work
+is. \\ 
+
+My main research contributions have been concretized over the past a few years
+as I developed and improved well-known security architecture of {\bf Data Flow
+Tracking (DFT)} that supports COTS binaries. To address the issue of high
+overhead inherent to the systems of the same kind, I leveraged a number of
+recent research innovations from different CS fields. Specifically, I have been
+interested in {\it i)} combining static and dynamic analysis approaches to
+adopt operating system and programming language theories {\it ii)} facilitating
+multi-core architecture to implement parallelized analysis. Although my
+research have focused on a specific system of DFT, I believe that the insights
+that I learned from it can benefit the area of system security in general since
+DFT shares many architectural characteristics with other security systems. \\
+
+In addition to making improvements to a dynamic security system, I have a
+broader interest in research topics related to secure and reliable software
+system. Firstly, it is crucial to improve static analysis techniques such as
+{\bf white-box and black-box software fuzzing} to assist developers. Secondly,
+we also need to improve the {\bf educational system} to have our students
+better understandings about various security issues. In my view, the goal of
+building secure computing environment can be attained not by any single
+research direction, but by holistic consideration of a number of different
+approaches including aforementioned ones. \\
+
+My long-term research will be about the design and implementation of the
+security architecture, which would impact everyone’s computing life by
+providing trusted computing service at the expense of the negligible runtime
+slowdown. The approach that I am currently focusing on is to take advantage of
+the static analysis techniques to improve the dynamic defense measures. The
+other way around, executions from dynamic component would guide the static
+counterpart to achieve better coverage and accuracy. Complementing one another,
+I am confident that we are getting closer to the goal of building secure and
+reliable system effective in countering wide range of attack vectors (often
+unpredictable) only requiring minimal amount of overhead. \\
+
+From my research results thus far, I believe that I have already opened up the
+promising perspectives in this research direction. 
+
+\end{document}
+

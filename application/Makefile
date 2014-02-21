@@ -1,7 +1,7 @@
 BIBTEX=bibtex
 PDFLATEX=pdflatex
 
-all: res.pdf tea.pdf cv.pdf
+all: res.pdf res2.pdf tea.pdf cv.pdf
 
 #%.pdf : %.tex
 #	${PDFLATEX} $<
@@ -10,6 +10,12 @@ res.pdf: res.tex res.bib
 	${PDFLATEX} $<
 	${BIBTEX} res
 	${PDFLATEX} $<
+
+res2.pdf: res2.tex res.bib
+	${PDFLATEX} $<
+	${BIBTEX} res
+	${PDFLATEX} $<
+
 
 tea.pdf: tea.tex
 	${PDFLATEX} $<

@@ -1,8 +1,16 @@
 %% This BibTeX bibliography file in UTF-8 format was created using Papers.
 %% http://mekentosj.com/papers/
 
-@misc{dft,
+@inproceedings{dft,
 crossref = "libdft:vee2012"
+}
+
+@inproceedings{memcheck,
+crossref = "valgrind:pldi2007"
+}
+
+@inproceedings{cfi,
+crossref = "cfi:ccs2005"
 }
 
 @inproceedings{libdft:vee2012,
@@ -20,6 +28,33 @@ crossref = "libdft:vee2012"
      acmid = {2151042},
      publisher = {ACM},
      address = {New York, NY, USA},
-     keywords = {data flow tracking, dynamic binary instrumentation, exploit prevention, information leak detection, taint analysis},
+     keywords = {data flow tracking, dynamic binary instrumentation, exploit
+             prevention, information leak detection, taint analysis}, 
+} 
+
+@inproceedings{valgrind:pldi2007,
+ author = {Nethercote, Nicholas and Seward, Julian},
+ title = {Valgrind: a framework for heavyweight dynamic binary instrumentation},
+ booktitle = {Proc. of PLDI},
+ year = {2007}
+} 
+
+
+@inproceedings{cfi:ccs2005,
+ author = {Abadi, Mart\'{\i}n and Budiu, Mihai and Erlingsson, \'{U}lfar and Ligatti, Jay},
+ title = {Control-flow Integrity},
+ booktitle = {Proceedings of the 12th ACM Conference on Computer and Communications Security},
+ series = {CCS '05},
+ year = {2005},
+ isbn = {1-59593-226-7},
+ location = {Alexandria, VA, USA},
+ pages = {340--353},
+ numpages = {14},
+ url = {http://doi.acm.org/10.1145/1102120.1102165},
+ doi = {10.1145/1102120.1102165},
+ acmid = {1102165},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {binary rewriting, control-flow graph, inlined reference monitors, vulnerabilities},
 } 
 
