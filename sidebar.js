@@ -2,6 +2,10 @@ document.write('\
           <h2>Recent highlights</h2>\
           <ul class="style2">\
             <li class="first">\
+            <h3>Won Kaspersky student conference</h3>\
+            <p>ShadowReplica project won 2nd place from <a href="http://academy.kaspersky.com/">Kaspersky student conference</a> North America Round.<br> Apr 6 2014</p> \
+            <li>\
+            <li class="first">\
             <h3>New research project listing</h3>\
             <p>We have number of new research project listings from <a href="projects.html">project page</a>. If you are interested in any of those projects. Please contact me. <br>Dec 03 2013</p>\
             <li>\

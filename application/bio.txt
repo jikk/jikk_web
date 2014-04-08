@@ -1,8 +1,8 @@
 Kangkook Jee is a Ph.D candidate in Computer Science at Columbia University.
-His research interest is centered around the area of system security focusing
-on building secure and reliable software systems leveraging innovations of
-virtual machine introspection, reverse engineering, and static program analysis.
+His research interest centers around the area of system security with focus on
+on building secure and reliable software systems leveraging virtual machine
+introspection, static and dynamic program analysis.
 
-He also has five years of industry experience working for IBM Korea prior to
-doctoral program. As a software engineer, he supported AIX operating system,
-Java Virtual Machine and IBM's high availability solutions.
+Prior to his years in the doctoral program, he spent five years from industry
+working for IBM Korea.  As a software engineer, he supported AIX operating
+system, Java Virtual Machine and IBM's high availability solutions.
