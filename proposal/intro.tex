@@ -1,150 +1,235 @@
 % !TEX root = proposal.tex
 \section{Introduction} \label{sec:intro}
 
-Protecting software system is a challenging task. 
+Protecting software system from arbitrary attack or developer mistakes is a
+challenging task.
 %
-Attack vectors available to attackers are often unknown and this leads to
-incapable of defending zero day attacks.
+One promising approach that gains attention from both industry and research
+community is the techonology of data flow tracking (DFT) that is implemented by
+inlining monitoring/protectin logic along with the original program's
+execution.
 %
-Developers make mistakes in their codes.
+Well understood for its effectiveness/usefulness for its wide range of
+application domain which includes hardening software system against such
+security threats~\cite{x}, detection of privacy leakage~\cite{x}, malware
+analysis~\cite{x}, and performance tuning~\cite{x}, the issue of high overhead
+is the main obstacle that hinders its adoptation to production system.
+%
+For a last a few years, I have focused on addressing the issue of high overhead
+for the techonology, more apparent when it is applied against unknown binaries
+running from commodity system to guarantee full coverage of system protection.
 
-% Securing/positioning the document -- needs elaboration.
 %
-In respond to these problems, we have seen many proposals that
-inject/instrument one or more type of monitoring logics~\cite{cfi, memcheck,
-dft} against the program that we want to protect and let them run
-simultaneously to defend against various types of unexpected behaviors.
+% Previous work begins.
 %
-Research has been exploring three different approaches to instrument/in-line
-monitoring logics to implement in-line monitors.
+{\bf \libdft}~\cite{libdft}: it is our initial system that implementation of
+DFT. Even though it takes the conventional implmentation approach that inserts
+tracking operation per instruction basis leveraging VM-based
+instrumentation~\cite{pin}, it shows reasonable performance result thanks to
+the following design and engineering choices. Firstly, it carefully crafts
+tracking logics so as its size not to exceed threshold instruction count.
+Secondly, shadow memory is designed to reduce the memory translation cost.
+
+{\bf \tfafull (\tfa)}~\cite{tfa}: As I noted previously, typical DFT system
+interleaves the original execution and DFT logics into a single execution unit.
+Having them decoupled, \tfa optimized DFT logic aggressively leveraging offline
+static analysis dedicated to perform DFT-specific optimization in consideration
+of global context.
+
+{\bf ShadowReplica}~\cite{sreplica}: Extending \tfa approach furthher,
+\sreplica executes decoupled logics in parallel from different core. In this
+execution model, the main challenge lies in addressing the issue of high
+communication overhead needed to transfer information from the application
+thread to the thread that performs DFT analysis. The system addresses the issue
+by first defining the minimal subset state from the original execution and then
+inventing and applying optimizations that compress the information
+aggressively. As a result, the system reduces per basic block(BBL) message
+requirement from 4.81 to 1.2 contributing to achieves $\times 2.75$ slowdown
+over native execution when it is evaluated for SPEC 2006 CPU benchmark. 
+
+Details of each techonology are to be discussed further from
+section~\ref{sec:previous}.
+
 %
-Number of criteria to compare and evaluate different approaches. efficiency,
-coverage, flexibility(general ?).
+% Hypothesis begins.
+%
+Given that \sreplica proposes the approach to define and compress information
+from the application require to establish parallized DFT analysis, the first
+hypothesis that I will confirm from my thesis is that the approach can be
+generalized to support other families of inline monitors~\cite{} and remain
+optimal in term of communication volume and frequency.
+%
+Secondly, suppose that our parallelization framework can be generalized, I also
+want to build an overhead modeling framework that categorizes different inline
+monitors into one of the ollowing categories.
 
 \begin{itemize}
-%
-    \item {\bf Source code based:} Leveraging different representations exposed
-in the process of program build. Abstract Syntax Tree~(AST) or compiler
-specific Intermediate Representations~(IR) can be an instrumentation target.
-This approach is reasonably fast incurring about or less than $\sim$ 2$\times$
-overhead, but it can encounter an issue related to code {\it coverage} as in
-most case we only have a partial source access about program's execution
-environment for having 3rd party libraries~(\ie libc) that come as binaries.
-%
-    \item {\bf Hardware assisted:} This approach leverages hardware add-ons to
-instrument monitoring defense logics to a runtime execution and it is the most
-efficient approach being able to achieve near-to-native performance. The
-approach is not flexible as users cannot modify monitoring logics once it is
-fixed/burned/encoded to hardware. This is also not general as we have not seen
-any commodity vendors that implements this kind of in-line monitors.
-%
-    \item {\bf VM-based instrumentation:}  This approach leverages widely
-adopted VM-hypervisor for instrumentation. As this approach overcomes the
-coverage issue supporting unknown(COTS) binaries and users can freely modify
-and update their monitoring logics, the approach incurs to much runtime
-overhead.
 
+        \item {\bf inlining}: Inline monitor shows the best response tme when
+                the monitoring logic is interleaved with the application
+                thread.
+
+        \item {\bf 1-1}: Inline monitor shows the best response time when an
+                analysis thread is assigned to each application thread. This
+                model is similar to produce consumer model.
+
+        \item {\bf 1-n}: Inline monitor shows the best reponse time when more
+                than one analysis threads are assigned to each application
+                thread. This model requires dedicated dispatcher thread for
+                scheduling.
 \end{itemize}
-%
-The approach based on VM-based instrumentation, being effective in defending
-software systems against aforementioned threats, is regarded as the most
-promising for its ability to address limitation of other approaches -- coverage
-and flexibility. 
-%
-However the approach suffers from excessive amount of slowdown and the sources
-for the overhead are {\it i)} instrumentation cost needed to maintain two
-different contexts {\it ii)} cycles for defense/monitoring logic itself.
-%
 
-The idea of parallel analysis that decouples the original application and
-analysis logics and executes these contexts from different execution
-units~(threads) has risen from past research to minimize the runtime overhead.  
-%
-We have two different approaches based on process replication and subset state
-propagation.
-%
-The cost for the communication connecting two threads tends to be too
-high/excessive for both approaches, subsequently masks/overwhelms/cancels the
-parallelization benefit and often make it slower than comparable in-lined
-analysis. Its side-effects include
+For the case of \sreplica which parallelizes DFT, it falls into a category of
+1-1, which means that it shows better overall performance when it uses one
+analysis thread per each analysis thread. 
 
-\begin{itemize} \item n analyzer threads.  \item synchronization becomes too
-difficult.  \item not suitable for online/runtime analysis. In turn, some are
-purely positioned themselves as an off-line solution.  \end{itemize}
+Lastly, I will explore how performance semantics changes as it employs
+different type of instrumentation medium.
 
-%Preliminary result -- explain ShadowReplica, TFA, libdft
-From my previous research~\cite{ShadowReplica, TFA, libdft}, I proposed a
-system that directly addresses the issue of too high communication overhead for
-an analysis of Data Flow Tracking~(DFT). The system first defines minimal but
-necessary representations from the original execution which are {\it i)}
-control flow record in terms of Basic Blocks~(BBL) and {\it ii)} effective
-address~(EA) touched from each BBL. Then I established a framework that applies
-number of optimizations that compress both the frequency and the amount of the
-communication requirement at runtime. 
+%Protecting software system is a challenging task. 
+%%
+%Attack vectors available to attackers are often unknown and this leads to
+%incapable of defending zero day attacks.
+%%
+%Developers make mistakes in their codes.
 %
-These informations are transferred via/using carefully crafted communication
-channel in consideration of/specific to underlying CPU architectures. Its
-design is deeply related to various aspects such as size of on-chip caches and
-thread and CPU affinities.
+%% Securing/positioning the document -- needs elaboration.
+%%
+%In respond to these problems, we have seen many proposals that
+%inject/instrument one or more type of monitoring logics~\cite{cfi, memcheck,
+%dft} against the program that we want to protect and let them run
+%simultaneously to defend against various types of unexpected behaviors.
+%%
+%Research has been exploring three different approaches to instrument/in-line
+%monitoring logics to implement in-line monitors.
+%%
+%Number of criteria to compare and evaluate different approaches. efficiency,
+%coverage, flexibility(general ?).
 %
-In turn, the system could achieve {\it i)} minimize the mitigation of event
-collection to the original execution, {\it ii)} minimize the communication
-traffic, and {\it iii)} make the analysis thread run faster than the original
-thread.
+%\begin{itemize}
+%%
+%    \item {\bf Source code based:} Leveraging different representations exposed
+%in the process of program build. Abstract Syntax Tree~(AST) or compiler
+%specific Intermediate Representations~(IR) can be an instrumentation target.
+%This approach is reasonably fast incurring about or less than $\sim$ 2$\times$
+%overhead, but it can encounter an issue related to code {\it coverage} as in
+%most case we only have a partial source access about program's execution
+%environment for having 3rd party libraries~(\ie libc) that come as binaries.
+%%
+%    \item {\bf Hardware assisted:} This approach leverages hardware add-ons to
+%instrument monitoring defense logics to a runtime execution and it is the most
+%efficient approach being able to achieve near-to-native performance. The
+%approach is not flexible as users cannot modify monitoring logics once it is
+%fixed/burned/encoded to hardware. This is also not general as we have not seen
+%any commodity vendors that implements this kind of in-line monitors.
+%%
+%    \item {\bf VM-based instrumentation:}  This approach leverages widely
+%adopted VM-hypervisor for instrumentation. As this approach overcomes the
+%coverage issue supporting unknown(COTS) binaries and users can freely modify
+%and update their monitoring logics, the approach incurs to much runtime
+%overhead.
 %
-1.2 messages per BBL, $\sim$ 2.75 $\times$
-
-%what this proposal is about.
-From this proposal, I aim to generalize my previous research to invent a
-(general) methodology that would accelerates the decoupled analysis that
-implements/replaces/substitutes in-line monitors of certain categories.
-\jikk{number agreement problem.}
-%"our hypothesis is that the use of XYZ technology in environment Z under
-%constraints Q can identify insider attackers with probability Z" 
+%\end{itemize}
+%%
+%The approach based on VM-based instrumentation, being effective in defending
+%software systems against aforementioned threats, is regarded as the most
+%promising for its ability to address limitation of other approaches -- coverage
+%and flexibility. 
+%%
+%However the approach suffers from excessive amount of slowdown and the sources
+%for the overhead are {\it i)} instrumentation cost needed to maintain two
+%different contexts {\it ii)} cycles for defense/monitoring logic itself.
+%%
 %
-Our hypothesis is that with two elements~(CFR, EAs) collected from the original
-execution, that I previously defined for \SR, the monitoring logics can
-correctly be reconstructed from separate execution unit(s) for most of in-lined
-analysis. Leveraging/applying (analysis-agnostic) optimization approaches
-invented for \SR, these monitoring logics along with the their original
-executions can have performance gain as DFT did for \SR.
-
+%The idea of parallel analysis that decouples the original application and
+%analysis logics and executes these contexts from different execution
+%units~(threads) has risen from past research to minimize the runtime overhead.  
+%%
+%We have two different approaches based on process replication and subset state
+%propagation.
+%%
+%The cost for the communication connecting two threads tends to be too
+%high/excessive for both approaches, subsequently masks/overwhelms/cancels the
+%parallelization benefit and often make it slower than comparable in-lined
+%analysis. Its side-effects include
 %
-I provide a framework to categorize unknown/arbitrary in-line
-monitors~\cite{CAB} and eventually make the applicability decision.
+%\begin{itemize} \item n analyzer threads.  \item synchronization becomes too
+%difficult.  \item not suitable for online/runtime analysis. In turn, some are
+%purely positioned themselves as an off-line solution.  \end{itemize}
 %
-For this, I define number of abstractions and requirements shared among in-line
-monitors  which, in turn, would help in defining/designing common API for users
-to implement arbitrary parallelized analysis.
+%%Preliminary result -- explain ShadowReplica, TFA, libdft
+%From my previous research~\cite{ShadowReplica, TFA, libdft}, I proposed a
+%system that directly addresses the issue of too high communication overhead for
+%an analysis of Data Flow Tracking~(DFT). The system first defines minimal but
+%necessary representations from the original execution which are {\it i)}
+%control flow record in terms of Basic Blocks~(BBL) and {\it ii)} effective
+%address~(EA) touched from each BBL. Then I established a framework that applies
+%number of optimizations that compress both the frequency and the amount of the
+%communication requirement at runtime. 
+%%
+%These informations are transferred via/using carefully crafted communication
+%channel in consideration of/specific to underlying CPU architectures. Its
+%design is deeply related to various aspects such as size of on-chip caches and
+%thread and CPU affinities.
+%%
+%In turn, the system could achieve {\it i)} minimize the mitigation of event
+%collection to the original execution, {\it ii)} minimize the communication
+%traffic, and {\it iii)} make the analysis thread run faster than the original
+%thread.
+%%
+%1.2 messages per BBL, $\sim$ 2.75 $\times$
 %
-I go over \SR optimizations mostly designed to minimize the frequency and the
-amount of communication requirement. While most of these are general
-optimizations applicable to most of monitoring logics, it also have a few that
-only applicable to specific type of analysis.
-
-I plan to verify aforementioned hypothesis in number of ways listed from below.
-
-The generalization idea will be verified by implementing number of different
-analysis~\cite{memcheck, cfi} applying the approach.
+%%what this proposal is about.
+%From this proposal, I aim to generalize my previous research to invent a
+%(general) methodology that would accelerates the decoupled analysis that
+%implements/replaces/substitutes in-line monitors of certain categories.
+%\jikk{number agreement problem.}
+%%"our hypothesis is that the use of XYZ technology in environment Z under
+%%constraints Q can identify insider attackers with probability Z" 
+%%
+%Our hypothesis is that with two elements~(CFR, EAs) collected from the original
+%execution, that I previously defined for \SR, the monitoring logics can
+%correctly be reconstructed from separate execution unit(s) for most of in-lined
+%analysis. Leveraging/applying (analysis-agnostic) optimization approaches
+%invented for \SR, these monitoring logics along with the their original
+%executions can have performance gain as DFT did for \SR.
 %
-\SR's communication channel design will be generalized to support custom
-analysis.
+%%
+%I provide a framework to categorize unknown/arbitrary in-line
+%monitors~\cite{CAB} and eventually make the applicability decision.
+%%
+%For this, I define number of abstractions and requirements shared among in-line
+%monitors  which, in turn, would help in defining/designing common API for users
+%to implement arbitrary parallelized analysis.
+%%
+%I go over \SR optimizations mostly designed to minimize the frequency and the
+%amount of communication requirement. While most of these are general
+%optimizations applicable to most of monitoring logics, it also have a few that
+%only applicable to specific type of analysis.
 %
-I will explore another design space leveraging the minimal data representation.
-One direction that I am working on is about leveraging hardware component that
-would replace the expensive operations from VM-based instrumentation; event
-collecting and communication component.
-
-% I may want to say something about the optimality of the approach to be
-% verified formally.
-
-% Novelty, if it is properly implemented/fulfilled.
-In this proposal, I define minimal but sufficient representation required to
-offload custom monitoring logics from the original execution at runtime. Once
-it is properly defined, research as well as industry can take advantage of it
-to make known-to-be expensive security measures more widely/generally adopted.
+%I plan to verify aforementioned hypothesis in number of ways listed from below.
 %
-This innovation eventually result in reducing to size of trusted computing
-base~(TCB) required to implement custom in-line analysis only with reasonable
-amount of overhead would in turn impact on many areas hardware based
-implementation, mobile security, and cloud computing. 
+%The generalization idea will be verified by implementing number of different
+%analysis~\cite{memcheck, cfi} applying the approach.
+%%
+%\SR's communication channel design will be generalized to support custom
+%analysis.
+%%
+%I will explore another design space leveraging the minimal data representation.
+%One direction that I am working on is about leveraging hardware component that
+%would replace the expensive operations from VM-based instrumentation; event
+%collecting and communication component.
+%
+%% I may want to say something about the optimality of the approach to be
+%% verified formally.
+%
+%% Novelty, if it is properly implemented/fulfilled.
+%In this proposal, I define minimal but sufficient representation required to
+%offload custom monitoring logics from the original execution at runtime. Once
+%it is properly defined, research as well as industry can take advantage of it
+%to make known-to-be expensive security measures more widely/generally adopted.
+%%
+%This innovation eventually result in reducing to size of trusted computing
+%base~(TCB) required to implement custom in-line analysis only with reasonable
+%amount of overhead would in turn impact on many areas hardware based
+%implementation, mobile security, and cloud computing. 
