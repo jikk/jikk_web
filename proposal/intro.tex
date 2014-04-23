@@ -47,9 +47,6 @@ aggressively. As a result, the system reduces per basic block(BBL) message
 requirement from 4.81 to 1.2 contributing to achieves $\times 2.75$ slowdown
 over native execution when it is evaluated for SPEC 2006 CPU benchmark. 
 
-Details of each techonology are to be discussed further from
-section~\ref{sec:previous}.
-
 %
 % Hypothesis begins.
 %
@@ -60,7 +57,7 @@ generalized to support other families of inline monitors~\cite{} and remain
 optimal in term of communication volume and frequency.
 %
 Secondly, suppose that our parallelization framework can be generalized, I also
-want to build an overhead modeling framework that categorizes different inline
+want to propose an overhead modeling framework that categorizes different inline
 monitors into one of the ollowing categories.
 
 \begin{itemize}
@@ -79,12 +76,12 @@ monitors into one of the ollowing categories.
                 scheduling.
 \end{itemize}
 
-For the case of \sreplica which parallelizes DFT, it falls into a category of
-1-1, which means that it shows better overall performance when it uses one
-analysis thread per each analysis thread. 
+For example, \sreplica, which performs parallelization for DFT, falls into the
+second category (1-1), which means that it shows better overall performance
+when it uses one analysis thread per each analysis thread. 
 
 Lastly, I will explore how performance semantics changes as it employs
-different type of instrumentation medium.
+different instrumentation mechanisms for the application thread.
 
 %Protecting software system is a challenging task. 
 %%
