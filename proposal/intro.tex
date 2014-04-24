@@ -5,8 +5,8 @@ Protecting software system from arbitrary attack or developer mistakes is a
 challenging task.
 %
 One promising approach that gains attention from both industry and research
-community is the techonology of data flow tracking (DFT) that is implemented by
-inlining monitoring/protectin logic along with the original program's
+community is the technology of data flow tracking (DFT) that is implemented by
+inlining monitoring/protection logic along with the original program's
 execution.
 %
 Well understood for its effectiveness/usefulness for its wide range of
@@ -16,72 +16,89 @@ analysis~\cite{x}, and performance tuning~\cite{x}, the issue of high overhead
 is the main obstacle that hinders its adoptation to production system.
 %
 For a last a few years, I have focused on addressing the issue of high overhead
-for the techonology, more apparent when it is applied against unknown binaries
+for the technology, more apparent when it is applied against unknown binaries
 running from commodity system to guarantee full coverage of system protection.
 
 %
 % Previous work begins.
 %
 {\bf \libdft}~\cite{libdft}: it is our initial system that implementation of
-DFT. Even though it takes the conventional implmentation approach that inserts
+DFT. Even though it takes the conventional implementation approach that inserts
 tracking operation per instruction basis leveraging VM-based
-instrumentation~\cite{pin}, it shows reasonable performance result thanks to
-the following design and engineering choices. Firstly, it carefully crafts
-tracking logics so as its size not to exceed threshold instruction count.
-Secondly, shadow memory is designed to reduce the memory translation cost.
+instrumentation~\cite{pin:pldi2005}, it shows reasonable performance result
+thanks to the following design and engineering choices. Firstly, it carefully
+crafts tracking logics so as its size not to exceed threshold instruction
+count. Secondly, shadow memory is designed to reduce the memory translation
+cost.
 
-{\bf \tfafull (\tfa)}~\cite{tfa}: As I noted previously, typical DFT system
-interleaves the original execution and DFT logics into a single execution unit.
-Having them decoupled, \tfa optimized DFT logic aggressively leveraging offline
-static analysis dedicated to perform DFT-specific optimization in consideration
-of global context.
+{\bf \tfafull (\tfa)}~\cite{tfa:ndss2012}: As I noted previously, typical DFT
+system interleaves the original execution and DFT logics into a single
+execution unit.  Having them decoupled, \tfa optimized DFT logic aggressively
+leveraging off-line static analysis dedicated to perform DFT-specific
+optimization in consideration of global context.
 
-{\bf ShadowReplica}~\cite{sreplica}: Extending \tfa approach furthher,
-\sreplica executes decoupled logics in parallel from different core. In this
-execution model, the main challenge lies in addressing the issue of high
-communication overhead needed to transfer information from the application
-thread to the thread that performs DFT analysis. The system addresses the issue
-by first defining the minimal subset state from the original execution and then
-inventing and applying optimizations that compress the information
-aggressively. As a result, the system reduces per basic block(BBL) message
-requirement from 4.81 to 1.2 contributing to achieves $\times 2.75$ slowdown
-over native execution when it is evaluated for SPEC 2006 CPU benchmark. 
+{\bf ShadowReplica}~\cite{sreplica:ccs2013}: Extending \tfa approach further,
+\sreplica executes decoupled logics in parallel from different core along with
+the application thread. In this execution model, the main challenge lies in
+addressing the issue of high communication overhead needed to transfer
+information from the application thread to the thread that performs DFT
+analysis. The system addresses the issue by first defining the minimal subset
+state from the original execution and then inventing and applying optimizations
+that compress the information aggressively. As a result, the system reduces per
+basic block(BBL) message requirement from 4.81 to 1.2 contributing to achieves
+$\times 2.75$ slowdown over native execution when it is evaluated for SPEC 2006
+CPU benchmark.
 
 %
 % Hypothesis begins.
 %
-Given that \sreplica proposes the approach to define and compress information
-from the application require to establish parallized DFT analysis, the first
-hypothesis that I will confirm from my thesis is that the approach can be
-generalized to support other families of inline monitors~\cite{} and remain
-optimal in term of communication volume and frequency.
-%
-Secondly, suppose that our parallelization framework can be generalized, I also
-want to propose an overhead modeling framework that categorizes different inline
-monitors into one of the ollowing categories.
+Given that \sreplica proposes the optimal representation to define and compress
+information to be transferred from the application and establish parallelized
+DFT analysis, the first hypothesis to be verified is that \sreplica's
+communication approach can be generalized to support other families of inline
+monitors~\cite{cfi, memcheck} still minimizing communication volume and
+frequency.
+
+Secondly, among many candidate inline monitors to be considered, so as to
+verify the applicability \sreplica's parallelization approach, we an overhead
+modeling framework that categorizes inline monitors into one of the following
+categories.
 
 \begin{itemize}
 
-        \item {\bf inlining}: Inline monitor shows the best response tme when
-                the monitoring logic is interleaved with the application
-                thread.
+    \item {\bf Inlining model}: Inline monitor shows the best response time
+            when the monitoring logic is interleaved with the application
+            thread.
 
-        \item {\bf 1-1}: Inline monitor shows the best response time when an
-                analysis thread is assigned to each application thread. This
-                model is similar to produce consumer model.
+    \item {\bf 1-1 model}: Inline monitor shows the best response time when an
+            analysis thread is assigned to each application thread. This model
+            is similar to produce consumer model.
 
-        \item {\bf 1-n}: Inline monitor shows the best reponse time when more
-                than one analysis threads are assigned to each application
-                thread. This model requires dedicated dispatcher thread for
-                scheduling.
-\end{itemize}
+    \item {\bf 1-n model}: Inline monitor shows the best response time when
+            more than one analysis threads are assigned to each application
+            thread.  This model requires dedicated dispatcher thread for
+            scheduling.
+    \end{itemize}
 
-For example, \sreplica, which performs parallelization for DFT, falls into the
-second category (1-1), which means that it shows better overall performance
-when it uses one analysis thread per each analysis thread. 
+For example, \sreplica, a parallelization framework for DFT,  falls into the
+second category (1-1 model) which means that it shows the best response time
+when it uses one analysis thread per each analysis thread. Likewise, different
+monitors fit into different overhead models. The hypothesis in this case is
+that the overhead model would introduce a methodology to choose execution model
+for best response time analytically having with a level of confidence high
+enough.
+ 
+Lastly, given that the most of inline monitors for binary resort to VM-based
+instrumentation framework to collect relevant events from the application
+thread, I will confirm that we can implement the same parallelization approach
+with different instrumentation mediums and would show different performance
+semantics with different instrumentation mediums. Candidates for this substrate
+include {\it i)} dynamic binary instrumentation frameworks~(DBI), {\it ii)}
+other type of software tracing approach, and {\it iii)} hardware assisted
+profiling and information transfer.
 
-Lastly, I will explore how performance semantics changes as it employs
-different instrumentation mechanisms for the application thread.
+
+Rest of document is organized as follow.
 
 %Protecting software system is a challenging task. 
 %%
@@ -105,7 +122,7 @@ different instrumentation mechanisms for the application thread.
 %
 %\begin{itemize}
 %%
-%    \item {\bf Source code based:} Leveraging different representations exposed
+%  \item {\bf Source code based:} Leveraging different representations exposed
 %in the process of program build. Abstract Syntax Tree~(AST) or compiler
 %specific Intermediate Representations~(IR) can be an instrumentation target.
 %This approach is reasonably fast incurring about or less than $\sim$ 2$\times$
@@ -113,14 +130,14 @@ different instrumentation mechanisms for the application thread.
 %most case we only have a partial source access about program's execution
 %environment for having 3rd party libraries~(\ie libc) that come as binaries.
 %%
-%    \item {\bf Hardware assisted:} This approach leverages hardware add-ons to
+%  \item {\bf Hardware assisted:} This approach leverages hardware add-ons to
 %instrument monitoring defense logics to a runtime execution and it is the most
 %efficient approach being able to achieve near-to-native performance. The
 %approach is not flexible as users cannot modify monitoring logics once it is
 %fixed/burned/encoded to hardware. This is also not general as we have not seen
 %any commodity vendors that implements this kind of in-line monitors.
 %%
-%    \item {\bf VM-based instrumentation:}  This approach leverages widely
+%  \item {\bf VM-based instrumentation:} This approach leverages widely
 %adopted VM-hypervisor for instrumentation. As this approach overcomes the
 %coverage issue supporting unknown(COTS) binaries and users can freely modify
 %and update their monitoring logics, the approach incurs to much runtime
@@ -140,7 +157,7 @@ different instrumentation mechanisms for the application thread.
 %
 %The idea of parallel analysis that decouples the original application and
 %analysis logics and executes these contexts from different execution
-%units~(threads) has risen from past research to minimize the runtime overhead.  
+%units~(threads) has risen from past research to minimize the runtime overhead. 
 %%
 %We have two different approaches based on process replication and subset state
 %propagation.
@@ -150,9 +167,9 @@ different instrumentation mechanisms for the application thread.
 %parallelization benefit and often make it slower than comparable in-lined
 %analysis. Its side-effects include
 %
-%\begin{itemize} \item n analyzer threads.  \item synchronization becomes too
-%difficult.  \item not suitable for online/runtime analysis. In turn, some are
-%purely positioned themselves as an off-line solution.  \end{itemize}
+%\begin{itemize} \item n analyzer threads. \item synchronization becomes too
+%difficult. \item not suitable for online/runtime analysis. In turn, some are
+%purely positioned themselves as an off-line solution. \end{itemize}
 %
 %%Preliminary result -- explain ShadowReplica, TFA, libdft
 %From my previous research~\cite{ShadowReplica, TFA, libdft}, I proposed a
@@ -196,7 +213,7 @@ different instrumentation mechanisms for the application thread.
 %monitors~\cite{CAB} and eventually make the applicability decision.
 %%
 %For this, I define number of abstractions and requirements shared among in-line
-%monitors  which, in turn, would help in defining/designing common API for users
+%monitors which, in turn, would help in defining/designing common API for users
 %to implement arbitrary parallelized analysis.
 %%
 %I go over \SR optimizations mostly designed to minimize the frequency and the
