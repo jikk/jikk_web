@@ -1,3 +1,83 @@
 % !TEX root = proposal.tex
-\section{Related Work}
+\section{Background and Related Work}
 \label{sec:related}
+
+In this section, I present related work and my previous research results
+which are relevant to my thesis.
+
+\subsection{Related Work}
+
+\subsubsection{Inline Monitors}
+\label{ssec:inline}
+
+Program protection and profiling using inline monitors are dynamic analysis
+approaches that execute specific analysis logics along with the application
+process. Instance of the technology includes data flow tracking
+(DFT)~\cite{DFT}, memory integrity checking~\cite{memcheck}, control flow
+integrity~\cite{cfi}, method counting, call graph profiling and so on.
+Given that the technology can be implemented interleaving analysis/monitoring
+logics into the program execution, we can choose different instrumentation
+targets either of source code or program binaries and use different
+instrumentation mediums to implement inline monitors.
+
+Employing source code based approach, we can use representations
+exposed~\cite{AST,LLVM-IR} by compiler internals as instrumentation targets or
+source-to-source approaches~\cite{txl, cil} to make changes to source code.
+This approach comes in reasonable amount of overhead roughly around $2\times$
+or less, but it is limited in completeness not being able to support COTS
+binaries (\ie 3rd party libraries).  An alternative can be binary
+implementation approaches either based on process-wide virtualization using
+dynamic binary instrumentation(DBI)~\cite{PIN, dynamoRIO, valgrind} or
+system-wide virtualization~\cite{qemu,xen}. These address coverage issue as
+these can handle unknown program binaries. However, it comes with excessive
+amount of overhead which vary from $\times 5 \sim \times 100$ based on analyses
+and application domains. Hardware assisted implementation~\cite{HARD, lba} can
+implement inline monitors with minimal amount of overhead less than 5\% at most
+supporting full coverage, but the we have not yet seen this functionality
+supported by major vendors with their commodity production.
+
+\subsubsection{Data Flow Tracking (DFT)}
+
+DFT is one of inline monitoring approaches that accurately tracks selected data
+of interest, as they flow during program execution. Among other uses, DFT has
+been employed to provide insight in the behavior of applications and systems,
+and to assist in the identification of configuration errors. Most prominently,
+it has been used in the security field to defend against various software
+exploits~\cite{}, and to enforce information flow by monitoring and restricting
+the use of sensitive data~\cite{}. For the former, the network is usually
+defined as the source of interesting or “tainted” data, while the use of
+tainted data is disallowed in certain program locations (\eg, in instructions
+manipulating the control flow of programs, such as indirect branch instructions
+and function calls). For the latter, the developer or the user is responsible
+for specifying the data that needs to be tracked and the restrictions on their
+use.  
+
+\jikk{we may want to talk about details of DFT logics from here.}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|}
+\hline
+{\bf Instruction} & {\bf Tag propagation rule} \\ \hline \hline
+{\tt ALU-OP OP1 $\leftarrow$ OP2}  & {\tt t(op1) $\vert=$ t(op2)}\\ \hline
+MOV OP1 \textless-  OP2                                                            & t(op1) = t(op2)      \\ \hline
+LOAD OP1 \textless- {[}OP2{]}                                                      & t(OP1) = t(OP2)      \\ \hline
+\end{tabular}
+\end{table}
+
+The specifics of DFT can vary significantly depending on ones goals,
+performance considerations, and deployment platform. One possible
+classification of existing mechanisms can be made based on the means by which
+the tracking logic is augmented on regular program execution. As we discussed
+from Section~\ref{ssec:inline}, DFT can be performed by inserting data tracking
+logic statically during the compilation of software, or by performing source-
+to-source code transformation~\cite{}. It can also be applied dynamically by
+augmenting instrumentation code on existing binaries using dynamic binary
+instrumentation (DBI)~\cite{}  or a modified virtual machine (VM)~\cite{}.
+Finally, DFT can be also performed in hardware~\cite{}.
+
+\subsubsection{Parallelized Analysis}
+
+\subsection{Previous Research}
+\subsubsection{\libdft}
+\subsubsection{\tfa}
+\subsubsection{\sreplica}
