@@ -56,13 +56,12 @@ Given that \sreplica proposes the optimal representation to define and compress
 information to be transferred from the application and establish parallelized
 DFT analysis, the first hypothesis to be verified is that \sreplica's
 communication approach can be generalized to support other families of inline
-monitors~\cite{cfi, memcheck} still minimizing communication volume and
+monitors~\cite{CAB} still minimizing communication volume and
 frequency.
 
-Secondly, among many candidate inline monitors to be considered, so as to
-verify the applicability \sreplica's parallelization approach, we an overhead
-modeling framework that categorizes inline monitors into one of the following
-categories.
+To verify the applicability \sreplica's parallelization approach, we build an
+overhead modeling framework that categorizes cadidate inline monitors into one
+of the following types.
 
 \begin{itemize}
 
@@ -100,99 +99,7 @@ profiling and information transfer.
 
 Rest of document is organized as follow.
 
-%Protecting software system is a challenging task. 
-%%
-%Attack vectors available to attackers are often unknown and this leads to
-%incapable of defending zero day attacks.
-%%
-%Developers make mistakes in their codes.
-%
-%% Securing/positioning the document -- needs elaboration.
-%%
-%In respond to these problems, we have seen many proposals that
-%inject/instrument one or more type of monitoring logics~\cite{cfi, memcheck,
-%dft} against the program that we want to protect and let them run
-%simultaneously to defend against various types of unexpected behaviors.
-%%
-%Research has been exploring three different approaches to instrument/in-line
-%monitoring logics to implement in-line monitors.
-%%
-%Number of criteria to compare and evaluate different approaches. efficiency,
-%coverage, flexibility(general ?).
-%
-%\begin{itemize}
-%%
-%  \item {\bf Source code based:} Leveraging different representations exposed
-%in the process of program build. Abstract Syntax Tree~(AST) or compiler
-%specific Intermediate Representations~(IR) can be an instrumentation target.
-%This approach is reasonably fast incurring about or less than $\sim$ 2$\times$
-%overhead, but it can encounter an issue related to code {\it coverage} as in
-%most case we only have a partial source access about program's execution
-%environment for having 3rd party libraries~(\ie libc) that come as binaries.
-%%
-%  \item {\bf Hardware assisted:} This approach leverages hardware add-ons to
-%instrument monitoring defense logics to a runtime execution and it is the most
-%efficient approach being able to achieve near-to-native performance. The
-%approach is not flexible as users cannot modify monitoring logics once it is
-%fixed/burned/encoded to hardware. This is also not general as we have not seen
-%any commodity vendors that implements this kind of in-line monitors.
-%%
-%  \item {\bf VM-based instrumentation:} This approach leverages widely
-%adopted VM-hypervisor for instrumentation. As this approach overcomes the
-%coverage issue supporting unknown(COTS) binaries and users can freely modify
-%and update their monitoring logics, the approach incurs to much runtime
-%overhead.
-%
-%\end{itemize}
-%%
-%The approach based on VM-based instrumentation, being effective in defending
-%software systems against aforementioned threats, is regarded as the most
-%promising for its ability to address limitation of other approaches -- coverage
-%and flexibility. 
-%%
-%However the approach suffers from excessive amount of slowdown and the sources
-%for the overhead are {\it i)} instrumentation cost needed to maintain two
-%different contexts {\it ii)} cycles for defense/monitoring logic itself.
-%%
-%
-%The idea of parallel analysis that decouples the original application and
-%analysis logics and executes these contexts from different execution
-%units~(threads) has risen from past research to minimize the runtime overhead. 
-%%
-%We have two different approaches based on process replication and subset state
-%propagation.
-%%
-%The cost for the communication connecting two threads tends to be too
-%high/excessive for both approaches, subsequently masks/overwhelms/cancels the
-%parallelization benefit and often make it slower than comparable in-lined
-%analysis. Its side-effects include
-%
-%\begin{itemize} \item n analyzer threads. \item synchronization becomes too
-%difficult. \item not suitable for online/runtime analysis. In turn, some are
-%purely positioned themselves as an off-line solution. \end{itemize}
-%
-%%Preliminary result -- explain ShadowReplica, TFA, libdft
-%From my previous research~\cite{ShadowReplica, TFA, libdft}, I proposed a
-%system that directly addresses the issue of too high communication overhead for
-%an analysis of Data Flow Tracking~(DFT). The system first defines minimal but
-%necessary representations from the original execution which are {\it i)}
-%control flow record in terms of Basic Blocks~(BBL) and {\it ii)} effective
-%address~(EA) touched from each BBL. Then I established a framework that applies
-%number of optimizations that compress both the frequency and the amount of the
-%communication requirement at runtime. 
-%%
-%These informations are transferred via/using carefully crafted communication
-%channel in consideration of/specific to underlying CPU architectures. Its
-%design is deeply related to various aspects such as size of on-chip caches and
-%thread and CPU affinities.
-%%
-%In turn, the system could achieve {\it i)} minimize the mitigation of event
-%collection to the original execution, {\it ii)} minimize the communication
-%traffic, and {\it iii)} make the analysis thread run faster than the original
-%thread.
-%%
-%1.2 messages per BBL, $\sim$ 2.75 $\times$
-%
+
 %%what this proposal is about.
 %From this proposal, I aim to generalize my previous research to invent a
 %(general) methodology that would accelerates the decoupled analysis that
