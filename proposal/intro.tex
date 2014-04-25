@@ -56,13 +56,12 @@ Given that \sreplica proposes the optimal representation to define and compress
 information to be transferred from the application and establish parallelized
 DFT analysis, the first hypothesis to be verified is that \sreplica's
 communication approach can be generalized to support other families of inline
-monitors~\cite{cfi, memcheck} still minimizing communication volume and
+monitors~\cite{CAB} still minimizing communication volume and
 frequency.
 
-Secondly, among many candidate inline monitors to be considered, so as to
-verify the applicability \sreplica's parallelization approach, we an overhead
-modeling framework that categorizes inline monitors into one of the following
-categories.
+To verify the applicability \sreplica's parallelization approach, we build an
+overhead modeling framework that categorizes cadidate inline monitors into one
+of the following types.
 
 \begin{itemize}
 
@@ -100,101 +99,3 @@ profiling and information transfer.
 
 Rest of document is organized as follow.
 
-
-%However the approach suffers from excessive amount of slowdown and the sources
-%for the overhead are {\it i)} instrumentation cost needed to maintain two
-%different contexts {\it ii)} cycles for defense/monitoring logic itself.
-%%
-%
-%The idea of parallel analysis that decouples the original application and
-%analysis logics and executes these contexts from different execution
-%units~(threads) has risen from past research to minimize the runtime overhead. 
-%%
-%We have two different approaches based on process replication and subset state
-%propagation.
-%%
-%The cost for the communication connecting two threads tends to be too
-%high/excessive for both approaches, subsequently masks/overwhelms/cancels the
-%parallelization benefit and often make it slower than comparable in-lined
-%analysis. Its side-effects include
-%
-%\begin{itemize} \item n analyzer threads. \item synchronization becomes too
-%difficult. \item not suitable for online/runtime analysis. In turn, some are
-%purely positioned themselves as an off-line solution. \end{itemize}
-%
-%%Preliminary result -- explain ShadowReplica, TFA, libdft
-%From my previous research~\cite{ShadowReplica, TFA, libdft}, I proposed a
-%system that directly addresses the issue of too high communication overhead for
-%an analysis of Data Flow Tracking~(DFT). The system first defines minimal but
-%necessary representations from the original execution which are {\it i)}
-%control flow record in terms of Basic Blocks~(BBL) and {\it ii)} effective
-%address~(EA) touched from each BBL. Then I established a framework that applies
-%number of optimizations that compress both the frequency and the amount of the
-%communication requirement at runtime. 
-%%
-%These informations are transferred via/using carefully crafted communication
-%channel in consideration of/specific to underlying CPU architectures. Its
-%design is deeply related to various aspects such as size of on-chip caches and
-%thread and CPU affinities.
-%%
-%In turn, the system could achieve {\it i)} minimize the mitigation of event
-%collection to the original execution, {\it ii)} minimize the communication
-%traffic, and {\it iii)} make the analysis thread run faster than the original
-%thread.
-%%
-%1.2 messages per BBL, $\sim$ 2.75 $\times$
-%
-%%what this proposal is about.
-%From this proposal, I aim to generalize my previous research to invent a
-%(general) methodology that would accelerates the decoupled analysis that
-%implements/replaces/substitutes in-line monitors of certain categories.
-%\jikk{number agreement problem.}
-%%"our hypothesis is that the use of XYZ technology in environment Z under
-%%constraints Q can identify insider attackers with probability Z" 
-%%
-%Our hypothesis is that with two elements~(CFR, EAs) collected from the original
-%execution, that I previously defined for \SR, the monitoring logics can
-%correctly be reconstructed from separate execution unit(s) for most of in-lined
-%analysis. Leveraging/applying (analysis-agnostic) optimization approaches
-%invented for \SR, these monitoring logics along with the their original
-%executions can have performance gain as DFT did for \SR.
-%
-%%
-%I provide a framework to categorize unknown/arbitrary in-line
-%monitors~\cite{CAB} and eventually make the applicability decision.
-%%
-%For this, I define number of abstractions and requirements shared among in-line
-%monitors which, in turn, would help in defining/designing common API for users
-%to implement arbitrary parallelized analysis.
-%%
-%I go over \SR optimizations mostly designed to minimize the frequency and the
-%amount of communication requirement. While most of these are general
-%optimizations applicable to most of monitoring logics, it also have a few that
-%only applicable to specific type of analysis.
-%
-%I plan to verify aforementioned hypothesis in number of ways listed from below.
-%
-%The generalization idea will be verified by implementing number of different
-%analysis~\cite{memcheck, cfi} applying the approach.
-%%
-%\SR's communication channel design will be generalized to support custom
-%analysis.
-%%
-%I will explore another design space leveraging the minimal data representation.
-%One direction that I am working on is about leveraging hardware component that
-%would replace the expensive operations from VM-based instrumentation; event
-%collecting and communication component.
-%
-%% I may want to say something about the optimality of the approach to be
-%% verified formally.
-%
-%% Novelty, if it is properly implemented/fulfilled.
-%In this proposal, I define minimal but sufficient representation required to
-%offload custom monitoring logics from the original execution at runtime. Once
-%it is properly defined, research as well as industry can take advantage of it
-%to make known-to-be expensive security measures more widely/generally adopted.
-%%
-%This innovation eventually result in reducing to size of trusted computing
-%base~(TCB) required to implement custom in-line analysis only with reasonable
-%amount of overhead would in turn impact on many areas hardware based
-%implementation, mobile security, and cloud computing. 
