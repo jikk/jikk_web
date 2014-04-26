@@ -52,16 +52,24 @@ and function calls). For the latter, the developer or the user is responsible
 for specifying the data that needs to be tracked and the restrictions on their
 use.  
 
-\jikk{we may want to talk about details of DFT logics from here.}
+Table~\ref{tab:dft_tracking} shows how instuctions' DFT semantics for general
+purpose instruction architecure (ISA) are defined to 
+
 
 \begin{table}[h]
+        \centering
 \begin{tabular}{|l|l|}
 \hline
 {\bf Instruction} & {\bf Tag propagation rule} \\ \hline \hline
-{\tt ALU-OP OP1 $\leftarrow$ OP2}  & {\tt t(op1) $\vert=$ t(op2)}\\ \hline
-MOV OP1 \textless-  OP2                                                            & t(op1) = t(op2)      \\ \hline
-LOAD OP1 \textless- {[}OP2{]}                                                      & t(OP1) = t(OP2)      \\ \hline
+    {\tt \specialcell{ALU-OP OP1 $\leftarrow$ OP2 \\ (add, sub \dots)}} & 
+    {\tt t(op1) $\vert=$ t(op2)}\\ \hline
+    {\tt MOV OP1  $\leftarrow$  OP2} & {\tt t(op1) = t(op2)}  \\ \hline
+    {\tt LOAD OP1 $\leftarrow$ [OP2]} & {\tt t(OP1) = t([OP2])} \\ \hline
+    {\tt STORE [OP1] $\leftarrow$ OP2} & {\tt t([OP1]) = t(OP2)} \\ \hline
 \end{tabular}
+\caption{presents an interpretation of DFT semantics for pseudo instruction set
+architecture.}
+\label{tab:dft_tracking}
 \end{table}
 
 The specifics of DFT can vary significantly depending on ones goals,

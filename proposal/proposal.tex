@@ -40,6 +40,10 @@
     \newcommand{\jikk}[1]{}
 \fi
 
+%to support in-cell newline.
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
 \def \libdft{libdft~\xspace}
 \def \tfa{TFA~\xspace}
 \def \tfafull{Taint Flow Algebra~\xspace}
