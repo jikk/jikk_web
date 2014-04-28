@@ -7,13 +7,13 @@
 \contentsline {subsection}{\numberline {2.2}Previous Research}{vii}
 \contentsline {subsubsection}{\numberline {2.2.1}libdft\nobreakspace {}\xspace }{vii}
 \contentsline {subsubsection}{\numberline {2.2.2}TFA\nobreakspace {}\xspace }{viii}
-\contentsline {subsubsection}{\numberline {2.2.3}ShadowReplica\nobreakspace {}\xspace }{viii}
-\contentsline {section}{\numberline {3}Hypothesis}{viii}
-\contentsline {subsection}{\numberline {3.1}ShadowReplica\nobreakspace {}\xspace Generalization}{viii}
-\contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{viii}
-\contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{viii}
-\contentsline {subsection}{\numberline {3.3}DTrace Instrumentation}{viii}
-\contentsline {subsubsection}{\numberline {3.3.1}Hardware Assisted Parallel Analysis}{viii}
-\contentsline {subsubsection}{\numberline {3.3.2}Overhead Modeling Framework}{viii}
-\contentsline {section}{\numberline {4}Evaluation}{viii}
-\contentsline {section}{\numberline {5}Research Plan}{viii}
+\contentsline {subsubsection}{\numberline {2.2.3}ShadowReplica\nobreakspace {}\xspace }{ix}
+\contentsline {section}{\numberline {3}Hypothesis}{ix}
+\contentsline {subsection}{\numberline {3.1}ShadowReplica\nobreakspace {}\xspace Generalization}{ix}
+\contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{ix}
+\contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{ix}
+\contentsline {subsection}{\numberline {3.3}DTrace Instrumentation}{ix}
+\contentsline {subsubsection}{\numberline {3.3.1}Hardware Assisted Parallel Analysis}{ix}
+\contentsline {subsubsection}{\numberline {3.3.2}Overhead Modeling Framework}{ix}
+\contentsline {section}{\numberline {4}Evaluation}{ix}
+\contentsline {section}{\numberline {5}Research Plan}{ix}

@@ -125,10 +125,10 @@ framework.
 %
 \libdft's performance gain comes in two folds. 
 
-The first is by having {\it inline-friendly} DFT operations. To interleave
-codes from two different contexts, underlying DBI framework should add
-management instructions to save and restore states relevant to each context for
-every instrumentation. The state includes the whole CPU registers and the
+The first optimization is by having {\it inline-friendly} DFT operations. To
+interleave codes from two different contexts, underlying DBI framework should
+add management instructions to save and restore states relevant to each context
+for every instrumentation. The state includes the whole CPU registers and the
 operation of spilling/re-filling these is typically expensive. {\it
 Instrumentation inlining}~\cite{} reduces this overhead taking advantage of
 remaining register entries unused from the application context. In order to
@@ -142,21 +142,72 @@ updates to {\tt EFLAG} register.  \end{enumerate}
 Having highly crafted routines that satisfy above conditions, \libdft could
 have most of its operations in-lined reducing signification amount of overhead.
 
-The second is by having optimal shadow memory design that minimizes the cycles
-needed to translate real address entries into shadow memory counterparts. We
-have number of design choices regarding shadow store structure that come with
-CPU time vs. memory space trade-offs. Not to reduce the execution transparency
-by assign too large portion of address space, most of shadow memory
-architectures leverage multiple level of indirections which inevitably involve
-conditional operations. \libdft avoids this problem by instrumentation every
-memory routines to co-allocate/deallocate counterpart shadow entries. This not
-only reduce the instruction counts but also eliminate need for control
-instruction in translations.
+The second optimization is by having optimal shadow memory design that
+minimizes the cycles needed to translate real address entries into shadow
+memory counterparts. We have number of design choices regarding shadow store
+structure that come with CPU time vs. memory space trade-offs. Not to reduce
+the execution transparency by assign too large portion of address space, most
+of shadow memory architectures leverage multiple level of indirections which
+inevitably involve conditional operations. \libdft avoids this problem by
+instrumentation every memory routines to co-allocate/deallocate counterpart
+shadow entries. This not only reduce the instruction counts but also eliminate
+need for control instruction in translations.
 
 \libdft takes the form of a shared library enabling developers to create of
 DFT-enabled Pintools for binaries, using its extensive API. For example,
 \libdft already includes a DTA tool, which can be used to protect applications
 from remote buffer overflow exploits.
 
-\subsubsection{\tfa}
+\subsubsection{\tfa} 
+
+Main insights behind \tfa is that update-to-date DFT are lacking in {\it i)}
+consideration for global context {\it ii)} understanding of DFT operation
+semantics which is different from the original execution semantics.  \tfa
+attempts to address these issues by dedicating off-line static phase that
+performs application and DFT specific analysis. 
+
+\begin{figure}[tb]
+    \centering
+%        \includegraphics[width=\linewidth]{figs/execution_model.pdf}
+    \includegraphics[width=0.6\linewidth]{figs/overview_model.eps}
+    \caption{\tfa overview: It extract basic blocks and control flow
+    information using a combination of dynamic and static analysis, and then
+    statically analyze this information to produce optimized data tracking
+    code.
+   \label{fig:approach_overview}}
+\end{figure}
+
+Figure~\ref{fig:approach_overview} shows a high-level overview of our approach
+for optimizing data tracking. We start by dynamically and statically profiling
+the target application to extract its basic blocks and control flow
+information. A basic block (BBL) of code consists of a sequence of instructions
+that has only one entry point and, in our case, a single exit point. This means
+that no instruction within a BBL is the target of a jump or branch instruction,
+and the block is only exited after its last instruction executes. These
+properties are desirable for various types of analysis, like the ones performed
+by compilers. The control flow information describes how the basic blocks are
+linked. The combination of dynamic and static profiling provides us with a
+significant part of the CFG, including the part that dominates in terms of
+execution time, and would benefit the most from optimization.
+%
+The analyzer receives the profiler information and extracts data dependencies
+from the code, separating program from data tracking logic. It then transforms
+the latter to an internal representation, based on the Taint Flow Algebra
+(\tfa), which is highly amenable to various optimizations. The optimizations
+performed by the analyzer and include classic compiler optimizations like
+dead-code elimination and copy propagation as well as DFT specific ones. Our
+goal is to remove redundant tracking operations, and reduce the number of
+locations where tracking code is inserted. 
+%
+Finally, the analyzer emits optimized tracking code, which is applied on the
+application. Note that the type of tracking code generated depends on the
+original tracking implementation to be optimized. Implementation, as it
+operates on binary programs the analyzer produces primitive C code, which can
+be compiled and inserted into the application using a DBI framework.
+
+\tfa extends \libdft re-using many features such as instruction interpretation
+and shadow memory design. More importantly, \libdft plays a role of slow-path
+DFT implementation to cover execution paths missed from static analysis phase
+ensuring the completeness of our approach.
+ 
 \subsubsection{\sreplica}
