@@ -50,11 +50,14 @@ tainted data is disallowed in certain program locations (\eg, in instructions
 manipulating the control flow of programs, such as indirect branch instructions
 and function calls). For the latter, the developer or the user is responsible
 for specifying the data that needs to be tracked and the restrictions on their
-use.  
+use. DFT is even used to assist solving performance problems~\cite{} pairing
+configuration file entries with performance bottlenecks as sources and sinks. 
 
-Table~\ref{tab:dft_tracking} shows how instuctions' DFT semantics for general
-purpose instruction architecure (ISA) are defined to 
-
+DFT is implemented by having shadow context that corresponds to the original
+exectuion context. The shadow context comprise of shadow operations and shadow
+memory area. Table~\ref{tab:dft_tracking} shows how instuctions' DFT semantics
+for general purpose instruction architecure (ISA) are defined to perform DFT
+operations to keep track of changes from shadow memory area. 
 
 \begin{table}[h]
         \centering
@@ -63,8 +66,8 @@ purpose instruction architecure (ISA) are defined to
 {\bf Instruction} & {\bf Tag propagation rule} \\ \hline \hline
     {\tt \specialcell{ALU-OP OP1 $\leftarrow$ OP2 \\ (add, sub \dots)}} & 
     {\tt t(op1) $\vert=$ t(op2)}\\ \hline
-    {\tt MOV OP1  $\leftarrow$  OP2} & {\tt t(op1) = t(op2)}  \\ \hline
-    {\tt LOAD OP1 $\leftarrow$ [OP2]} & {\tt t(OP1) = t([OP2])} \\ \hline
+    {\tt MOV OP1  $\leftarrow$  OP2} & {\tt t(op1) = t(op2)}     \\ \hline
+    {\tt LOAD OP1 $\leftarrow$ [OP2]} & {\tt t(OP1) = t([OP2])}  \\ \hline
     {\tt STORE [OP1] $\leftarrow$ OP2} & {\tt t([OP1]) = t(OP2)} \\ \hline
 \end{tabular}
 \caption{presents an interpretation of DFT semantics for pseudo instruction set
