@@ -169,7 +169,7 @@ performs application and DFT specific analysis.
 \begin{figure}[tb]
     \centering
 %        \includegraphics[width=\linewidth]{figs/execution_model.pdf}
-    \includegraphics[width=0.6\linewidth]{figs/overview_model.eps}
+    \includegraphics[width=0.65\linewidth]{figs/overview_model.eps}
     \caption{\tfa overview: It extract basic blocks and control flow
     information using a combination of dynamic and static analysis, and then
     statically analyze this information to produce optimized data tracking
@@ -211,3 +211,140 @@ DFT implementation to cover execution paths missed from static analysis phase
 ensuring the completeness of our approach.
  
 \subsubsection{\sreplica}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.64\linewidth]{figs/architecture.eps}
+    \caption{The architecture of \sreplica \label{fig:approach_overview}}
+\end{figure}
+
+Figure~\ref{fig:approach_overview} depicts the architecture of \sreplica, which
+comprises of two stages. The first stage, shown in the left of the figure
+involves profiling an application both statically and dynamically to extract
+code blocks, or BBLs, and control-flow information (CFG+). The latter includes
+a partial control-flow graph showing how the extracted BBLs are connected, and
+frequency data indicating which branches are taken more frequently than others.
+
+This data is processed to generate optimized code to be injected in the
+application, and code for running the analysis in parallel. The first contains
+code stubs that enqueue the information required to decouple DFT in a shared
+data structure. Note that \sreplica does not naively generate code for
+enqueueing everything, but ensures that only information that has potentially
+changed since the previous executed block are enqueued. This is one of our main
+contributions, and problems for previous works~\cite{} that failed to
+satisfy equation (1). The second includes code stubs that dequeue information
+along with the analysis code.
+
+The generated code is passed to the runtime component of ShadowReplica, shown
+in Figiure~\ref{fig:approach_overview}~(b). We utilize a DBI framework that
+allows us to inject the enqueueing stubs in the application in an efficient
+manner and with flexibility (i.e., on arbitrary instructions of a binary). Our
+motivation for using a DBI is that it allows us to apply \sreplica on
+unmodified binary applications, and it enables different analyses, security
+related or others, by offering the ability to {\it interfere} with the application
+at the lowest possible level.
+
+Application threads are executing over the DBI and our tool, which inject the
+enqueueing stubs. We will refer to an application thread as the primary. For
+each primary, we spawn a shadow thread that will run the analysis code, which
+we will refer to as the secondary. While both threads are in the same address
+space, applications threads are running over the DBI’s VMM, but shadow threads
+are executing natively, since the code generated in the first phase includes
+everything required to run the analysis. Our current design spawns secondary
+threads in the same process used by the DBI and the application. In the future,
+we are considering hosting the secondary threads in a different process for
+increased isolation.
+
+Communication between primary and secondary threads is done through a
+ring-buffer structure optimized for multi-core architectures . The ring buffer
+is also used for the primary thread to synchronize with the secondary, when it
+is required that the analysis is complete before proceeding with execution. For
+instance, ensuring that integrity has not been compromised before allowing a
+certain system call or performing a computed branch.
+
+Finally, we export any new BBLs and CFG edges that are discovered at runtime,
+which can be passed back for code analysis. Extending the coverage of our
+analysis means that we can generate optimal code for a larger part of the
+application. Note that our analysis also generates generic code for handling
+application code not discovered during profiling. This “default” code performs
+all necessary functionality, albeit slower than the optimized code generated
+for known BBLs and control-flow edges.
+
+\subsubsection{Inline vs. Decoupled DFT}
+\label{sec:inlinevsdecoupled}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.65\linewidth]{figs/decoupling.eps}
+    \caption{Inline vs.decoupled application of DFT application with \sreplica
+    and binary instrumentation.\label{fig:decoupling}}
+\end{figure}
+
+Dynamically applying DFT on binaries usually involves the use of a dynamic
+binary instrumentation (DBI) framework or a virtual machine monitor (VMM) that
+will transparently extend the program being analyzed. Such frameworks enable us
+to inject code implementing DFT in binaries, by interleaving framework and DFT
+code with application code, as shown in
+Fig.\ref{fig:decoupling}~(\textit{in-line}) and \libdft and \tfa falls in this
+category.
+
+\sreplica proposes an efficient approach for accelerating dynamic DFT and similar
+analyses by decoupling them from execution and utilizing spare CPU cores to run
+the instrumented application and DFT code in parallel. We replace the in-line
+DFT logic in the application with a stub that \emph{extracts} the minimal
+information required to independently perform the analysis in another thread,
+and \emph{enqueues} the information in a shared data structure. The DFT code,
+which is running on a different CPU core, is prefixed with a consumer stub that
+\emph{pulls out} the information and then \emph{performs} the analysis.
+
+Decoupling the analysis from execution enables us to run it completely
+independently and without involving the instrumentation framework, as
+illustrated in Fig.~\ref{fig:decoupling}~(\textit{decoupled}). Depending on the
+cost of the analysis (\eg tracking implicit information flows is more costly
+than explicit flows), it can accelerate both application and analysis.  In
+short, if $I_{i}$, $A_{i}$, and $P_{i}$ are the instrumentation, analysis, and
+application code costs with in-line analysis, and $I_{d}$, $A_{d}$, $P_{d}$,
+$E_{d}$ and $D_{d}$ are the costs of instrumentation, analysis, application,
+enqueueing and dequeueing code (as defined in the above paragraph), then
+decoupling is efficient when:
+\begin{equation} \vspace{-5pt}
+	I_{i} + A_{i} + P_{i} > max(I_{d} + P_{d} + E_{d}, A_{d} + D_{d})
+	\label{eqn:efficiency}
+\end{equation}
+\vspace{-8pt}
+
+Essentially, decoupling is more efficient when the following two conditions are
+met: \textit{(a)} if the cost of the in-line analysis is higher than the cost of
+extracting the information and enqueueing, and \textit{(b)} if the cost of
+program execution combined with instrumentation interference is higher than
+dequeueing cost.  Ha~\etal~\cite{cab:oopsala2009} provide a more extensive model
+of the costs and benefits involved with decoupling analysis.
+
+Analyses that are bulky code-wise can experience even larger benefits because
+replacing them with more compact code, as decoupling does, exerts less
+pressure to the instrumentation framework, due to the smaller number of
+instructions that need to be interleaved with application code.
+For instance, when implementing DFT using binary instrumentation, the
+developer needs to take extra care to avoid large chunks of analysis code and
+conditional statements to achieve good performance~\cite{libdft:2012vee}. When
+decoupling DFT, we no longer have the same limitations, we could even use
+utility libraries and generally be more flexible.
+
+We need to emphasize that \sreplica does \emph{not} rely on complete execution
+replay~\cite{aftersight:atc2008, paranoidandroid:acsac10} or duplicating
+execution in other cores through speculative execution~\cite{speck:asplos2008,
+superpin:cgo2007}. So even though other cores may be utilized, it does not
+waste processing cycles.  Application code runs exactly once, and the same
+stands for the analysis code that runs in parallel. The performance and energy
+conservation benefits gained are solely due to exploiting the true parallelism
+offered by multi-cores, and being very efficient in collecting and
+communicating all the data required for the analysis to proceed independently.
+
+\subsubsection{Performance Result}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=\linewidth]{figs/s2k6.eps}
+    \caption{Inline vs.decoupled application of DFT application with \sreplica
+    and binary instrumentation.\label{fig:decoupling}}
+\end{figure}
