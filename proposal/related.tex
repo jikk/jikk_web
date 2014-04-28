@@ -2,8 +2,9 @@
 \section{Background and Related Work}
 \label{sec:related}
 
-In this section, I present related work and my previous research results
-which are relevant to my thesis.
+In this section, I discuss related work and present my previous research
+results relevant to my thesis to help reader to identify the context of this
+thesis proposal.
 
 \subsection{Related Work}
 
@@ -54,9 +55,9 @@ use. DFT is even used to assist solving performance problems~\cite{} pairing
 configuration file entries with performance bottlenecks as sources and sinks. 
 
 DFT is implemented by having shadow context that corresponds to the original
-exectuion context. The shadow context comprise of shadow operations and shadow
-memory area. Table~\ref{tab:dft_tracking} shows how instuctions' DFT semantics
-for general purpose instruction architecure (ISA) are defined to perform DFT
+execution context. The shadow context comprise of shadow operations and shadow
+memory area. Table~\ref{tab:dft_tracking} shows how instructions' DFT semantics
+for general purpose instruction architecture (ISA) are defined to perform DFT
 operations to keep track of changes from shadow memory area. 
 
 \begin{table}[h]
@@ -87,8 +88,75 @@ instrumentation (DBI)~\cite{}  or a modified virtual machine (VM)~\cite{}.
 Finally, DFT can be also performed in hardware~\cite{}.
 
 \subsubsection{Parallelized Analysis}
+\label{ssec:parallel}
+
+The idea of decoupling dynamic program analyses from execution, to run them in
+parallel, has been studied in past in various contexts~\cite{} . 
+%
+Aftersight~\cite{}, ReEmu~\cite{}, and Paranoid Android~\cite{} leverage record
+and replay for recording execution and replaying it, along with the analysis,
+on a remote host or a different CPU (replica). They are mostly geared toward
+off-line analyses and can greatly reduce the overhead imposed on the
+application.  However, the speed of the analysis itself is not improved, since
+execution needs to be replayed and augmented with the analysis code on the
+replica.  SuperPin~\cite{} and Speck~\cite{} use speculative execution to run
+application and (in-lined) analysis code in multiple threads that execute in
+parallel. These systems sacrifice significant processing power to achieve speed
+up.  Furthermore, handling multi-threaded applications without hardware support
+remains a challenging issue for this approach. CAB~\cite{} and PiPA~\cite{} aim
+at offloading the analysis code alone to another execution thread, and they are
+the closed to \sreplica. However, neither of the two has been able to deliver
+the expected performance gains, due to {\it (i)} naively collecting information
+from the application, and {\it (ii)} the high overhead of communicating it to
+the analysis thread(s). 
 
 \subsection{Previous Research}
+
+From my previous research, I have addressed the high overhead issue inherent to
+heavy-weighted inline monitors such as DFT implementations.
+
 \subsubsection{\libdft}
+
+\libdft is a highly optimized DFT framework that shows comparable to or faster
+performance than most previous DFT implementations. \libdft implements
+instruction level monitors by instrumenting DFT instruction that perform shadow
+operations against {\tt x86} binary stream at runtime using PIN~\cite{} DBI
+framework.
+%
+\libdft's performance gain comes in two folds. 
+
+The first is by having {\it inline-friendly} DFT operations. To interleave
+codes from two different contexts, underlying DBI framework should add
+management instructions to save and restore states relevant to each context for
+every instrumentation. The state includes the whole CPU registers and the
+operation of spilling/re-filling these is typically expensive. {\it
+Instrumentation inlining}~\cite{} reduces this overhead taking advantage of
+remaining register entries unused from the application context. In order to
+make DFT operations to be instrumentation suitable for inlining, it needs to
+meet the following two conditions.
+%
+\begin{enumerate} \item The instruction count for DFT operation should less
+than ten.  \item DFT operation should not contain branch operations that make
+updates to {\tt EFLAG} register.  \end{enumerate} 
+%
+Having highly crafted routines that satisfy above conditions, \libdft could
+have most of its operations in-lined reducing signification amount of overhead.
+
+The second is by having optimal shadow memory design that minimizes the cycles
+needed to translate real address entries into shadow memory counterparts. We
+have number of design choices regarding shadow store structure that come with
+CPU time vs. memory space trade-offs. Not to reduce the execution transparency
+by assign too large portion of address space, most of shadow memory
+architectures leverage multiple level of indirections which inevitably involve
+conditional operations. \libdft avoids this problem by instrumentation every
+memory routines to co-allocate/deallocate counterpart shadow entries. This not
+only reduce the instruction counts but also eliminate need for control
+instruction in translations.
+
+\libdft takes the form of a shared library enabling developers to create of
+DFT-enabled Pintools for binaries, using its extensive API. For example,
+\libdft already includes a DTA tool, which can be used to protect applications
+from remote buffer overflow exploits.
+
 \subsubsection{\tfa}
 \subsubsection{\sreplica}
