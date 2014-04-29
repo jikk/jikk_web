@@ -1,13 +1,43 @@
 % !TEX root = proposal.tex
 \section{Hypothesis} \label{sec:hypo} 
 
-In this section, I discuss about hypothesis item to be discussed from my
-thesis.
+In this section, I discuss about hypotheses that we want to verify and confirm
+from my thesis.
 
 \subsection{\sreplica Generalization}
 
+Even though, our previous work most focuses on one kind of inline monitor (\ie
+DFT), we strongly believe that the approaches can easily be generalized to
+support analyses of other kinds only with minimal amount of effort.
+Tabel~\ref{tab:analyses} contains a list of well-known inline
+monitors~\cite{CAB} whose purpose is either to protect or profile application
+processes dynamically. Table~\ref{tab:analyses} also contains column entries to
+categorize monitors according to its architectures. 
+
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|}
+\hline
+Analyses & Shadow Memory & Data Dependency & Check Operation \\ 
+\hline \hline
+Data Flow Tracking (DFT) & O & O & O \\ \hline
+Control Flow Integrity (CFI) & O & O & O \\ \hline
+\specialcell{Memory Integrity Tool \\ (Memcheck)} & O & O & O \\ \hline
+LockCheck & O & O & O \\ \hline
+Method Counting & O & O & O \\ \hline
+Call Graph Profiling & O & O & O \\ \hline
+Path Profiling & O & O & O \\ \hline
+Cache Simulation & O & O & O \\ \hline
+\end{tabular}
+\caption{ categorizes different inline analyses based on requiring shadow
+memory area, analysis dependency to its previous operations, existence of
+checking/asserting operations. \label{tab:analyses}}
+\end{table}
+
+\subsubsection{Control Flow Integrity (CFI)}
+\subsubsection{Memory Integrity Tool (Memcheck)}
+
 \subsection{Instrumentation Infrastructure Study}
 \subsubsection{DBI Study}
-\subsection{DTrace Instrumentation}
+\subsubsection{DTrace Instrumentation}
 \subsubsection{Hardware Assisted Parallel Analysis}
-\subsubsection{Overhead Modeling Framework}
+\subsection{Overhead Modeling Framework}
