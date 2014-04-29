@@ -3,17 +3,19 @@
 \contentsline {subsection}{\numberline {2.1}Related Work}{v}
 \contentsline {subsubsection}{\numberline {2.1.1}Inline Monitors}{v}
 \contentsline {subsubsection}{\numberline {2.1.2}Data Flow Tracking (DFT)}{vi}
-\contentsline {subsubsection}{\numberline {2.1.3}Parallelized Analysis}{vii}
+\contentsline {subsubsection}{\numberline {2.1.3}Parallelized Analysis}{vi}
 \contentsline {subsection}{\numberline {2.2}Previous Research}{vii}
 \contentsline {subsubsection}{\numberline {2.2.1}libdft\nobreakspace {}\xspace }{vii}
-\contentsline {subsubsection}{\numberline {2.2.2}TFA\nobreakspace {}\xspace }{vii}
-\contentsline {subsubsection}{\numberline {2.2.3}ShadowReplica\nobreakspace {}\xspace }{vii}
-\contentsline {section}{\numberline {3}Hypothesis}{vii}
-\contentsline {subsection}{\numberline {3.1}ShadowReplica\nobreakspace {}\xspace Generalization}{vii}
-\contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{vii}
-\contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{vii}
-\contentsline {subsection}{\numberline {3.3}DTrace Instrumentation}{vii}
-\contentsline {subsubsection}{\numberline {3.3.1}Hardware Assisted Parallel Analysis}{vii}
-\contentsline {subsubsection}{\numberline {3.3.2}Overhead Modeling Framework}{vii}
-\contentsline {section}{\numberline {4}Evaluation}{vii}
-\contentsline {section}{\numberline {5}Research Plan}{vii}
+\contentsline {subsubsection}{\numberline {2.2.2}TFA\nobreakspace {}\xspace }{viii}
+\contentsline {subsubsection}{\numberline {2.2.3}ShadowReplica\nobreakspace {}\xspace }{ix}
+\contentsline {subsubsection}{\numberline {2.2.4}Inline vs. Decoupled DFT}{x}
+\contentsline {subsubsection}{\numberline {2.2.5}Performance Result}{xi}
+\contentsline {section}{\numberline {3}Hypothesis}{xi}
+\contentsline {subsection}{\numberline {3.1}ShadowReplica\nobreakspace {}\xspace Generalization}{xii}
+\contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{xii}
+\contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{xii}
+\contentsline {subsection}{\numberline {3.3}DTrace Instrumentation}{xii}
+\contentsline {subsubsection}{\numberline {3.3.1}Hardware Assisted Parallel Analysis}{xii}
+\contentsline {subsubsection}{\numberline {3.3.2}Overhead Modeling Framework}{xii}
+\contentsline {section}{\numberline {4}Evaluation}{xii}
+\contentsline {section}{\numberline {5}Research Plan}{xii}
