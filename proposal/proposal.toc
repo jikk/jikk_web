@@ -13,11 +13,11 @@
 \contentsline {section}{\numberline {3}Hypothesis}{xiii}
 \contentsline {subsection}{\numberline {3.1}ShadowReplica\nobreakspace {}\xspace Generalization}{xiii}
 \contentsline {subsubsection}{\numberline {3.1.1}Control Flow Integrity (CFI)}{xiv}
-\contentsline {subsubsection}{\numberline {3.1.2}Memory Integrity Tool (Memcheck)}{xiv}
-\contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{xiv}
-\contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{xiv}
-\contentsline {subsubsection}{\numberline {3.2.2}DTrace Instrumentation}{xiv}
-\contentsline {subsubsection}{\numberline {3.2.3}Hardware Assisted Parallel Analysis}{xiv}
-\contentsline {subsection}{\numberline {3.3}Overhead Modeling Framework}{xiv}
-\contentsline {section}{\numberline {4}Evaluation}{xiv}
-\contentsline {section}{\numberline {5}Research Plan}{xiv}
+\contentsline {subsubsection}{\numberline {3.1.2}Memory Integrity Tool (Memcheck)}{xv}
+\contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{xv}
+\contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{xv}
+\contentsline {subsubsection}{\numberline {3.2.2}DTrace Instrumentation}{xv}
+\contentsline {subsubsection}{\numberline {3.2.3}Hardware Assisted Parallel Analysis}{xv}
+\contentsline {subsection}{\numberline {3.3}Overhead Modeling Framework}{xv}
+\contentsline {section}{\numberline {4}Evaluation}{xv}
+\contentsline {section}{\numberline {5}Research Plan}{xv}

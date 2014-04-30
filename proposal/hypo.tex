@@ -42,17 +42,49 @@ memory}, analysis' {\it dependency to its previous operations}, existence of
 {\it checking/asserting operations}. \label{tab:analyses}}
 \end{table}
 
-Our goal here is to extend \sreplica approach to support most of moniors
-presented from Table~\ref{tab:analyses}. Eventual output would be a framework
-with support API that would help users to writes tools that serve for their
-needs. However, due to time and resource constraints, we are planning to verify
-to feasiblity of the concept by extending the current implementation of
-\sreplica to support control flow integrity (CFI)~\cite{} and memory integrity
-tool~\cite{}.
+Our goal here is to extend \sreplica approach to support most of monitors
+presented from Table~\ref{tab:analyses}. Eventual output would be a generalized
+framework with supporting API that helps users to write tools that serve for
+their needs. However, due to time and resource constraints, we are planning to
+build proof-of-concept implementation by extending \sreplica to support
+representative instances of control flow integrity (CFI)~\cite{} and memory
+integrity tool~\cite{}.
 
 \subsubsection{Control Flow Integrity (CFI)} 
 
+CFI thwarts control-hijacking attacks by ensuring that the control flow remains
+within the control-flow graph (CFG) intended by the programmer. Every
+instruction that is the target of a legitimate control-flow transfer is
+assigned a unique identifier (ID), and checks are inserted before control-flow
+instructions to ensure that only valid targets are allowed. All programs
+usually contain two types of control-flow transfers: direct and indirect.
+Direct transfers have a fixed target and they do not require any enforcement
+checks. However, indirect transfers, like function calls and returns, and
+indirect jumps, take a dynamic target address as argument. As the target
+address could be controlled by an attacker due to a vulnerability, CFI checks
+to ensure that its ID matches the list of known and allowable target IDs of the
+instruction. 
+
+A certain form of control flow tracking is already implemented from the current
+prototype of \sreplica since it is designed to replicate the execution trace of the original application thread at BBL level granularity.
+
 \subsubsection{Memory Integrity Tool (Memcheck)}
+
+\begin{table}[h]
+        \centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Instruction} & {\bf Tag propagation rule} \\ \hline \hline
+    {\tt \specialcell{ALU-OP OP1 $\leftarrow$ OP2 \\ (add, sub \dots)}} & 
+    {\tt t(op1) $\vert=$ t(op2)}\\ \hline
+    {\tt MOV OP1  $\leftarrow$  OP2} & {\tt t(op1) = t(op2)}     \\ \hline
+    {\tt LOAD OP1 $\leftarrow$ [OP2]} & {\tt t(OP1) = t([OP2])}  \\ \hline
+    {\tt STORE [OP1] $\leftarrow$ OP2} & {\tt t([OP1]) = t(OP2)} \\ \hline
+\end{tabular}
+\caption{presents an interpretation of DFT semantics for pseudo instruction set
+architecture.}
+\label{tab:dft_tracking}
+\end{table}
 
 \subsection{Instrumentation Infrastructure Study}
 \subsubsection{DBI Study}
