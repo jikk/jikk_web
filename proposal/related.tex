@@ -158,7 +158,7 @@ DFT-enabled Pintools for binaries, using its extensive API. For example,
 \libdft already includes a DTA tool, which can be used to protect applications
 from remote buffer overflow exploits.
 
-\subsubsection{\tfa} 
+\subsubsection{\tfafull (\tfa)} 
 
 Main insights behind \tfa is that update-to-date DFT are lacking in {\it i)}
 consideration for global context {\it ii)} understanding of DFT operation
@@ -341,6 +341,7 @@ offered by multi-cores, and being very efficient in collecting and
 communicating all the data required for the analysis to proceed independently.
 
 \subsubsection{Evaluation for Previous Systems}
+\label{ssec:prev_eval}
 
 Fig.~\ref{fig:s2k6} represents the performance results that compares previous
 DFT implementations against SPEC 2006 CPU benchmarks suite. Given that SPEC is
@@ -410,7 +411,7 @@ usage using the {\it perf} tool. Figure~\ref{fig:task0} presents the results of
 our experiment. We run \sreplica with both application and analysis threads
 running, having the analysis perform no analysis (No analysis), implementing
 DFT using all optimizations (DFT), and without the FastPath optimization from
-LIFT~\cite{lift}(DFT (NO FP)). The last column(in-line DFT) shows the result
+LIFT~\cite{lift}(DFT (NO\_FP)). The last column(in-line DFT) shows the result
 for DFT implementation that inlines the analysis to the application
 process~\cite{tfa}. CPU usage is partitioned to show the amount of CPU cycles
 taken from the application and analysis threads separately. The darker
