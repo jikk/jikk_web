@@ -340,11 +340,91 @@ conservation benefits gained are solely due to exploiting the true parallelism
 offered by multi-cores, and being very efficient in collecting and
 communicating all the data required for the analysis to proceed independently.
 
-\subsubsection{Performance Result}
+\subsubsection{Evaluation for Previous Systems}
+
+Fig.~\ref{fig:s2k6} represents the performance results that compares previous
+DFT implementations against SPEC 2006 CPU benchmarks suite. Given that SPEC is
+a CPU intensive one, on average, \libdft, \tfa, \sreplica show $\times 11.27$,
+$\times 6.36$, $\times 2.75$ slowdown over native executions.
+%
+From this result, items that show particularly high slowdown are ones that
+incur high instrumentation overhead incurred by underlying DBI framework. {\tt
+h264} typically involves many operations for re-prefixed-string instructions
+(\eg {\tt rep movs, rep cmps, rep lods, rep stos}). For these instructions, our
+underlying instrumentation framework \ie \pin assumes that developer may want
+to instrument one of these repetitions, so it JITs these instructions into
+explicit loops, allowing the instrumentation to be inserted into each one of
+the iterations. The JITed explicit loop is far less performant than the
+original rep-prefixed-string instruction. 
+%
+And {\tt perl} is a language runtime that generates instructions dynamically as
+the runtime interprets statements to be executed. Whenever \pin encounters
+dynamically generated code, it needs to re-interpret the code and store them in
+its code-cache. As a result, not being able to have high cache-hit ratios, DBI
+based instrumentations failing to show good performance result when it is
+applied the language runtimes. 
 
 \begin{figure}[tb]
     \centering
     \includegraphics[width=\linewidth]{figs/s2k6.eps}
     \caption{Inline vs.decoupled application of DFT application with \sreplica
-    and binary instrumentation.\label{fig:decoupling}}
+    and binary instrumentation.\label{fig:s2k6}}
+\end{figure}
+
+Besides SPEC 2006, our systems are extensively evaluated against many mature,
+real world applications which include MySQL, Apache, and web browsers. For
+details about these result, readers can refer to our previous papers.
+
+We want to discuss further about a couple of interesting insights that we
+learned from our most recent DFT implementation or \sreplica and its
+performance and efficiency evaluations. Firstly, Figure~\ref{fig:sreplica0}
+provides segmented view that illustrates \sreplica's overhead components. From
+the left to the right, {\tt NULL\_PIN} represents the pure instrumentation
+overhead imposed by DBI instrumentation. In this case, each benchmark items are
+executed with \pin DBI but with no analysis logics. Thus additional slowdown of
+$\times 0.69$ accounts for the pure instrumentation cost. The next entry of
+{\tt SEC\_NULL} represents the slowdown when the enqueueing operation is
+instrumented with the application thread without having the analysis thread
+that would consumes transferred messages. Thus the additional $\times 1.02$
+slowdown is to collect informations to be transferred. Lastly, the analysis
+thread is attached to perform DFT operation in {\tt SEC\_DFT} (\ie, full-scale
+\sreplica). Interestingly, it only shows $\times 0.4$ of additional slowdown.
+It means that, in most cases, the overall slowdown is bound to the application
+thread instrumented with event collector and the cost for DFT analysis thread
+and communications are not major bottlenecks.
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.33\linewidth]{figs/sreplica0.eps}
+    \caption{Inline vs.decoupled application of DFT application with \sreplica
+    and binary instrumentation.\label{fig:sreplica0}}
+\end{figure}
+
+On of the goals of \sreplica was to also make DFT more efficient
+computation-wise. In other words, we not only desired to accelerate DFT, but
+also do it using less CPU resources. To evaluate this aspect of our approach,
+we chose two benchmarks from the SPEC CPU2006 suite; {\tt bzip2} and {\tt
+perl}.  Our choice was was not arbitrary. We run \sreplica and our accelerated
+in-line DFT implementation with these two benchmarks, and measured their CPU
+usage using the {\it perf} tool. Figure~\ref{fig:task0} presents the results of
+our experiment. We run \sreplica with both application and analysis threads
+running, having the analysis perform no analysis (No analysis), implementing
+DFT using all optimizations (DFT), and without the FastPath optimization from
+LIFT~\cite{lift}(DFT (NO FP)). The last column(in-line DFT) shows the result
+for DFT implementation that inlines the analysis to the application
+process~\cite{tfa}. CPU usage is partitioned to show the amount of CPU cycles
+taken from the application and analysis threads separately. The darker
+horizontal line visualizes the tipping point where the DFT analysis thread
+starts dominating performance (\ie it is slower than the application), when we
+are running \sreplica with DFT and all optimizations enabled.  A take-out from
+these results is that the aggregated CPU usage of \sreplica is less or equal
+than that of in-line DFT analysis, \tfa in this case. In the case of {\tt
+perl}, we are so much more efficient that we require ∼30\% less CPU cycles to
+apply DFT.
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figs/task0.eps}
+    \caption{Inline vs.decoupled application of DFT application with \sreplica
+    and binary instrumentation.\label{fig:task0}}
 \end{figure}
