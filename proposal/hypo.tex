@@ -6,13 +6,22 @@ from my thesis.
 
 \subsection{\sreplica Generalization}
 
-Even though, our previous work most focuses on one kind of inline monitor (\ie
-DFT), we strongly believe that the approaches can easily be generalized to
-support analyses of other kinds only with minimal amount of effort.
-Tabel~\ref{tab:analyses} contains a list of well-known inline
-monitors~\cite{CAB} whose purpose is either to protect or profile application
-processes dynamically. Table~\ref{tab:analyses} also contains column entries to
-categorize monitors according to its architectures. 
+Even though, our previous work most focuses on a specific instance of inline
+monitor (\ie DFT), we strongly believe that the approaches can easily be
+generalized to support analyses of other kinds only with minimal amount of
+effort.  Tabel~\ref{tab:analyses} contains a list of well-known inline
+monitors~\cite{CAB} echo one's goal is either to protect or profile application
+processes dynamically. Column entries categorizes monitors according to its
+structural properties. Column entry {\it Shadow Memory} denotes whether the
+monitor requires shadow memory area to keep track of updates from real
+execution context. {\it Data dependency} denotes whether the monitor's
+operations depend on it own previous updates. We have to consider data
+dependencies between updates if we want to parallel the analysis performed by
+the monitor. {\it Check Operation} denotes whether the monitor examines for
+specific system activities. For instance, DTA tool checks for every {\tt RET}
+structions to see whether a taintedness value is used for its operand to
+deviate executions. In contrast, {\it cache simulation} does not have such
+operations.
 
 \begin{table}[h]
 \begin{tabular}{|c|c|c|c|}
@@ -33,7 +42,16 @@ memory}, analysis' {\it dependency to its previous operations}, existence of
 {\it checking/asserting operations}. \label{tab:analyses}}
 \end{table}
 
-\subsubsection{Control Flow Integrity (CFI)}
+Our goal here is to extend \sreplica approach to support most of moniors
+presented from Table~\ref{tab:analyses}. Eventual output would be a framework
+with support API that would help users to writes tools that serve for their
+needs. However, due to time and resource constraints, we are planning to verify
+to feasiblity of the concept by extending the current implementation of
+\sreplica to support control flow integrity (CFI)~\cite{} and memory integrity
+tool~\cite{}.
+
+\subsubsection{Control Flow Integrity (CFI)} 
+
 \subsubsection{Memory Integrity Tool (Memcheck)}
 
 \subsection{Instrumentation Infrastructure Study}
