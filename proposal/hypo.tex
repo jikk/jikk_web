@@ -155,6 +155,7 @@ how system behaviors would change in respond as well as how frequent checking
 operations of the tool would have impact.
 
 \subsection{Instrumentation Infrastructure Study}
+\label{ssec:inst_infra}
 
 As we have discussed from Section~\ref{ssec:prev_eval}, the cost to instrument
 event collect to the application thread accounts for large portion of its
@@ -165,13 +166,16 @@ and then talk about approaches of different categories based on binary writing
 and hardware assistance.
 
 \subsubsection{DBI Study} 
+\label{ssec:dbi_study}
 
 Dynamic binary instrumentation(DBI) frameworks enable the development of
 program analysis tools for unknown binary by facilitating automatic low-level
-instrumentation. This technique has become essential building blocks in
-developing tools that enhance the security and reliability of software systems.
-Representative DBI frameworks for these are PIN~\cite{}, Valgrind~\cite{}, and
-DynamoRIO~\cite{}.
+instrumentation. This technology takes advantage of the process-level
+virtualization populating the code cache entries that combines original codes
+with users-authored analysis logics. This technique has become essential
+building blocks in developing tools that enhance the security and reliability
+of software systems.  Representative DBI frameworks for these are PIN~\cite{},
+Valgrind~\cite{}, and DynamoRIO~\cite{}.
 %
 Forming a same layer between a running application and underlying operating
 system, each framework comes with different capabilities and performance
@@ -185,8 +189,39 @@ three different aspects – efficiency, capability, and usability. Purpose of ou
 work is to provide a proper guideline to developers who want to develop
 security analysis tools enhancing this technology.
 
-\subsubsection{DTrace Instrumentation}
+\subsubsection{Alternative Instrumentation Approaches}
 
+\jikk{AWK}Trade-off for flexibility in DBI instrumentation, we need to pay high
+overhead due to process level virtualization. Having this in mind, we want to
+explore possible alternatives that can replace the substrate. Now, we are
+looking at solutions based on {\it binary re-writing}~\cite{cfi, rewriting} and
+instrumentation approach leveraging {\it DTrace}~\cite{} technology.
 
-\subsubsection{Hardware Assisted Parallel Analysis}
+\subsubsection{Hardware Assisted Decoupled Analysis} 
+\label{}
+
+We are also considering to hardware based instrumentation to enhance
+\sreplica's execution model. XXX \etal already proposed log based architecture
+(LBA)~\cite{lba}, a framework for decoupled analysis having hardware level
+support, but it suffered from too much amount of information collected from the
+application and transferred using shared cache connecting two different cores.
+%
+Addressing the issue of communication volume and frequency with \sreplica's
+capability in optimizing and reducing the amount of such informations by having
+static off-line analysis, we also want to build a CPU extension that would
+accelerate decoupled analysis. 
+%
+The main design and implementation challenges are (a) space requirement for
+addition hardware need to be minimal and (b) the support should be flexible so
+it can dynamically adopt to monitoring logics and support different kinds of
+inline monitors.
+
 \subsection{Overhead Modeling Framework}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.90\linewidth]{figs/model0.eps}
+    \caption{Overhead model inline monitors \label{fig:model0}}
+\end{figure}
+
+

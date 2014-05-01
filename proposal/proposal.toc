@@ -16,8 +16,8 @@
 \contentsline {subsubsection}{\numberline {3.1.2}Memory Integrity Tool (Memcheck)}{xv}
 \contentsline {subsection}{\numberline {3.2}Instrumentation Infrastructure Study}{xvi}
 \contentsline {subsubsection}{\numberline {3.2.1}DBI Study}{xvi}
-\contentsline {subsubsection}{\numberline {3.2.2}DTrace Instrumentation}{xvi}
-\contentsline {subsubsection}{\numberline {3.2.3}Hardware Assisted Parallel Analysis}{xvi}
-\contentsline {subsection}{\numberline {3.3}Overhead Modeling Framework}{xvi}
-\contentsline {section}{\numberline {4}Evaluation}{xvi}
-\contentsline {section}{\numberline {5}Research Plan}{xvi}
+\contentsline {subsubsection}{\numberline {3.2.2}Alternative Instrumentation Approaches}{xvi}
+\contentsline {subsubsection}{\numberline {3.2.3}Hardware Assisted Decoupled Analysis}{xvi}
+\contentsline {subsection}{\numberline {3.3}Overhead Modeling Framework}{xvii}
+\contentsline {section}{\numberline {4}Evaluation}{xvii}
+\contentsline {section}{\numberline {5}Research Plan}{xvii}
