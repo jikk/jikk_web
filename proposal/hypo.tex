@@ -218,6 +218,35 @@ inline monitors.
 
 \subsection{Overhead Modeling Framework}
 
+Different inline monitors discussed from Section~\ref{ssec:inline} have
+different performance implications and may not be benefited must when it is
+parallelized than when the analysis is in-lined with the original execution. Or
+it would be better to have multiple number of the analysis threads when the
+analysis is too heavy-weighted and workload can be divided into number of
+independent sub-units. Regarding this, we can consider three different models
+described from Figure~\ref{fig:model0}. As a part of generalization effort, we
+want to establish an analytic framework that would take one of in-lined model
+as an input and determine the suitable model for the best response time. 
+
+Ha \etal\cite{xx} proposed a model simpler than our by taking only two
+execution models (Figure~\ref{fig:model0} (a), Figure~\ref{fig:model0} (b))
+into its consideration. By not having a model for Figure~\ref{fig:model0} (c),
+their model can cover cases where we have too expensive monitoring logic or the
+cost for event collector and its instrumentation become very thin and they did
+not use their model for the purpose of choose best model for monitors. In
+contrast, dynamic profiler will be used to capture performance characteristics
+of target monitors and application to be in-lined. With profiling result, the
+framework can better decide the execution model for best response time for
+given monitor and application.
+
+More interestingly, from our previous hypotheses, we attempt to change the
+performance characteristics by having different instrumentation media. We can
+consider this as a meaningful contribution, if we can confirm the benefits of
+these choices previous using the framework.
+
+For the rest of the section, we discuss more about execution models of our
+consideration.
+
 \begin{figure}[tb]
     \centering
     \includegraphics[width=0.90\linewidth]{figs/model0.eps}
@@ -231,4 +260,3 @@ inline monitors.
 \subsubsection{Inlining Model}
 \subsubsection{Producer-consumer Model}
 \subsubsection{Worker poll Model}
-
