@@ -19,5 +19,8 @@
 \contentsline {subsubsection}{\numberline {3.2.2}Alternative Instrumentation Approaches}{xvi}
 \contentsline {subsubsection}{\numberline {3.2.3}Hardware Assisted Decoupled Analysis}{xvi}
 \contentsline {subsection}{\numberline {3.3}Overhead Modeling Framework}{xvii}
+\contentsline {subsubsection}{\numberline {3.3.1}Inlining Model}{xvii}
+\contentsline {subsubsection}{\numberline {3.3.2}Producer-consumer Model}{xvii}
+\contentsline {subsubsection}{\numberline {3.3.3}Worker poll Model}{xvii}
 \contentsline {section}{\numberline {4}Evaluation}{xvii}
 \contentsline {section}{\numberline {5}Research Plan}{xvii}
