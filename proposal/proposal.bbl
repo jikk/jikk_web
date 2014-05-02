@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{sreplica:ccs2013}
 {\em the ACM Conference on Computer and Communications Security, CCS'13,
@@ -10,6 +10,19 @@ Mart\'{\i}n Abadi, Mihai Budiu, \'{U}lfar Erlingsson, and Jay Ligatti.
 \newblock In {\em Proceedings of the 12th ACM Conference on Computer and
   Communications Security}, CCS '05, pages 340--353, New York, NY, USA, 2005.
   ACM.
+
+\bibitem{vigilante:sosp05}
+M.~Costa, J.~Crowcroft, M.~Castro, A.~Rowstron, L.~Zhou, L.~Zhang, and
+  P.~Barham.
+\newblock {Vigilante}: End-to-end containment of internet worms.
+\newblock In {\em Proc. of SOSP}, 2005.
+
+\bibitem{taintdroid:osdi10}
+William Enck, Peter Gilbert, Byung-Gon Chun, Landon~P. Cox, Jaeyeon Jung,
+  Patrick McDaniel, and Anmol~N. Sheth.
+\newblock {TaintDroid}: An information-flow tracking system for realtime
+  privacy monitoring on smartphones.
+\newblock In {\em Proc. of OSDI}, 2010.
 
 \bibitem{tfa:ndss2012}
 Kangkook Jee, Georgios Portokalidis, Vasileios~P Kemerlis, Soumyadeep Ghosh,
@@ -37,5 +50,17 @@ CK~Luk, R~Cohn, R~Muth, H~Patil, A~Klauser, G~Lowney, S~Wallace, VJ~Reddi, and
 Nicholas Nethercote and Julian Seward.
 \newblock Valgrind: a framework for heavyweight dynamic binary instrumentation.
 \newblock In {\em Proc. of PLDI}, 2007.
+
+\bibitem{taintcheck:ndss2005}
+J~Newsome and D~Song.
+\newblock {Dynamic taint analysis for automatic detection, analysis, and
+  signature generation of exploits on commodity software}.
+\newblock In {\em Proc. of NDSS}, 2005.
+
+\bibitem{panorama:ccs2007}
+Heng Yin, Dawn Song, Manuel Egele, Christopher Kruegel, and Engin Kirda.
+\newblock Panorama: capturing system-wide information flow for malware
+  detection and analysis.
+\newblock In {\em Proc. of CCS}, 2007.
 
 \end{thebibliography}
