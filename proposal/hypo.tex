@@ -10,14 +10,14 @@ Even though, our previous work most focuses on a specific instance of inline
 monitor (\ie DFT), we strongly believe that the approaches can easily be
 generalized to support analyses of other kinds only with minimal amount of
 effort.  Tabel~\ref{tab:analyses} contains a list of well-known inline
-monitors~\cite{CAB} echo one's goal is either to protect or profile application
-processes dynamically. Column entries categorizes monitors according to its
-structural properties. Column entry {\it Shadow Memory} denotes whether the
-monitor requires shadow memory area to keep track of updates from real
-execution context. {\it Data dependency} denotes whether the monitor's
-operations depend on it own previous updates. We have to consider data
-dependencies between updates if we want to parallel the analysis performed by
-the monitor. {\it Check Operation} denotes whether the monitor examines for
+monitors~\cite{cab:oopsala2009} echo one's goal is either to protect or profile
+application processes dynamically. Column entries categorizes monitors
+according to its structural properties. Column entry {\it Shadow Memory}
+denotes whether the monitor requires shadow memory area to keep track of
+updates from real execution context. {\it Data dependency} denotes whether the
+monitor's operations depend on it own previous updates. We have to consider
+data dependencies between updates if we want to parallel the analysis performed
+by the monitor. {\it Check Operation} denotes whether the monitor examines for
 specific system activities. For instance, DTA tool checks for every {\tt RET}
 structions to see whether a taintedness value is used for its operand to
 deviate executions. In contrast, {\it cache simulation} does not have such
@@ -115,7 +115,7 @@ level of optimization benefit.
 
 \subsubsection{Memory Integrity Tool (Memcheck)}
 
-Memory integrity tools~\cite{memcheck, drmemory, asan} are designed to assist
+Memory integrity tools~\cite{memcheck, drmemory:cgo2011, asan} are designed to assist
 developers by reporting (a) memory leakage errors implemented by instrumenting
 known memory allocation and deallocation routines to check whether a program
 exits having any allocated memory chunks not being deallocated and (b) usage of
@@ -194,15 +194,16 @@ security analysis tools enhancing this technology.
 \jikk{AWK}Trade-off for flexibility in DBI instrumentation, we need to pay high
 overhead due to process level virtualization. Having this in mind, we want to
 explore possible alternatives that can replace the substrate. Now, we are
-looking at solutions based on {\it binary re-writing}~\cite{cfi, rewriting} and
-instrumentation approach leveraging {\it DTrace}~\cite{} technology.
+looking at solutions based on {\it binary re-writing}~\cite{cfi,
+brewriting:usenix2003} and instrumentation approach leveraging {\it
+DTrace}~\cite{DTrace} technology.
 
 \subsubsection{Hardware Assisted Decoupled Analysis} 
 \label{}
 
 We are also considering to hardware based instrumentation to enhance
 \sreplica's execution model. XXX \etal already proposed log based architecture
-(LBA)~\cite{lba}, a framework for decoupled analysis having hardware level
+(LBA)~\cite{lba:isca2008}, a framework for decoupled analysis having hardware level
 support, but it suffered from too much amount of information collected from the
 application and transferred using shared cache connecting two different cores.
 %
@@ -228,8 +229,8 @@ described from Figure~\ref{fig:model0}. As a part of generalization effort, we
 want to establish an analytic framework that would take one of in-lined model
 as an input and determine the suitable model for the best response time. 
 
-Ha \etal\cite{xx} proposed a model simpler than our by taking only two
-execution models (Figure~\ref{fig:model0} (a), Figure~\ref{fig:model0} (b))
+Ha \etal\cite{cab:oopsala2009} proposed a model simpler than our by taking only
+two execution models (Figure~\ref{fig:model0} (a), Figure~\ref{fig:model0} (b))
 into its consideration. By not having a model for Figure~\ref{fig:model0} (c),
 their model can cover cases where we have too expensive monitoring logic or the
 cost for event collector and its instrumentation become very thin and they did
@@ -258,5 +259,17 @@ consideration.
 \end{figure}
 
 \subsubsection{Inlining Model}
+
+Inline monitor shows the best response time when the monitoring logic is
+interleaved with the application thread.
+
 \subsubsection{Producer-consumer Model}
+
+Inline monitor shows the best response time when an analysis thread is assigned
+to each application thread. This model is similar to produce consumer model.
+
 \subsubsection{Worker poll Model}
+
+Inline monitor shows the best response time when more than one analysis threads
+are assigned to each application thread. This model requires dedicated
+dispatcher thread for scheduling.

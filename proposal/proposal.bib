@@ -131,10 +131,300 @@ and analysis},
  keywords = {dynamic taint analysis, malware analysis, malware detection, spyware},
 }
 
-@article{x-ray:osdi2012,
-author = {Attariyan, Mona and Chow, Michael and Flinn, Jason},
-title = {{X-ray: Automating root-cause diagnosis of performance anomalies in production software}},
-year = {2012}
+
+@inproceedings{xray:osdi2012,
+ author = {Attariyan, Mona and Chow, Michael and Flinn, Jason},
+ title = {X-ray: Automating Root-cause Diagnosis of Performance Anomalies in Production Software},
+ booktitle = {Proceedings of the 10th USENIX Conference on Operating Systems Design and Implementation},
+ series = {OSDI'12},
+ year = {2012},
+ isbn = {978-1-931971-96-6},
+ location = {Hollywood, CA, USA},
+ pages = {307--320},
+ numpages = {14},
+ url = {http://dl.acm.org/citation.cfm?id=2387880.2387910},
+ acmid = {2387910},
+ publisher = {USENIX Association},
+ address = {Berkeley, CA, USA},
+} 
+
+@inproceedings{cab:oopsala2009,
+ author = {Ha, Jungwoo and Arnold, Matthew and Blackburn, Stephen M. and McKinley, Kathryn S.},
+ title = {A concurrent dynamic analysis framework for multicore hardware},
+ booktitle = {Proc. of  OOPSLA},
+ year = {2009},
+ keywords = {dynamic analysis, instrumentation, multicore, profiling},
+}
+
+@inproceedings{lba:isca2008,
+    author = {S Chen and M Kozuch and T Strigkos and B Falsafi and P.B Gibbons
+    and T.C Mowry and V Ramachandran and O Ruwase and M Ryan and E Vlachos},
+    booktitle = {Proc. of the $35^{th}$ ICSA},
+    title = {{Flexible Hardware Acceleration for Instruction-Grain Program
+    Monitoring}},
+    year = {2008},
+    pages = {377--388}
+}
+
+@article{DTrace,
+ author = {Cooper, Greg},
+ title = {DTrace: Dynamic Tracing in Oracle Solaris, Mac OS X, and Free BSD by Brendan Gregg and Jim Mauro},
+ journal = {SIGSOFT Softw. Eng. Notes},
+ issue_date = {January 2012},
+ volume = {37},
+ number = {1},
+ month = jan,
+ year = {2012},
+ issn = {0163-5948},
+ pages = {34--34},
+ numpages = {1},
+ url = {http://doi.acm.org/10.1145/2088883.2088902},
+ doi = {10.1145/2088883.2088902},
+ acmid = {2088902},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@inproceedings{drmemory:cgo2011,
+    author = {D Bruening and Q Zhao},
+    title = {{Practical Memory Checking with Dr. Memory}},
+    booktitle = {Proc. of the $9^{th}$ CGO},
+    year = {2011},
+    pages = {213--223}
+}
+
+@inproceedings{llvm:cgo04,
+    author = {Lattner, Chris and Adve, Vikram},
+    title = {{LLVM}: A Compilation Framework for Lifelong Program Analysis \&
+       Transformation},
+    booktitle = {Proc. of CGO},
+    year = {2004}
+}
+
+@article{txl,
+ author = {Cordy, James R.},
+ title = {The TXL Source Transformation Language},
+ journal = {Sci. Comput. Program.},
+ issue_date = {August 2006},
+ volume = {61},
+ number = {3},
+ month = aug,
+ year = {2006},
+ issn = {0167-6423},
+ pages = {190--210},
+ numpages = {21},
+ url = {http://dx.doi.org/10.1016/j.scico.2006.04.002},
+ doi = {10.1016/j.scico.2006.04.002},
+ acmid = {1149672},
+ publisher = {Elsevier North-Holland, Inc.},
+ address = {Amsterdam, The Netherlands, The Netherlands},
+ keywords = {functional programming, grammars, source transformation, term rewriting},
+} 
+
+@inproceedings{cil,
+ author = {Necula, George C. and McPeak, Scott and Rahul, Shree Prakash and Weimer, Westley},
+ title = {CIL: Intermediate Language and Tools for Analysis and Transformation of C Programs},
+ booktitle = {Proceedings of the 11th International Conference on Compiler Construction},
+ series = {CC '02},
+ year = {2002},
+ isbn = {3-540-43369-4},
+ pages = {213--228},
+ numpages = {16},
+ url = {http://dl.acm.org/citation.cfm?id=647478.727796},
+ acmid = {727796},
+ publisher = {Springer-Verlag},
+ address = {London, UK, UK},
+} 
+
+@phdthesis{dynamorio,
+ author = {Bruening, Derek L.},
+ title = {Efficient, Transparent, and Comprehensive Runtime Code Manipulation},
+ year = {2004},
+ note = {AAI0807735},
+ publisher = {Massachusetts Institute of Technology},
+ address = {Cambridge, MA, USA},
+} 
+
+@PhDThesis{valgrind,
+    author      = {Nicholas Nethercote},
+    title       = {Dynamic Binary Analysis and Instrumentation},
+    school      = {Computer Laboratory, University of Cambridge},
+    address     = {United Kingdom},
+    month       = nov,
+    year        = 2004,
+}
+
+@inproceedings{qemu:usenix05,
+    author = {Fabrice Bellard},
+    title = {{QEMU}, a Fast and Portable Dynamic Translator},
+    booktitle = {Proc. of the USENIX ATC},
+    pages = {41-46},
+    year = {2005},
+    month = {April}}
+
+@article{xen:sosp2003,
+ author = {Barham, Paul and Dragovic, Boris and Fraser, Keir and Hand, Steven
+         and Harris, Tim and Ho, Alex and Neugebauer, Rolf and Pratt, Ian and
+                 Warfield, Andrew},
+ title = {Xen and the Art of Virtualization},
+ journal = {SIGOPS Oper. Syst. Rev.},
+ issue_date = {December 2003},
+ volume = {37},
+ number = {5},
+ month = oct,
+ year = {2003},
+ issn = {0163-5980},
+ pages = {164--177},
+ numpages = {14},
+ url = {http://doi.acm.org/10.1145/1165389.945462},
+ doi = {10.1145/1165389.945462},
+ acmid = {945462},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {hypervisors, paravirtualization, virtual machine monitors},
+} 
+
+@inproceedings{raksha:isca2007,
+ author = {Dalton, Michael and Kannan, Hari and Kozyrakis, Christos},
+ title = {Raksha: A Flexible Information Flow Architecture for Software Security},
+ booktitle = {Proceedings of the 34th Annual International Symposium on Computer Architecture},
+ series = {ISCA '07},
+ year = {2007},
+ isbn = {978-1-59593-706-3},
+ location = {San Diego, California, USA},
+ pages = {482--493},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/1250662.1250722},
+ doi = {10.1145/1250662.1250722},
+ acmid = {1250722},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {dynamic, semantic vulnerabilities, software security},
+} 
+
+@inproceedings{taintcheck:ndss05,
+        author          = {James Newsome and Dawn Song},
+        title           = {{Dynamic Taint Analysis for Automatic Detection,
+                        Analysis, and Signature Generation of Exploits on
+                        Commodity Software}},
+        booktitle       = {Proc. of the $12^{th}$ NDSS},
+        year            = {2005}}
+
+@Inproceedings{dta++:ndss11,
+  author = {Min Gyung Kang and Stephen McCamant and Pongsin Poosankam and Dawn 
+    Song},
+  title = {{{DTA}++: Dynamic Taint Analysis with Targeted Control-Flow 
+    Propagation}},
+  booktitle = {Proc. of the $18^{th}$ NDSS},
+  year = {2011},
+}
+
+@inproceedings{argos:eurosys06,
+        author          = {Georgios Portokalidis and Asia Slowinska and
+                        Herbert Bos},
+        title           = {{{Argos}: an Emulator for Fingerprinting Zero-Day
+                        Attacks}},
+        booktitle       = {Proc. of the 2006 EuroSys},
+        pages           = {15--27}}
+
+@inproceedings{minemu:raid11,
+        author          = {Erik Bosman and Asia Slowinska and Herbert Bos},
+        title           = {{{Minemu}: The World's Fastest Taint Tracker}},
+        booktitle       = {Proc. of the 14$^{th}$ RAID},
+        year            = {2011},
+	pages		= {1--20}}
+
+@inproceedings{taintpolicy:usenixsec06,
+        author = {Xu, Wei and Bhatkar, Sandeep and Sekar, R.},
+        title = {{Taint-Enhanced Policy Enforcement: A Practical Approach to
+                Defeat a Wide Range of Attacks}},
+        booktitle = {Proc. of the $15^{th}$ USENIX Security},
+	pages = {121--136},
+        year = {2006}}
+
+@inproceedings{aftersight:atc2008,
+author = {Chow, J and Garfinkel, T and Chen, PM},
+title = {{Decoupling dynamic program analysis from execution in virtual environments}},
+booktitle = {Proc. of USENIX ATC},
+year = {2008},
+}
+
+@inproceedings{reemu:ppopp2013,
+ author = {Chen, Yufei and Chen, Haibo},
+ title = {Scalable deterministic replay in a parallel full-system emulator},
+ booktitle = {Proc. of PPoPP},
+ year = {2013},
+ isbn = {978-1-4503-1922-5},
+ location = {Shenzhen, China},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/2442516.2442537},
+ doi = {10.1145/2442516.2442537},
+ acmid = {2442537},
+ keywords = {full-system emulator, scalable deterministic replay},
+}
+
+@inproceedings{paranoidandroid:acsac10,
+    author      =   {Georgios Portokalidis and Philip Homburg and
+                    Kostas Anagnostakis and Herbert Bos},
+    title       =   {{Paranoid Android: Versatile} Protection For Smartphones},
+    booktitle   =   {Proc. of ACSAC},
+    year        =   {2010},
+    OPTpages       =   {347--356},
+    location    =   {Austin, TX, USA},
+}
+
+@inproceedings{speck:asplos2008,
+author = {Nightingale, Edmund B and Peek, Daniel and Chen, Peter M and Flinn, Jason},
+title = {{Parallelizing security checks on commodity hardware}},
+booktitle = {Proc. of ASPLOS},
+year = {2008},
+}
+
+@inproceedings{superpin:cgo2007,
+author = {Wallace, S and Hazelwood, K},
+title = {{Superpin: Parallelizing dynamic instrumentation for real-time performance}},
+booktitle = {Proc. of CGO},
+year = {2007},
+}
+
+@inproceedings{pipa:cgo2008,
+author = {Zhao, Q and Cutcutache, I and Wong, WF},
+title = {{PiPA: pipelined profiling and analysis on multi-core systems}},
+booktitle = {Proc. of CGO},
+year = {2008},
+}
+
+@article{inlining:wbia2006,
+author = {Uh, GR and Cohn, R and Yadavalli, B and Peri, R and Ayyagari, R},
+title = {{Analyzing dynamic binary instrumentation overhead}},
+journal = {WBIA Workshop at ASPLOS},
+year = {2006}
+}
+
+@article{lift:2006micro,
+author = {Qin, Feng and Wang, Cheng and Li, Zhenmin and Kim, Ho-seop and Zhou, Yuanyuan and Wu, Youfeng},
+title = {{LIFT: A Low-Overhead Practical Information Flow Tracking System for Detecting Security Attacks}},
+journal = {MICRO 39: Proceedings of the 39th Annual IEEE/ACM International Symposium on Microarchitecture},
+year = {2006},
+volume = {LIFT:2006},
+month = dec
+}
+
+@inproceedings{brewriting:usenix2003,
+    author = {Manish Prasad and Tzi-cker Chiueh},
+    title = {A Binary Rewriting Defense against Stack Based Overflow attacks},
+    booktitle = {In Proceedings of the USENIX Annual Technical Conference},
+    year = {2003},
+    pages = {211--224}
+}
+
+@article{asan,
+author = {Serebryany, Konstantin and Bruening, Derek and Potapenko, Alexander and Vyukov, Dmitry},
+title = {{AddressSanitizer: A Fast Address Sanity Checker}},
+journal = {USENIX 2012 Annual Technical Conference on Annual Technical Conference},
+year = {2012},
+pages = {1--10},
+month = apr
 }
 
 
