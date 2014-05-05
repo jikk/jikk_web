@@ -76,12 +76,6 @@ James~R. Cordy.
 \newblock The txl source transformation language.
 \newblock {\em Sci. Comput. Program.}, 61(3):190--210, August 2006.
 
-\bibitem{vigilante:sosp05}
-M.~Costa, J.~Crowcroft, M.~Castro, A.~Rowstron, L.~Zhou, L.~Zhang, and
-  P.~Barham.
-\newblock {Vigilante}: End-to-end containment of internet worms.
-\newblock In {\em Proc. of SOSP}, 2005.
-
 \bibitem{raksha:isca2007}
 Michael Dalton, Hari Kannan, and Christos Kozyrakis.
 \newblock Raksha: A flexible information flow architecture for software
@@ -89,13 +83,6 @@ Michael Dalton, Hari Kannan, and Christos Kozyrakis.
 \newblock In {\em Proceedings of the 34th Annual International Symposium on
   Computer Architecture}, ISCA '07, pages 482--493, New York, NY, USA, 2007.
   ACM.
-
-\bibitem{taintdroid:osdi10}
-William Enck, Peter Gilbert, Byung-Gon Chun, Landon~P. Cox, Jaeyeon Jung,
-  Patrick McDaniel, and Anmol~N. Sheth.
-\newblock {TaintDroid}: An information-flow tracking system for realtime
-  privacy monitoring on smartphones.
-\newblock In {\em Proc. of OSDI}, 2010.
 
 \bibitem{cab:oopsala2009}
 Jungwoo Ha, Matthew Arnold, Stephen~M. Blackburn, and Kathryn~S. McKinley.
@@ -154,12 +141,6 @@ Nicholas Nethercote and Julian Seward.
 \newblock Valgrind: a framework for heavyweight dynamic binary instrumentation.
 \newblock In {\em Proc. of PLDI}, 2007.
 
-\bibitem{taintcheck:ndss2005}
-J~Newsome and D~Song.
-\newblock {Dynamic taint analysis for automatic detection, analysis, and
-  signature generation of exploits on commodity software}.
-\newblock In {\em Proc. of NDSS}, 2005.
-
 \bibitem{taintcheck:ndss05}
 James Newsome and Dawn Song.
 \newblock {Dynamic Taint Analysis for Automatic Detection, Analysis, and
@@ -210,12 +191,6 @@ Wei Xu, Sandeep Bhatkar, and R.~Sekar.
   Wide Range of Attacks}.
 \newblock In {\em Proc. of the $15^{th}$ USENIX Security}, pages 121--136,
   2006.
-
-\bibitem{panorama:ccs2007}
-Heng Yin, Dawn Song, Manuel Egele, Christopher Kruegel, and Engin Kirda.
-\newblock Panorama: capturing system-wide information flow for malware
-  detection and analysis.
-\newblock In {\em Proc. of CCS}, 2007.
 
 \bibitem{pipa:cgo2008}
 Q~Zhao, I~Cutcutache, and WF~Wong.
