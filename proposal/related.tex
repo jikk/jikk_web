@@ -13,16 +13,16 @@ thesis proposal.
 
 Program protection and profiling using inline monitors are dynamic analysis
 approaches that execute specific analysis logics along with the application
-process. Instance of the technology includes data flow tracking
-(DFT)~\cite{DFT}, memory integrity checking~\cite{memcheck}, control flow
-integrity~\cite{cfi}, method counting, call graph profiling and so on.
-Given that the technology can be implemented interleaving analysis/monitoring
-logics into the program execution, we can choose different instrumentation
-targets either of source code or program binaries and use different
-instrumentation mediums to implement inline monitors.
+process. Instance of the technology includes data flow tracking (DFT), memory
+integrity checking~\cite{memcheck, drmemory:cgo2011}, control flow
+integrity~\cite{cfi}, method counting, call graph profiling and so on.  Given
+that the technology can be implemented interleaving analysis/monitoring logics
+into the program execution, we can choose different instrumentation targets
+either of source code or program binaries and use different instrumentation
+mediums to implement inline monitors.
 
 Employing source code based approach, we can use representations
-exposed~\cite{AST,LLVM-IR} by compiler internals as instrumentation targets or
+exposed  by compiler~\cite{llvm:cgo04} internals as instrumentation targets or
 source-to-source approaches~\cite{txl, cil} to make changes to source code.
 This approach comes in reasonable amount of overhead roughly around $2\times$
 or less, but it is limited in completeness not being able to support COTS

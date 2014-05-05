@@ -12,9 +12,10 @@ execution.
 Well understood for its effectiveness/usefulness for its wide range of
 application domain which includes hardening software system against such
 security threats~\cite{taintcheck:ndss2005,vigilante:sosp05}, detection of
-privacy leakage~\cite{taintdroid:osdi10}, malware analysis~\cite{panorama:ccs2007}, and performance
-tuning~\cite{x}, the issue of high overhead is the main obstacle that hinders
-its adoptation to production system.
+privacy leakage~\cite{taintdroid:osdi10}, malware
+analysis~\cite{panorama:ccs2007}, and performance tuning~\cite{x-ray:osdi2012},
+the issue of high overhead is the main obstacle that hinders its adoptation to
+production system.
 %
 For a last a few years, I have focused on addressing the issue of high overhead
 for the technology, more apparent when it is applied against unknown binaries
@@ -57,7 +58,7 @@ Given that \sreplica proposes the optimal representation to define and compress
 information to be transferred from the application and establish parallelized
 DFT analysis, the first hypothesis to be verified is that \sreplica's
 communication approach can be generalized to support other families of inline
-monitors~\cite{CAB} still minimizing communication volume and
+monitors~\cite{cab:oopsala2009} still minimizing communication volume and
 frequency.
 
 To verify the applicability \sreplica's parallelization approach, we build an
@@ -93,14 +94,13 @@ instrumentation framework to collect relevant events from the application
 thread, I will confirm that we can implement the same parallelization approach
 with different instrumentation mediums and would show different performance
 semantics with different instrumentation mediums. Candidates for this substrate
-include {\it i)} dynamic binary instrumentation frameworks~(DBI), {\it ii)}
+include {\it (a)} dynamic binary instrumentation frameworks~(DBI), {\it (b)}
 other type of software tracing approach such as DTrace~\cite{DTrace} and {\it
-iii)} hardware assisted parallel analysis~\cite{lba}.
+(b)} hardware assisted parallel analysis~\cite{lba:isca2008}.
 
 Rest of document is organized as follow. Relevant relate work and my own
 previous research output that lead to this proposal are discussed from
 Section~\ref{sec:related}, and the details of hypotheses follows in
-Section~\ref{sec:hypo}. Section~\ref{sec:eval} discusses about evaluation
-approaches and Section~\ref{sec:plan} talks about research roadmap to fulfill
-the proposal.
+Section~\ref{sec:hypo}. Section~\ref{sec:plan} talks about research plan to
+fulfill research items proposed from the document.
 

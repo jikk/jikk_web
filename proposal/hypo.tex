@@ -258,5 +258,17 @@ consideration.
 \end{figure}
 
 \subsubsection{Inlining Model}
+
+Inline monitor shows the best response time when the monitoring logic is
+interleaved with the application thread.
+
 \subsubsection{Producer-consumer Model}
+
+Inline monitor shows the best response time when an analysis thread is assigned
+to each application thread. This model is similar to produce consumer model.
+
 \subsubsection{Worker poll Model}
+
+Inline monitor shows the best response time when more than one analysis threads
+are assigned to each application thread. This model requires dedicated
+dispatcher thread for scheduling.
