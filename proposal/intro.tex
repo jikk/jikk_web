@@ -51,31 +51,31 @@ optimizations to gain $\times$ 2 over the baseline tool of \libdft.
 {\bf \sreplica}~\cite{sreplica:ccs2013}: extending \tfa further, \sreplica
 executes two different contexts decoupled from \tfa analysis in parallel from
 different cores. In this execution model, the frequency and volume
-communication traffic connecting two threads are simply too much masking all
+communication traffic connecting two threads are simply too much masking all of
 the parallelization benefit. The system addresses the issue by first defining
 the minimal subset states from the application to be transferred and then
 applied a number of novel optimizations to compress them aggressively. As a
-result, the system reduces per basic block(BBL) message requirement from 4.81
+result, the system reduces per basic block (BBL) message requirement from 4.81
 to 1.2 subsequently contributing to its $\times 2.75$ slowdown over native
-execution when it is evaluated for SPEC 2006 CPU benchmark. This is $\times$ 2,  
+execution when it is evaluated for SPEC 2006 CPU benchmark. This is $\times$ 2,
 $\times$ 4 speed up over our previous systems of \libdft and \tfa respectively.
 
 %
 % Hypothesis begins.
 %
-Given that the main  contribution of our latest work, \sreplica lies in
+Given that the main contribution of our latest work, \sreplica lies in
 proposing the parallel architecture that performs DFT analysis with
 unprecedented efficiency, the first hypothesis to be verified is that
 \sreplica's approach can be generalized to support other families of inline
 monitors~\cite{cab:oopsala2009}. 
 
-However, as their architectural and design goals vary, not all inline monitor
-are susceptible for parallelization nd \sreplica to enjoy the same amount of
-performance improvement. Different execution scenarios can serve better for
-those. We, hence, need to have an overhead modeling framework to verify the
-applicability of \sreplica's methodology to different inline monitors, before 
-build an overhead modeling framework and the validity of the model is our
-second hypothesis that we want to confirm.
+However, as each one's architectural specifics and design goal varies much, not
+all inline monitors are susceptible for parallelization and \sreplica's
+approach to enjoy similar amount of performance improvement. For those
+monitors, different execution scenarios may serve better. Thus, we need to have
+a modeling framework to choose the right execution scenario for different
+inline monitors prior to its actual development and deployment. Establishing
+and verifying the model is our second hypothesis that we want to confirm.
 
 In the overhead analysis model, three different execution scenarios to
 categorize different inline monitors. 
@@ -104,13 +104,14 @@ Given that inline monitors that aim to be a tool that works against unknown
 binaries mostly resort to virtualization layer (in our case PIN DBI framework)
 for instrumentation, the last hypothesis that we want to confirm is that the
 substrate can be substituted with different instrumentation mediums to
-implement equivalent parallelization framework. For this, we will begin with a
-study that compares three different DBI frameworks~\cite{pin:pldi2005,
-dynamorio, valgrind} for their instrumentation and performance characteristics
-and then we will explore other type of software instrumentation approach such
-as binary re-writing~\cite{brewriting:usenix2003} and DTrace~\cite{DTrace}.
-Lastly, we will also study the effective and flexibility of the approach of
-hardware assisted instrumentation~\cite{lba:isca2008, raksha:isca2007}.
+implement the equivalent parallelization framework. Along the way, we will
+begin with a study that compares three different DBI
+frameworks~\cite{pin:pldi2005, dynamorio, valgrind} for their instrumentation
+and performance characteristics and then we will move on to other type of
+software instrumentation approach such as binary
+re-writing~\cite{brewriting:usenix2003} and DTrace~\cite{DTrace}. We will also
+explore the effective and flexibility of the approach of hardware assisted
+instrumentation~\cite{lba:isca2008, raksha:isca2007}.
 
 Rest of document is organized as follows. Relevant relate work and our own
 previous research outputs that lead to this proposal are discussed from
