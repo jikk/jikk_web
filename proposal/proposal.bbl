@@ -11,6 +11,12 @@ Mart\'{\i}n Abadi, Mihai Budiu, \'{U}lfar Erlingsson, and Jay Ligatti.
   Communications Security}, CCS '05, pages 340--353, New York, NY, USA, 2005.
   ACM.
 
+\bibitem{x-ray:osdi2012}
+Mona Attariyan, Michael Chow, and Jason Flinn.
+\newblock {X-ray: Automating root-cause diagnosis of performance anomalies in
+  production software}.
+\newblock 2012.
+
 \bibitem{vigilante:sosp05}
 M.~Costa, J.~Crowcroft, M.~Castro, A.~Rowstron, L.~Zhou, L.~Zhang, and
   P.~Barham.
