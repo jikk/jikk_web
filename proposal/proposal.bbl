@@ -141,6 +141,12 @@ Nicholas Nethercote and Julian Seward.
 \newblock Valgrind: a framework for heavyweight dynamic binary instrumentation.
 \newblock In {\em Proc. of PLDI}, 2007.
 
+\bibitem{taintcheck:ndss2005}
+J~Newsome and D~Song.
+\newblock {Dynamic taint analysis for automatic detection, analysis, and
+  signature generation of exploits on commodity software}.
+\newblock In {\em Proc. of NDSS}, 2005.
+
 \bibitem{taintcheck:ndss05}
 James Newsome and Dawn Song.
 \newblock {Dynamic Taint Analysis for Automatic Detection, Analysis, and

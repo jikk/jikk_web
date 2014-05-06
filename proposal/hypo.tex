@@ -1,27 +1,28 @@
 % !TEX root = proposal.tex
-\section{Hypothesis} \label{sec:hypo} 
+\section{Research Assumptions} \label{sec:hypo} 
 
-In this section, I discuss about hypotheses that we want to verify and confirm
-from my thesis.
+In this section, I discuss about hypotheses to be verified and confirmed
+from the thesis.
 
 \subsection{\sreplica Generalization}
 
 Even though, our previous work most focuses on a specific instance of inline
 monitor (\ie DFT), we strongly believe that the approaches can easily be
-generalized to support analyses of other kinds only with minimal amount of
-effort.  Tabel~\ref{tab:analyses} contains a list of well-known inline
-monitors~\cite{cab:oopsala2009} echo one's goal is either to protect or profile
-application processes dynamically. Column entries categorizes monitors
-according to its structural properties. Column entry {\it Shadow Memory}
-denotes whether the monitor requires shadow memory area to keep track of
-updates from real execution context. {\it Data dependency} denotes whether the
-monitor's operations depend on it own previous updates. We have to consider
-data dependencies between updates if we want to parallel the analysis performed
-by the monitor. {\it Check Operation} denotes whether the monitor examines for
-specific system activities. For instance, DTA tool checks for every {\tt RET}
-structions to see whether a taintedness value is used for its operand to
-deviate executions. In contrast, {\it cache simulation} does not have such
-operations.
+generalized to support analyses of other kinds with minimal amount of porting
+effort. Tabel~\ref{tab:analyses} contains a list of well-known inline
+monitors~\cite{cab:oopsala2009}. While it is either to protect or to profile
+application process at runtime, inline monitors are categorized for each one's
+architectural properties specified by column entries.  The leftmost column of
+{\it Shadow Memory} denotes whether the monitor requires shadow memory area to
+keep track of memory updates from the application context. {\it Data
+dependency} denotes whether the monitor's operations depend on the result of
+previous operations. This property tells us whether we can parallelize the
+analysis performed by the monitor for further performance improvement. {\it
+Check Operation} denotes whether the monitor is entitled to check for specific
+set of violations. For instance, Dynamic taint analysis
+(DTA)~\cite{taintcheck:ndss2005} tool checks for every {\tt RET} struction to
+see whether a taintedness value is used for its operand to deviate executions.
+In contrast, {\it cache simulation} does not have such operations.
 
 \begin{table}[h]
     \centering
@@ -38,46 +39,49 @@ Call Graph Profiling & O & O & O \\ \hline
 Path Profiling & O & O & O \\ \hline
 Cache Simulation & O & O & O \\ \hline
 \end{tabular}
-\caption{ categorizes different inline analyses based on requiring {\it shadow
-memory}, analysis' {\it dependency to its previous operations}, existence of
-{\it checking/asserting operations}. \label{tab:analyses}}
+\caption{ categorizes different inline monitors based on each one's
+architectural specifics. \label{tab:analyses}}
 \end{table}
 
 Our goal here is to extend \sreplica approach to support most of monitors
-presented from Table~\ref{tab:analyses}. Eventual output would be a generalized
-framework with supporting API that helps users to write tools that serve for
-their needs. However, due to time and resource constraints, we are planning to
-build proof-of-concept implementation by extending \sreplica to support
-representative instances of control flow integrity (CFI)~\cite{} and memory
-integrity tool~\cite{}.
+presented from Table~\ref{tab:analyses}. While the eventual output would be in
+form of a new framework equipped with supporting API that would allow users to
+write tools that serve for their purposes. However, due to time and resource
+constraints, we will begin with building proof-of-concept implementations that
+support two representative inline monitors of control flow integrity
+(CFI)~\cite{cfi} and memory integrity tool~\cite{memcheck, drmemory:cgo2011}.
 
 \subsubsection{Control Flow Integrity (CFI)} 
 
-CFI~\cite{cfi}, similarly to DTA, aims to prevent attackers from compromising
-applications by hijacking their control flow. Programs normally follow
-predetermined execution paths. CFI enforces program flow to follow one of these
-predetermined paths. Determining a complete CFG of a program is a challenging
-task in itself, but assuming such a CFG is available, CFI operates as follows.
-Run-time checks are injected in the application to ensure that control flow
-remains within the CFG. These checks are placed before every indirect control
-flow transfer in the application and check that the destination is one of the
-intended ones. Basically, all possible destinations of a particular control
-flow instruction are assigned the same id, which is validated before
-transferring control. While this can be overly permissive, because multiple
-instructions may have the same targets assigning the same id to the super-set
-of destinations, this approach allows for fast checks. 
+CFI, similarly to DTA, aims to prevent attackers from compromising applications
+by hijacking their control flow. Programs normally follow programmer-intended
+execution paths. CFI enforces program flow to follow one of these predetermined
+paths. Determining a complete CFG of a program is a challenging task in itself,
+but assuming such a CFG is available, CFI operates as follows.  Run-time checks
+are injected in the application to ensure that control flow remains within the
+CFG. These checks are placed before every indirect control flow transfer in the
+application and check that the destination is one of the intended ones.
+Basically, all possible destinations of a particular control flow instruction
+are assigned the same identifer (ID), which is validated before transferring
+control. While this can be overly permissive, because multiple instructions may
+have the same targets assigning the same ID to the super-set of destinations,
+this approach allows for fast checks. 
 
-Control flow tracking is already implemented from the current prototype of
-\sreplica since it is designed to replicate the execution trace of the original
-application thread at BBL level granularity to locate \tfa summary and performs
-corresponding DFT opertion from analysis thread. To minimize the amount of BBL
-identifers (BBID), \sreplica leverages CFG built from profiling stages.
+Control flow tracking is already implemented as a core component of the current
+prototype of \sreplica as it replicates the execution trace of the original
+application thread at BBL level granularity to locate \tfa summary and perform
+corresponding DFT opertion from analysis thread. 
 %
-As we have seen from Figure~\ref{fig:cfg0}, {\tt x86} system has three
-different type of control transfers. (a) direct jumps, (b) direct branches, and
-(c) indirect jumps. For direct jumps, BBIDs for successor BBLs can be excluded
-from logging, since there is only a single, fixed exit once execution enters
-into BBL0. For example, the transitions from BBL0 to BBL1, and then to BBL2 in
+While it is too expensive to log and transfer identifer for all BBLs executed,
+\sreplica takes advantage of CFG gathered from the profiling stage to optimize
+and minimize the amount of BBL identifers (BBID) required.
+%
+Typical instruction set architectures (ISA) including {\tt x86} system have
+three different type of control transfers illustrated from
+Figure~\ref{fig:cfg0}. (a) direct jumps, (b) direct branches, and (c) indirect
+jumps. For direct jumps, BBIDs for successor BBLs can be excluded from logging,
+since there is only a single, fixed exit once execution enters into BBL0. For
+example, the transitions from BBL0 to BBL1, and then to BBL2 in
 Figure~\ref{fig:cfg0} can be excluded. Direct branches can have two outcomes.
 They are either taken, or fall through where execution continues at the next
 instruction. We exploit this property to only enqueue a BBID, when the least
