@@ -1,14 +1,13 @@
 % !TEX root = proposal.tex
-\section{Background and Related Work}
-\label{sec:related}
-
-In this section, I discuss related work and present my previous research
+ and present my previous research
 results relevant to my thesis to help reader to identify the context of this
 thesis proposal.
 
-\subsection{Related Work}
+\section{Related Work}
+\label{sec:related}
+In this section, I discuss related work relevant to the thesis proposal. 
 
-\subsubsection{Inline Monitors}
+\subsection{Inline Monitors}
 \label{ssec:inline}
 
 Program protection and profiling using inline monitors are dynamic analysis
@@ -38,7 +37,7 @@ monitors with minimal amount of overhead less than 5\% at most supporting full
 coverage, but the we have not yet seen this functionality supported by major
 vendors with their commodity production.
 
-\subsubsection{Data Flow Tracking (DFT)}
+\subsection{Data Flow Tracking (DFT)}
 
 DFT is one of inline monitoring approaches that accurately tracks selected data
 of interest, as they flow during program execution. Among other uses, DFT has
@@ -92,7 +91,7 @@ or a modified virtual machine (VM)~\cite{qemu:usenix05, xen:sosp2003}.
 Finally, DFT can be also performed in hardware~\cite{raksha:isca2007,
 lba:isca2008}.
 
-\subsubsection{Parallelized Analysis}
+\subsection{Parallelized Analysis}
 \label{ssec:parallel}
 
 The idea of decoupling dynamic program analyses from execution, to run them in
@@ -117,12 +116,13 @@ the expected performance gains, due to {\it (a)} naively collecting information
 from the application, and {\it (b)} the high overhead of communicating it to
 the analysis thread(s). 
 
-\subsection{Previous Research}
+\section{Previous Research}
+\label{sec:previous}
 
 From my previous research, I have addressed the high overhead issue inherent to
 heavy-weighted inline monitors such as DFT implementations.
 
-\subsubsection{\libdft}
+\subsection{\libdft}
 
 \libdft is a highly optimized DFT framework that shows comparable to or faster
 performance than most previous DFT implementations. \libdft implements
@@ -165,7 +165,7 @@ DFT-enabled Pintools for binaries, using its extensive API. For example,
 \libdft already includes a DTA tool, which can be used to protect applications
 from remote buffer overflow exploits.
 
-\subsubsection{\tfafull (\tfa)} 
+\subsection{\tfafull (\tfa)} 
 
 Main insights behind \tfa is that update-to-date DFT are lacking in {\it i)}
 consideration for global context {\it ii)} understanding of DFT operation
@@ -217,7 +217,7 @@ and shadow memory design. More importantly, \libdft plays a role of slow-path
 DFT implementation to cover execution paths missed from static analysis phase
 ensuring the completeness of our approach.
  
-\subsubsection{\sreplica}
+\subsection{\sreplica}
 
 \begin{figure}[tb]
     \centering
@@ -277,7 +277,7 @@ application code not discovered during profiling. This “default” code perfor
 all necessary functionality, albeit slower than the optimized code generated
 for known BBLs and control-flow edges.
 
-\subsubsection{Inline vs. Decoupled DFT}
+\subsection{Inline vs. Decoupled DFT}
 \label{sec:inlinevsdecoupled}
 
 \begin{figure}[tb]
@@ -347,7 +347,7 @@ conservation benefits gained are solely due to exploiting the true parallelism
 offered by multi-cores, and being very efficient in collecting and
 communicating all the data required for the analysis to proceed independently.
 
-\subsubsection{Evaluation for Previous Systems}
+\subsection{Evaluation for Previous Systems}
 \label{ssec:prev_eval}
 
 Fig.~\ref{fig:s2k6} represents the performance results that compares previous
