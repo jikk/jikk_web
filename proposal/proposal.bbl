@@ -181,6 +181,13 @@ Manish Prasad and Tzi cker Chiueh.
 \newblock In {\em In Proceedings of the USENIX Annual Technical Conference},
   pages 211--224, 2003.
 
+\bibitem{lift:2006micro}
+Feng Qin, Cheng Wang, Zhenmin Li, Ho-seop Kim, Yuanyuan Zhou, and Youfeng Wu.
+\newblock {LIFT: A Low-Overhead Practical Information Flow Tracking System for
+  Detecting Security Attacks}.
+\newblock {\em MICRO 39: Proceedings of the 39th Annual IEEE/ACM International
+  Symposium on Microarchitecture}, LIFT:2006, December 2006.
+
 \bibitem{asan}
 Konstantin Serebryany, Derek Bruening, Alexander Potapenko, and Dmitry Vyukov.
 \newblock {AddressSanitizer: A Fast Address Sanity Checker}.

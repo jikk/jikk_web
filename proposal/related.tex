@@ -114,54 +114,57 @@ multiple threads that execute in parallel.  These systems sacrifice significant
 processing power to achieve speed up.  Furthermore, handling multi-threaded
 applications without hardware support remains a challenging issue for this
 approach. CAB~\cite{cab:oopsala2009} and PiPA~\cite{pipa:cgo2008} aim at
-offloading the analysis code alone to another execution thread. However, neither of the two has been able to deliver
-the expected performance gains, due to {\it (a)} naively collecting information
-from the application, and {\it (b)} the high overhead of communicating it to
-the analysis thread(s). 
+offloading the analysis code alone to another execution thread. However,
+neither of the two has been able to deliver the expected performance gains, due
+to {\it (a)} naively collecting information from the application, and {\it (b)}
+the high overhead of communicating it to the analysis thread(s). 
 
 \section{Previous Research}
 \label{sec:previous}
 
 From my previous research, I have addressed the high overhead issue inherent to
-heavy-weighted inline monitors such as DFT implementations.
+heavy-weighted inline monitors such as DFT implementations. In this section, we
+discuss details of each and related research output.
 
 \subsection{\libdft}
 
 \libdft is a highly optimized DFT framework that shows comparable to or faster
 performance than most previous DFT implementations. \libdft implements
 instruction level monitors by instrumenting DFT instruction that perform shadow
-operations against {\tt x86} binary stream at runtime using PIN DBI
-framework.
+operations against {\tt x86} binary stream at runtime using PIN
+DBI~\cite{pin:pldi2005} framework.
 %
-\libdft's performance gain comes in two folds. 
+\libdft's performance improvement comes in two folds. 
 
-The first optimization is by having {\it inline-friendly} DFT operations. To
-interleave codes from two different contexts, underlying DBI framework should
-add management instructions to save and restore states relevant to each context
-for every instrumentation. The state includes the whole CPU registers and the
-operation of spilling/re-filling these is typically expensive. {\it
-Instrumentation inlining}~\cite{inlining:wbia2006} reduces this overhead taking
-advantage of remaining register entries unused from the application context. In
-order to make DFT operations to be instrumentation suitable for inlining, it
-needs to meet the following two conditions.
+The first optimization is achieved by having {\it inline-friendly} DFT
+operations. To interleave codes of two different contexts, underlying DBI
+framework should add management/scheduling instructions to save and restore
+states for each context switch. The context includes CPU register state  and
+the operation of spilling/re-filling these contexts is typically expensive.
+{\it Instrumentation inlining}~\cite{inlining:wbia2006} is an approach aims to
+reduce this overhead taking advantage of register entries unused from the
+context of application execution. In order to make DFT operations to be
+instrumentation suitable for inlining, it needs to meet the following two
+conditions.
 %
 \begin{enumerate} \item The instruction count for DFT operation should less
 than ten.  \item DFT operation should not contain branch operations that make
 updates to {\tt EFLAG} register.  \end{enumerate} 
 %
-Having highly crafted routines that satisfy above conditions, \libdft could
-have most of its operations in-lined reducing signification amount of overhead.
+Having highly crafted routines that satisfy both conditions, \libdft could have
+most of its operations in-lined to see signification amount of overhead.
 
-The second optimization is by having optimal shadow memory design that
+The second optimization is by having efficient shadow memory design that
 minimizes the cycles needed to translate real address entries into shadow
 memory counterparts. We have number of design choices regarding shadow store
-structure that come with CPU time vs. memory space trade-offs. Not to reduce
-the execution transparency by assign too large portion of address space, most
-of shadow memory architectures leverage multiple level of indirections which
-inevitably involve conditional operations. \libdft avoids this problem by
-instrumentation every memory routines to co-allocate/deallocate counterpart
-shadow entries. This not only reduce the instruction counts but also eliminate
-need for control instruction in translations.
+structure that come as CPU time vs. memory space trade-offs. Not to reduce the
+execution transparency by assign too large portion of address space, most of
+shadow memory architectures leverage multiple level of indirections which
+inevitably involve conditional operations~\cite{}. \libdft avoids this problem
+by instrumentation every memory allocators (\ie {\tt malloc(), mmap(), free()})
+to co-allocate/deallocate counterpart shadow entries. This design choice enable
+us not only to reduce the instruction counts but also to avoid the usage of
+control instruction in translation process.
 
 \libdft takes the form of a shared library enabling developers to create of
 DFT-enabled Pintools for binaries, using its extensive API. For example,
@@ -170,8 +173,8 @@ from remote buffer overflow exploits.
 
 \subsection{\tfafull (\tfa)} 
 
-Main insights behind \tfa is that update-to-date DFT are lacking in {\it i)}
-consideration for global context {\it ii)} understanding of DFT operation
+Main insights behind \tfa is that update-to-date DFT are lacking in {\it (a)}
+consideration for global context {\it (b)} understanding of DFT operation
 semantics which is different from the original execution semantics.  \tfa
 attempts to address these issues by dedicating off-line static phase that
 performs application and DFT specific analysis. 
@@ -195,10 +198,10 @@ that has only one entry point and, in our case, a single exit point. This means
 that no instruction within a BBL is the target of a jump or branch instruction,
 and the block is only exited after its last instruction executes. These
 properties are desirable for various types of analysis, like the ones performed
-by compilers. The control flow information describes how the basic blocks are
-linked. The combination of dynamic and static profiling provides us with a
-significant part of the CFG, including the part that dominates in terms of
-execution time, and would benefit the most from optimization.
+by compilers. The control flow information describes how the BBLs are linked.
+The combination of dynamic and static profiling provides us with a significant
+part of the CFG, including the part that dominates in terms of execution time,
+and would benefit the most from optimization.
 %
 The analyzer receives the profiler information and extracts data dependencies
 from the code, separating program from data tracking logic. It then transforms
@@ -215,20 +218,20 @@ original tracking implementation to be optimized. Implementation, as it
 operates on binary programs the analyzer produces primitive C code, which can
 be compiled and inserted into the application using a DBI framework.
 
-\tfa extends \libdft re-using many features such as instruction interpretation
-and shadow memory design. More importantly, \libdft plays a role of slow-path
-DFT implementation to cover execution paths missed from static analysis phase
-ensuring the completeness of our approach.
+\tfa extends \libdft re-using many of its features such as instruction
+interpretation and shadow memory architecture. More importantly, \libdft plays
+a role of slow-path DFT implementation to cover execution paths missed from
+static analysis phase ensuring the completeness of our approach.
  
 \subsection{\sreplica}
 
 \begin{figure}[tb]
     \centering
     \includegraphics[width=0.64\linewidth]{figs/architecture.eps}
-    \caption{The architecture of \sreplica \label{fig:approach_overview}}
+    \caption{The architecture of \sreplica \label{fig:sreplica_arch}}
 \end{figure}
 
-Figure~\ref{fig:approach_overview} depicts the architecture of \sreplica, which
+Figure~\ref{fig:sreplica_arch} depicts the architecture of \sreplica, which
 comprises of two stages. The first stage, shown in the left of the figure
 involves profiling an application both statically and dynamically to extract
 code blocks, or BBLs, and control-flow information (CFG+). The latter includes
@@ -280,12 +283,12 @@ application code not discovered during profiling. This “default” code perfor
 all necessary functionality, albeit slower than the optimized code generated
 for known BBLs and control-flow edges.
 
-\subsection{Inline vs. Decoupled DFT}
+\subsubsection{Inlined vs. Decoupled DFT}
 \label{sec:inlinevsdecoupled}
 
 \begin{figure}[tb]
     \centering
-    \includegraphics[width=0.65\linewidth]{figs/decoupling.eps}
+    \includegraphics[width=0.75\linewidth]{figs/decoupling.eps}
     \caption{Inline vs.decoupled application of DFT application with \sreplica
     and binary instrumentation.\label{fig:decoupling}}
 \end{figure}
@@ -336,7 +339,7 @@ pressure to the instrumentation framework, due to the smaller number of
 instructions that need to be interleaved with application code.
 For instance, when implementing DFT using binary instrumentation, the
 developer needs to take extra care to avoid large chunks of analysis code and
-conditional statements to achieve good performance~\cite{libdft:2012vee}. When
+conditional statements to achieve good performance~\cite{libdft}. When
 decoupling DFT, we no longer have the same limitations, we could even use
 utility libraries and generally be more flexible.
 
@@ -350,7 +353,7 @@ conservation benefits gained are solely due to exploiting the true parallelism
 offered by multi-cores, and being very efficient in collecting and
 communicating all the data required for the analysis to proceed independently.
 
-\subsection{Evaluation for Previous Systems}
+\subsection{Evaluation Results}
 \label{ssec:prev_eval}
 
 Fig.~\ref{fig:s2k6} represents the performance results that compares previous
@@ -421,7 +424,7 @@ usage using the {\it perf} tool. Figure~\ref{fig:task0} presents the results of
 our experiment. We run \sreplica with both application and analysis threads
 running, having the analysis perform no analysis (No analysis), implementing
 DFT using all optimizations (DFT), and without the FastPath optimization from
-LIFT~\cite{lift:micro2006}(DFT (NO\_FP)). The last column(in-line DFT) shows
+LIFT~\cite{lift:2006micro}(DFT (NO\_FP)). The last column(in-line DFT) shows
 the result for DFT implementation that inlines the analysis to the application
 process~\cite{tfa:ndss2012}. CPU usage is partitioned to show the amount of CPU
 cycles taken from the application and analysis threads separately. The darker
