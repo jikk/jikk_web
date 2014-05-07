@@ -84,6 +84,13 @@ Michael Dalton, Hari Kannan, and Christos Kozyrakis.
   Computer Architecture}, ISCA '07, pages 482--493, New York, NY, USA, 2007.
   ACM.
 
+\bibitem{taintdroid:osdi10}
+William Enck, Peter Gilbert, Byung-Gon Chun, Landon~P. Cox, Jaeyeon Jung,
+  Patrick McDaniel, and Anmol~N. Sheth.
+\newblock {TaintDroid}: An information-flow tracking system for realtime
+  privacy monitoring on smartphones.
+\newblock In {\em Proc. of OSDI}, 2010.
+
 \bibitem{cab:oopsala2009}
 Jungwoo Ha, Matthew Arnold, Stephen~M. Blackburn, and Kathryn~S. McKinley.
 \newblock A concurrent dynamic analysis framework for multicore hardware.

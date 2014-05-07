@@ -5,24 +5,25 @@ In this section, I discuss about hypotheses to be verified and confirmed
 from the thesis.
 
 \subsection{\sreplica Generalization}
+\label{ssec:general}
 
 Even though our previous work mostly focuses on a specific instance of inline
-monitor (\ie DFT), we strongly believe that the approaches can easily be
-generalized to support analyses of other kinds with minimal amount of porting
-effort. Tabel~\ref{tab:analyses} contains a list of well-known inline
-monitors~\cite{cab:oopsala2009}. While it is either to protect or to profile
-application process at runtime, inline monitors are categorized for each one's
-architectural properties specified by column entries.  The leftmost column of
-{\it Shadow Memory} denotes whether the monitor requires shadow memory area to
-keep track of memory updates from the application context. {\it Data
-dependency} denotes whether the monitor's operations depend on the result of
-previous operations. This property tells us whether we can parallelize the
-analysis performed by the monitor for further performance improvement. {\it
-Check Operation} denotes whether the monitor is entitled to check for specific
-set of violations. For instance, Dynamic taint analysis
-(DTA)~\cite{taintcheck:ndss2005} tool checks for every {\tt RET} struction to
-see whether a taintedness value is used for its operand to deviate executions.
-In contrast, {\it cache simulation} does not have such operations.
+monitor (\ie DFT), we strongly believe that the approach can easily be
+generalized to support analyses of other kind with minimal porting effort.
+Table~\ref{tab:analyses} introduces a list of well-known inline
+monitors~\cite{cab:oopsala2009}. While it purpose is either to protect or to
+profile application process at runtime, inline monitors are categorized for
+each one's architectural specifics denoted by column entries. The leftmost
+column of {\it Shadow Memory} denotes whether the monitor requires shadow
+memory area to keep track of memory updates from the application context. {\it
+Data dependency} denotes whether the monitor's operation depend on the result
+of previous operations. This property tells us whether we can parallelize the
+analysis performed by the monitor for further performance improvement. The
+column for {\it Check Operation} denotes whether the monitor is entitled to
+check for specific set of violations. For instance, Dynamic taint analysis
+(DTA)~\cite{taintcheck:ndss2005} tool checks for every {\tt RET} instruction to
+see whether a tainted value is used to deviate control transfer. In contrast, {\it
+cache simulation} does not have such operations.
 
 \begin{table}[h]
     \centering
@@ -44,12 +45,12 @@ architectural specifics. \label{tab:analyses}}
 \end{table}
 
 Our goal here is to extend \sreplica approach to support most of monitors
-presented from Table~\ref{tab:analyses}. While the eventual output would be in
-form of a new framework equipped with supporting API that would allow users to
-write tools that serve for their purposes. However, due to time and resource
-constraints, we will begin with building proof-of-concept implementations that
-support two representative inline monitors of control flow integrity
-(CFI)~\cite{cfi} and memory integrity tool~\cite{memcheck, drmemory:cgo2011}.
+presented from Table~\ref{tab:analyses}. While the eventual output would be a
+new framework equipped with supporting API that allow users to write tools that
+would serve for their needs. However, due to time and resource constraint, we
+will begin with building the proof-of-concept implementation that support two
+representative inline monitors of control flow integrity (CFI)~\cite{cfi} and
+memory integrity tool~\cite{memcheck, drmemory:cgo2011}.
 
 \subsubsection{Control Flow Integrity (CFI)} 
 
@@ -62,20 +63,21 @@ are injected in the application to ensure that control flow remains within the
 CFG. These checks are placed before every indirect control flow transfer in the
 application and check that the destination is one of the intended ones.
 Basically, all possible destinations of a particular control flow instruction
-are assigned the same identifer (ID), which is validated before transferring
+are assigned the same identifier (ID), which is validated before transferring
 control. While this can be overly permissive, because multiple instructions may
 have the same targets assigning the same ID to the super-set of destinations,
-this approach allows for fast checks. 
+this approach allows fast checks. 
 
-Control flow tracking is already implemented as a core component of the current
-prototype of \sreplica as it replicates the execution trace of the original
-application thread at BBL level granularity to locate \tfa summary and perform
-corresponding DFT opertion from analysis thread. 
+Control flow tracking already have existed as a core component of the current
+prototype of \sreplica to replicate the execution trace observed from
+the original application thread at BBL level granularity. This is to locate
+\tfa summary from the analysis thread and to perform corresponding DFT
+operation.
 %
-While it is too expensive to log and transfer identifer for all BBLs executed,
+While it is too expensive to log and transfer identifier for all BBLs executed,
 \sreplica takes advantage of CFG gathered from the profiling stage to optimize
-and minimize the amount of BBL identifers (BBID) required.
-%
+and minimize the amount of BBL identifers (BBID) to be transferred.
+
 Typical instruction set architectures (ISA) including {\tt x86} system have
 three different type of control transfers illustrated from
 Figure~\ref{fig:cfg0}. (a) direct jumps, (b) direct branches, and (c) indirect
@@ -90,23 +92,23 @@ when BBL3 follows BBL2 in Figure~\ref{fig:cfg0}. We use the absence of BBL3’s
 id to signify that BBL4 followed as expected. Note that if a BBL has two
 predecessors and it is the most frequent path for only one of them, we log its
 BBID. Last, for indirect jumps we always record the BBID following them, since
-they are hard to predict.  
+they are hard to predict.  Fortunately, the number of such jumps are less
+compared with direct transfers.
 %
-Fortunately, the number of such jumps are less compared with direct transfers.
 Applying our approach on the example CFG from Figure~\ref{fig:cfg0}, we would
 only need to enqueue the id of BBL3 once. When it is applied to real
 applications, it could save $70 \sim 80 \%$ of BBIDs from being logged.
 
-A main challenge in separating control flow replication from \sreplica and
-implementing CFI lies in data representation. \sreplica assigns address range
-different from effective address (EA) pool for BBID. Aforementioned control
-flow optimization exploits this representation to discern cases where the
-branch choice is made to a BBL with large execution count as it encounters EA
-entry not BBID.
+It is a data representation issue that becomes a main challenge as we use
+\sreplica's control flow replication to implement CFI. \sreplica differentiates
+BBID from effective address (EA) by assigning different address range.
+Aforementioned control flow optimization exploits this representation to
+discern the direct branch choice. Encounter with EA entry (not BBID) explicitly
+implies the branch choice is made to the edge with larger execution count.
 %
 Not having DFT operation and its associated EA entries, CFI implementation
-needs to have another way to replicate control transfers achieving the same
-level of optimization benefit.
+needs to have a new approach to replicate control transfers achieving the same
+level of communication efficiency.
 
 \begin{figure}[tb]
     \centering
@@ -119,21 +121,22 @@ level of optimization benefit.
 
 \subsubsection{Memory Integrity Tool (Memcheck)}
 
-Memory integrity tools~\cite{memcheck, drmemory:cgo2011, asan} are designed to assist
-developers by reporting (a) memory leakage errors implemented by instrumenting
-known memory allocation and deallocation routines to check whether a program
-exits having any allocated memory chunks not being deallocated and (b) usage of
-uninitialized variable by tracking the propagations and usages of any
-uninitialized variables throughout the program execution.
+Memory integrity tools~\cite{memcheck, drmemory:cgo2011, asan} are designed to
+assist developers by reporting (a) memory leakage errors implemented by
+instrumenting known memory allocator and deallocator routines to check whether
+a program terminates not deallocating any allocated memory chunks and (b) usage
+of uninitialized variable by tracking its propagations according to the rules
+specified from Table~\ref{tab:memcheck_tracking}. The tool reports the Usage of
+such uninitialized variables at any point of the program execution.
 %
-While it share much of its architectural characteristics with DFT as it tracks
-the uninitialized memory entries using shadow memory area, it has its own
-interpretations of general purpose instructions needed to perform tracking
-operation.  Readers can notice that representative examples presented from
-Table~\ref{tab:memcheck_tracking} are different from DFT interpretation in
-Table~\ref{tab:dft_tracking}. And the checking operation (for the usage
-uninitialized variables) is far more frequent in this case, as this is needed
-for every instruction that has memory reference.
+As it utilizes shadow memory are to track the status of real memory space with
+its own interpretations of general purpose ISA, memory integrity tools share
+much of its architectural characteristics with DFT.
+Table~\ref{tab:memcheck_tracking} introduces interpretation summary for memory
+integrity tool which are different from DFT's interpretation (
+Table~\ref{tab:dft_tracking}). One peculiarity that we want examine is that the
+checking operation (for the usage uninitialized variables) is far more frequent
+in this case, as it is verified before every memory reference.
 
 \begin{table}[h]
         \centering
@@ -151,107 +154,140 @@ architecture.}
 \label{tab:memcheck_tracking}
 \end{table}
 
-To extend \sreplica to support a tool of the kind, we have to modify its core
-components  that (a) translate {\tt x86} instructions into \tfa representation,
-(b) perform optimization and so on. Even though we do not make fundamental
-changes to its architecture, we still do not have clear understandings about
-how system behaviors would change in respond as well as how frequent checking
-operations of the tool would have impact.
+To extend \sreplica to support the tool of this kind, we have to make changes
+its components that include (a) binary analyzer that translates {\tt x86}
+instructions into intermediate representation (\tfa), (b) analysis component
+that perform optimizations against the representation.  Even though changes are
+fundamental to its core architecture, we still need to clarify how system
+behaviors would change in respond to the modifications we make. 
 
 \subsection{Instrumentation Infrastructure Study}
 \label{ssec:inst_infra}
 
-As we have discussed from Section~\ref{ssec:prev_eval}, the cost to instrument
-event collect to the application thread accounts for large portion of its
-runtime slowdown. In this section, we discuss about available considerations to
-replace this substrate for performance improvement. First, we compare three
-different DBI implementations including one that we use for \sreplica (PIN DBI)
-and then talk about approaches of different categories based on binary writing
-and hardware assistance.
+As we have discussed from Section~\ref{ssec:prev_eval}, it is the cost to
+instrument the application thread to inline event collector that accounts for
+the largest portion of the slowdown. In this section, we discuss about
+alternatives for this substrate to improve the overall response time. Firstly,
+we compare three different DBI frameworks including PIN DBI our choice for
+\sreplica and then move on to cover different approaches based on
+software~\cite{brewriting:usenix2003, DTrace} and
+hardware~\cite{raksha:isca2007, lba:isca2008} assisted instrumentation. 
 
 \subsubsection{DBI Study} 
 \label{ssec:dbi_study}
 
-Dynamic binary instrumentation(DBI) frameworks enable the development of
-program analysis tools for unknown binary by facilitating automatic low-level
+Dynamic binary instrumentation (DBI) frameworks enable the development of
+program analysis tools for unknown binary by facilitating automated low-level
 instrumentation. This technology takes advantage of the process-level
 virtualization populating the code cache entries that combines original codes
 with users-authored analysis logics. This technique has become essential
 building blocks in developing tools that enhance the security and reliability
-of software systems.  Representative DBI frameworks for these are PIN~\cite{},
-Valgrind~\cite{}, and DynamoRIO~\cite{}.
+of software systems.  Representative frameworks of this kind are
+PIN~\cite{pin:pldi2005}, Valgrind~\cite{valgrind}, and
+DynamoRIO~\cite{dynamorio}.
 %
-Forming a same layer between a running application and underlying operating
+Placed in the same layer between a running application and underlying operating
 system, each framework comes with different capabilities and performance
-implications as each framework’s design principles varies up to their major
-target applications. However, developers who want to leverage the technology
-were rarely informed regarding how to choose a framework that meets their
-developmental requirements.
+implications as each framework’s design principles varies up to their intended
+application domain. However, developers who want to leverage the technology
+were rarely informed regarding how to choose a right framework that would serve
+best to their purpose.
 %
-In this part, we compare three aforementioned frameworks by carefully examining
+In this work, we compare three aforementioned frameworks by carefully examining
 three different aspects – efficiency, capability, and usability. Purpose of our
 work is to provide a proper guideline to developers who want to develop
 security analysis tools enhancing this technology.
 
-\subsubsection{Alternative Instrumentation Approaches}
+\subsubsection{Other Software Instrumentation Approaches}
+\label{ssec:sw_inst}
 
-\jikk{AWK}Trade-off for flexibility in DBI instrumentation, we need to pay high
-overhead due to process level virtualization. Having this in mind, we want to
-explore possible alternatives that can replace the substrate. Now, we are
-looking at solutions based on {\it binary re-writing}~\cite{cfi,
-brewriting:usenix2003} and instrumentation approach leveraging {\it
-DTrace}~\cite{DTrace} technology.
+Trade-off to flexibility of instrumentation leveraging DBI framework based
+process-wide virtualization, it cost users to pay high overhead in the course
+of translating the binary, interleaving with analysis logic, store those into
+the code-cache for future re-use. Having this in mind, we want to explore
+feasible alternatives (software approaches but not based on virtualization
+technologies) that can replace the layer with less overhead. Ones that we are
+actively looking into are solutions based on {\it binary re-writing}~\cite{cfi,
+brewriting:usenix2003} and also want to extend light-weighted system
+tracing/monitoring frameworks similar to {\it DTrace}~\cite{DTrace} technology.
 
-\subsubsection{Hardware Assisted Decoupled Analysis} 
-\label{}
+\subsubsection{Hardware Assisted Instrumentation} 
+\label{ssec:hw_inst}
 
 We are also considering to hardware based instrumentation to enhance
-\sreplica's execution model. XXX \etal already proposed log based architecture
-(LBA)~\cite{lba:isca2008}, a framework for decoupled analysis having hardware level
-support, but it suffered from too much amount of information collected from the
-application and transferred using shared cache connecting two different cores.
+\sreplica's execution model. Chen \etal already proposed log based architecture
+(LBA)~\cite{lba:isca2008}, a framework for decoupled analysis having hardware
+level support, but it's initial prototype failed to address the issue of too
+much amount of information collected from the application and transferred using
+shared cache connecting two different core which is later resolved by the
+software side optimization. 
 %
-Addressing the issue of communication volume and frequency with \sreplica's
-capability in optimizing and reducing the amount of such informations by having
-static off-line analysis, we also want to build a CPU extension that would
-accelerate decoupled analysis. 
+Our insight is that we can use \sreplica's approach to handle excessive amount
+of communication volume and frequency to tackle the issue. Furthermore, our
+optimal data representation of effective addresses (EAs) and control transfer
+trace (BBID), needed to replicate inline monitors, would reduce the size of
+required hardware component.
 %
-The main design and implementation challenges are (a) space requirement for
-addition hardware need to be minimal and (b) the support should be flexible so
-it can dynamically adopt to monitoring logics and support different kinds of
-inline monitors.
+The main design and implementation challenges are (a) reduction in space
+requirement for additional hardware component and (b) flexible support of
+different monitoring logics without requiring hardware logic update.
 
 \subsection{Overhead Modeling Framework}
 
-Different inline monitors discussed from Section~\ref{ssec:inline} have
-different performance implications and may not be benefited must when it is
-parallelized than when the analysis is in-lined with the original execution. Or
-it would be better to have multiple number of the analysis threads when the
-analysis is too heavy-weighted and workload can be divided into number of
-independent sub-units. Regarding this, we can consider three different models
-described from Figure~\ref{fig:model0}. As a part of generalization effort, we
-want to establish an analytic framework that would take one of in-lined model
-as an input and determine the suitable model for the best response time. 
+Inline monitors that we discussed from Section~\ref{ssec:inline} may have
+different performance implications and become slower being parallelized than
+when the monitoring logic is in-lined into a original process. Or we may find
+some other execution model what would work better for a monitor. For instance,
+when the monitoring logic is too heavy-weighted, it is better to distribute
+workloads over multiple number of the worker threads having a arbitrator
+thread. Formalizing the idea, we consider three different models presented from
+Figure~\ref{fig:model0} to categorize inline monitors.
 
-Ha \etal\cite{cab:oopsala2009} proposed a model simpler than our by taking only
-two execution models (Figure~\ref{fig:model0} (a), Figure~\ref{fig:model0} (b))
-into its consideration. By not having a model for Figure~\ref{fig:model0} (c),
-their model can cover cases where we have too expensive monitoring logic or the
-cost for event collector and its instrumentation become very thin and they did
-not use their model for the purpose of choose best model for monitors. In
-contrast, dynamic profiler will be used to capture performance characteristics
-of target monitors and application to be in-lined. With profiling result, the
-framework can better decide the execution model for best response time for
-given monitor and application.
+\begin{itemize}
 
-More interestingly, from our previous hypotheses, we attempt to change the
-performance characteristics by having different instrumentation media. We can
-consider this as a meaningful contribution, if we can confirm the benefits of
-these choices previous using the framework.
+    \item{{\bf Inlining model:} Inline monitor shows the best response time
+            when the monitoring logic is interleaved with the application
+    thread. Simple monitors such as call graph profiler falls into this
+    category.}
 
-For the rest of the section, we discuss more about execution models of our
-consideration.
+    \item{{\bf $1-1$ model:} Inline monitor shows the best response time when
+            an analysis thread is assigned to each application thread. This
+    model is same as produce-consumer design pattern. \sreplica implements this
+    model parallelizing DFT analysis.}
 
+    \item{{\bf $1-n$ model:} Inline monitor shows the best response time when
+            more than one analysis threads are assigned to each application
+    thread. This model requires dedicated dispatcher thread for scheduling. To
+    be suitable for this model, analysis need to be heavy-weighted and have
+    weak data dependency. Cache simulation falls into this category.}
+
+\end{itemize}
+
+%
+Given that we have three different execution models, we want to establish an
+analytic framework that would take one of in-lined model as an input and
+determine the suitable model for the best response time. Once we establish the
+framework, we expect to see how performance implications changes from the
+modeling framework as we make changes to confirm other hypotheses we discussed
+from Section~\ref{ssec:general} and Section~\ref{ssec:inst_infra} 
+
+Ha\etal\cite{cab:oopsala2009} proposed a model simpler than our by taking only
+two execution models of {\it Inlining model} (Figure~\ref{fig:model0} (a)), and
+{\it $1-1$ model} (Figure~\ref{fig:model0} (b)) into its consideration. By not
+having a model for Figure~\ref{fig:model0} (c), their model cannot cover cases
+where we have too expensive monitoring logic or the cost for event collector
+and its instrumentation become very thin. Furthermore, their purpose of having
+the model is different from ours not to choose best model for different
+monitors.  In our case, dynamic profiler will be used to capture performance
+characteristics of target application and monitors to be analyzed. Based on
+profiling result, we expect the framework can better categorize inline monitors 
+to have best response time.
+
+As we noted from previous sections, we attempt to change the performance
+characteristics by \sreplica and examining instrumentation layer for better
+performance. The modeling framework would be a meaningful contribution, if we
+can confirm the benefits and disadvantages of these choices ahead of time.
+ 
 \begin{figure}[tb]
     \centering
     \includegraphics[width=0.90\linewidth]{figs/model0.eps}
@@ -262,18 +298,4 @@ consideration.
 
 \end{figure}
 
-\subsubsection{Inlining Model}
 
-Inline monitor shows the best response time when the monitoring logic is
-interleaved with the application thread.
-
-\subsubsection{Producer-consumer Model}
-
-Inline monitor shows the best response time when an analysis thread is assigned
-to each application thread. This model is similar to produce consumer model.
-
-\subsubsection{Worker poll Model}
-
-Inline monitor shows the best response time when more than one analysis threads
-are assigned to each application thread. This model requires dedicated
-dispatcher thread for scheduling.

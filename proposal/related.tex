@@ -10,48 +10,51 @@ In this section, I discuss related work relevant to the thesis proposal.
 \subsection{Inline Monitors}
 \label{ssec:inline}
 
-Program protection and profiling using inline monitors are dynamic analysis
-approaches that execute specific analysis logics along with the application
-process. Instance of the technology includes data flow tracking (DFT), memory
-integrity checking~\cite{memcheck, drmemory:cgo2011}, control flow
-integrity~\cite{cfi}, method counting, call graph profiling and so on.  Given
-that the technology can be implemented interleaving analysis/monitoring logics
-into the program execution, we can choose different instrumentation targets
-either of source code or program binaries and use different instrumentation
-mediums to implement inline monitors.
+Program protection and profiling using inline monitors are dynamic approach
+that execute specific analysis logics along with the application process.
+Instance of the technology includes data flow tracking (DFT), memory integrity
+checking~\cite{memcheck, drmemory:cgo2011}, control flow integrity~\cite{cfi},
+method counting, call graph profiling and so on. Given that the technology can
+be implemented by interleaving analysis and monitoring logics into the program
+execution, we can choose different instrumentation targets either of source
+code or program binaries and therefore use different instrumentation frameworks
+to implement inline monitors.
 
-Employing source code based approach, we can use representations exposed  by
-compiler~\cite{llvm:cgo04} internals as instrumentation targets or
-source-to-source approaches~\cite{txl, cil} to make changes to source code.
-This approach comes in reasonable amount of overhead roughly around $2\times$
-or less, but it is limited in completeness not being able to support COTS
-binaries (\ie 3rd party libraries).  An alternative can be binary
-implementation approaches either based on process-wide virtualization using
-dynamic binary instrumentation(DBI)~\cite{pin:pldi2005, dynamorio, valgrind} or
-system-wide virtualization~\cite{qemu:usenix05, xen:sosp2003}. These address
-coverage issue as these can handle unknown program binaries. However, it comes
-with excessive amount of overhead which vary from $\times 5 \sim \times 100$
-based on analyses and application domains. Hardware assisted
-implementation~\cite{raksha:isca2007, lba:isca2008} can implement inline
-monitors with minimal amount of overhead less than 5\% at most supporting full
-coverage, but the we have not yet seen this functionality supported by major
-vendors with their commodity production.
+With source code based approach, we can use representations exposed  by
+compiler~\cite{llvm:cgo04} internals of abstract syntax tree (AST) or
+intermedidate representation (IR) as instrumentation targets or we take
+source-to-source tranformation~\cite{txl, cil} to generate new source code
+embedded with monitoring logics. This approach comes in reasonable amount of
+overhead roughly around $2\times$ or less, but it is limited in coverage not
+being able to support COTS binaries (\ie 3rd party libraries).  An alternative
+to this limitation is to leverage binary instrumentation approaches either
+based on process-wide virtualization using dynamic binary
+instrumentation(DBI)~\cite{pin:pldi2005, dynamorio, valgrind} or system-wide
+virtualization~\cite{qemu:usenix05, xen:sosp2003}. These address coverage issue
+as these can handle unknown program binaries. However, it comes with excessive
+amount of overhead which vary from $\times 5 \sim \times 100$ based on analyses
+and application domains. Hardware assisted
+implementation~\cite{raksha:isca2007, lba:isca2008} can be considered to
+implement inline monitors with minimal amount of overhead usually less than 5\%
+at most with full coverage of execution environment, however the we have not
+yet seen this being supported by major vendors with their commodity products.
 
 \subsection{Data Flow Tracking (DFT)}
 
-DFT is one of inline monitoring approaches that accurately tracks selected data
-of interest, as they flow during program execution. Among other uses, DFT has
-been employed to provide insight in the behavior of applications and systems,
-and to assist in the identification of configuration errors. Most prominently,
-it has been used in the security field to defend against various software
-exploits~\cite{taintcheck:ndss05, dta++:ndss11, argos:eurosys06, minemu:raid11,
-taintpolicy:usenixsec06}, and to enforce information flow by monitoring and
-restricting the use of sensitive data~\cite{}. For the former, the network is
-usually defined as the source of interesting or “tainted” data, while the use
-of tainted data is disallowed in certain program locations (\eg, in
-instructions manipulating the control flow of programs, such as indirect branch
-instructions and function calls). For the latter, the developer or the user is
-responsible for specifying the data that needs to be tracked and the
+DFT is one of inline monitoring approaches whose purpose is to accurately
+tracks selected data of interest, as they flow during program execution. Among
+other uses, DFT has been employed to provide insight in the behavior of
+applications and systems, and to assist in the identification of configuration
+errors. Most prominently, it has been used in the security field to defend
+against various software exploits~\cite{taintcheck:ndss05, dta++:ndss11,
+argos:eurosys06, minemu:raid11, taintpolicy:usenixsec06}, and to enforce
+information flow by monitoring and restricting the use of sensitive
+data~\cite{taintdroid:osdi10, paranoidandroid:acsac10}. For the former, the
+network is usually defined as the source of interesting or “tainted” data,
+while the use of tainted data is disallowed in certain program locations (\eg,
+in instructions manipulating the control flow of programs, such as indirect
+branch instructions and function calls). For the latter, the developer or the
+user is responsible for specifying the data that needs to be tracked and the
 restrictions on their use. DFT is even used to assist solving performance
 problems~\cite{xray:osdi2012} pairing configuration file entries with
 performance bottlenecks as sources and sinks. 
@@ -95,7 +98,8 @@ lba:isca2008}.
 \label{ssec:parallel}
 
 The idea of decoupling dynamic program analyses from execution, to run them in
-parallel, has been studied in past in various contexts. 
+parallel for better response time, has been studied in past in various
+contexts. 
 %
 Aftersight~\cite{aftersight:atc2008}, ReEmu~\cite{reemu:ppopp2013}, and
 Paranoid Android~\cite{paranoidandroid:acsac10} leverage record and replay for
@@ -110,8 +114,7 @@ multiple threads that execute in parallel.  These systems sacrifice significant
 processing power to achieve speed up.  Furthermore, handling multi-threaded
 applications without hardware support remains a challenging issue for this
 approach. CAB~\cite{cab:oopsala2009} and PiPA~\cite{pipa:cgo2008} aim at
-offloading the analysis code alone to another execution thread, and they are
-the closed to \sreplica. However, neither of the two has been able to deliver
+offloading the analysis code alone to another execution thread. However, neither of the two has been able to deliver
 the expected performance gains, due to {\it (a)} naively collecting information
 from the application, and {\it (b)} the high overhead of communicating it to
 the analysis thread(s). 
