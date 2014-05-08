@@ -13,37 +13,36 @@ in-line security and monitoring logics to programs that we want to protect and
 execute simultaneously.
 %
 Being effective in defending against these failures, the approaches based on
-in-line monitors have suffered from an inherent issue of too high overhead
-which subsequently hinders the approaches adaptation to production systems.
+in-line monitors have suffered from an inherent issue of high overhead which
+subsequently hinders the approaches adaptation to production systems.
 
-Addressing the issue, a line of approaches that parallelizes the original
-execution and monitoring logic arose from the past proposals, but most of them
-have failed to be a practical solution for many reasons, but most notably for
-having too high communication cost connecting two distinct contexts.
-
-From this thesis, I introduce a methodology that will improve the parallel
-analysis by defining the minimal but sufficient amount of information needed
-from the original execution to restore the correct monitoring context from
-another thread,  
+In our past research, we have addressed this issue of high overhead for data
+flow tracking (DFT) technology which is one representative instance of the
+inline monitor. Most notably, our latest framework decouples analysis logics
+from the application process and has two different contexts run in parallel
+taking advantage of recent multi-core innovation achieving $\sim$ $\times$2.10
+speed-up over the previous DFT implementation when it is evaluated for SPEC
+2006 CPU benchmark suite requiring the less amount of CPU cycles.
 %
-and the optimality of the approach will be confirmed by the formal analysis
-based on the information theory. \jikk{should think about it. more carefully.}
+Different from the most parallel frameworks proposed from other research which
+have suffered from excessive amount of communication volume and frequency, our
+main contribution lies in defining the minimal subset state --  {\it (a)}
+effective address (EA) {\it (b)} control flow trace -- for the communication,
+and devising number of novel optimization schemes.
 
-From my past research experience, I implemented a prototype implementation of
-the approach for DFT analysis, which leveraged the off-line static analysis and
-in turn could achieve $\sim$ $\times$2.10 speed-up over the previous DFT
-implementation requiring the less amount of CPU cycles.
-
-Generalizing the approach, I will extend the approach so as it can benefit the
-different type of analyses~(CFI, Memory Integrity Tool) to gain the similar
-performance improvement as DFT did from my past research experience. 
+Based on previous results, we want to propose three
+hypotheses from the document to be verified from the thesis.
 %
-For this, I will also establish a classification framework to identify in-line
-analyses that can be benefited from the approach.
-
-As a next step, we will explore design choices to improve the instrumentation
-layer that in-lines event collection and communication logics taking advantage
-of innovations from the proposed approach.
+Firstly, we want to confirm that our parallelization approach for DFT can be
+generalized to speedup different type of inline monitors expecting to have
+similar amount performance improvement.
+%
+Secondly, we want to establish a modeling framework to make decision about each
+monitor's fitness to our parallel approach in advance, prior to real execution.
+%
+Lastly, we want to explore and examine available alternatives for the
+instrumentation framework that we have used to in-line event collector and
+communication stubs to the application process. 
 %
 %For this, I will {\it i)} improve VM-based instrumentation which is currently
 %employed {it ii)} propose a H/W based architecture that support the our
