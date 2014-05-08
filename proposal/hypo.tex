@@ -173,7 +173,7 @@ we compare three different DBI frameworks including PIN DBI our choice for
 software~\cite{brewriting:usenix2003, DTrace} and
 hardware~\cite{raksha:isca2007, lba:isca2008} assisted instrumentation. 
 
-\subsubsection{DBI Study} 
+\subsubsection{DBI Comparison Study} 
 \label{ssec:dbi_study}
 
 Dynamic binary instrumentation (DBI) frameworks enable the development of
@@ -232,6 +232,17 @@ The main design and implementation challenges are (a) reduction in space
 requirement for additional hardware component and (b) flexible support of
 different monitoring logics without requiring hardware logic update.
 
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.90\linewidth]{figs/model0.eps}
+
+    \caption{present three different models to instrument inline monitors. From
+    the left to right it has (a) inlining model, (b) a producer - a consumer
+    model, and (c) one producer - multiple consumers model.\label{fig:model0}}
+
+\end{figure}
+
 \subsection{Overhead Modeling Framework}
 
 Inline monitors that we discussed from Section~\ref{ssec:inline} may have
@@ -288,14 +299,6 @@ characteristics by \sreplica and examining instrumentation layer for better
 performance. The modeling framework would be a meaningful contribution, if we
 can confirm the benefits and disadvantages of these choices ahead of time.
  
-\begin{figure}[tb]
-    \centering
-    \includegraphics[width=0.90\linewidth]{figs/model0.eps}
 
-    \caption{present three different models to instrument inline monitors. From
-    the left to right it has (a) inlining model, (b) a producer - a consumer
-    model, and (c) one producer - multiple consumers model.\label{fig:model0}}
-
-\end{figure}
 
 
