@@ -7,22 +7,22 @@
 %for their malicious activities.
 
 %
-One way to harden the software system against failures, due to malicious
-attempts from attackers or unexpected disclosure of developer bugs, is to
-in-line security and monitoring logics to programs that we want to protect and
-execute simultaneously.
+A promising way to harden the software system against failures, either due to
+malicious attempts from attackers or unexpected disclosure of developer bugs,
+is to in-line security and monitoring logic to the executing programs that we
+aim to protect.
 %
-Being effective in defending against these failures, the approaches based on
-in-line monitors have suffered from an inherent issue of high overhead which
-subsequently hinders the approaches adaptation to production systems.
+Although such techniques are usually effective, in-line monitors inherently
+exhibit high overhead which subsequently hinders their adaptation to production
+systems.
 
 In our past research, we have addressed this issue of high overhead for data
 flow tracking (DFT) technology which is one representative instance of the
-inline monitor. Most notably, our latest framework decouples analysis logics
-from the application process and has two different contexts run in parallel
-taking advantage of recent multi-core innovation achieving $\sim$ $\times$2.10
-speed-up over the previous DFT implementation when it is evaluated for SPEC
-2006 CPU benchmark suite requiring the less amount of CPU cycles.
+in-line monitor. Most notably, our latest framework decouples analysis logic
+from the application process and has two different contexts run in parallel.
+Our framework take advantage of recent multi-core innovation and achieve $\sim$
+$\times$2.10 speed-up over the previous DFT implementation when it is evaluated
+for SPEC 2006 CPU benchmark suite requiring the less amount of CPU cycles.
 %
 Different from the most parallel frameworks proposed from other research which
 have suffered from excessive amount of communication volume and frequency, our
