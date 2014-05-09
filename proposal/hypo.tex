@@ -82,18 +82,17 @@ Typical instruction set architectures (ISA) including {\tt x86} system have
 three different type of control transfers illustrated from
 Figure~\ref{fig:cfg0}. (a) direct jumps, (b) direct branches, and (c) indirect
 jumps. For direct jumps, BBIDs for successor BBLs can be excluded from logging,
-since there is only a single, fixed exit once execution enters into BBL0. For
-example, the transitions from BBL0 to BBL1, and then to BBL2 in
-Figure~\ref{fig:cfg0} can be excluded. Direct branches can have two outcomes.
-They are either taken, or fall through where execution continues at the next
-instruction. We exploit this property to only enqueue a BBID, when the least
-frequent outcome, according to our dynamic profiling, occurs. For instance,
-when BBL3 follows BBL2 in Figure~\ref{fig:cfg0}. We use the absence of BBL3’s
-id to signify that BBL4 followed as expected. Note that if a BBL has two
-predecessors and it is the most frequent path for only one of them, we log its
-BBID. Last, for indirect jumps we always record the BBID following them, since
-they are hard to predict.  Fortunately, the number of such jumps are less
-compared with direct transfers.
+since there is only a single, fixed exit. For example, the transitions from
+BBL0 to BBL1, and then to BBL2 in Figure~\ref{fig:cfg0} can be excluded. Direct
+branches can have two outcomes.  They are either taken, or fall through where
+execution continues at the next instruction. We exploit this property to only
+enqueue a BBID, when the least frequent outcome, according to our dynamic
+profiling, occurs. For instance, when BBL3 follows BBL2 in
+Figure~\ref{fig:cfg0}. We use the absence of BBL3’s id to signify that BBL4
+followed as expected. Note that if a BBL has two predecessors and it is the
+most frequent path for only one of them, we log its BBID. Last, for indirect
+jumps we always record the BBID following them, since they are hard to predict.
+Fortunately, the number of such jumps are less compared with direct transfers.
 %
 Applying our approach on the example CFG from Figure~\ref{fig:cfg0}, we would
 only need to enqueue the id of BBL3 once. When it is applied to real
@@ -103,12 +102,12 @@ It is a data representation issue that becomes a main challenge as we use
 \sreplica's control flow replication to implement CFI. \sreplica differentiates
 BBID from effective address (EA) by assigning different address range.
 Aforementioned control flow optimization exploits this representation to
-discern the direct branch choice. Encounter with EA entry (not BBID) explicitly
-implies the branch choice is made to the edge with larger execution count.
+discern the direct branch choices. 
 %
-Not having DFT operation and its associated EA entries, CFI implementation
-needs to have a new approach to replicate control transfers achieving the same
-level of communication efficiency.
+When an EA entry (and not BBID) is encountered it is certain that the edge with
+the larger execution count was selected.  However, in order to implement CFI,
+we need a new data representation since EAs can no longer substitute BBIDs and
+naively logging all BBIDs would incur too high overhead.
 
 \begin{figure}[tb]
     \centering
@@ -118,7 +117,6 @@ level of communication efficiency.
     each edge is followed (edge labels). \label{fig:cfg0}}
 \end{figure}
 
-
 \subsubsection{Memory Integrity Tool (Memcheck)}
 
 Memory integrity tools~\cite{memcheck, drmemory:cgo2011, asan} are designed to
@@ -126,12 +124,13 @@ assist developers by reporting (a) memory leakage errors implemented by
 instrumenting known memory allocator and deallocator routines to check whether
 a program terminates not deallocating any allocated memory chunks and (b) usage
 of uninitialized variable by tracking its propagations according to the rules
-specified from Table~\ref{tab:memcheck_tracking}. The tool reports the Usage of
+specified from Table~\ref{tab:memcheck_tracking}. The tool reports the usage of
 such uninitialized variables at any point of the program execution.
 %
-As it utilizes shadow memory are to track the status of real memory space with
-its own interpretations of general purpose ISA, memory integrity tools share
-much of its architectural characteristics with DFT.
+DFT shares much of its architectural characteristics with memory integrity
+tools since they utilize shadow memory to track the status of real memory space
+while updates are made to the shadow memory by their tracking logic.
+
 Table~\ref{tab:memcheck_tracking} introduces interpretation summary for memory
 integrity tool which are different from DFT's interpretation (
 Table~\ref{tab:dft_tracking}). One peculiarity that we want examine is that the
