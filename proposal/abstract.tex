@@ -20,32 +20,35 @@ In our past research, we have addressed this issue of high overhead for data
 flow tracking (DFT) technology which is one representative instance of the
 in-line monitor. Most notably, our latest framework decouples analysis logic
 from the application process and has two different contexts run in parallel.
-Our framework take advantage of recent multi-core innovation and achieve $\sim$
-$\times$2.10 speed-up over the previous DFT implementation when it is evaluated
-for SPEC 2006 CPU benchmark suite requiring the less amount of CPU cycles.
+Our framework takes advantage of recent multi-core innovations and achieves a
+$\sim$ $\times$2.10 speed-up over the previous DFT implementation when
+evaluated upon the SPEC 2006 CPU benchmark suite requiring a smaller number of
+CPU cycles.
 %
-Different from the most parallel frameworks proposed from other research which
-have suffered from excessive amount of communication volume and frequency, our
-main contribution lies in defining the minimal subset state --  {\it (a)}
-effective address (EA) {\it (b)} control flow trace -- for the communication,
-and devising number of novel optimization schemes.
+Contrary to other proposed parallel frameworks that suffer from excessive
+amount of communication volume and frequency, the core of our proposed solution
+lies in defining the minimal subset state -- {\it (a)} effective address (EA)
+{\it (b)} control flow trace -- needed from the application process to be
+monitored, and devising a number of novel optimization schemes.
 
-Based on previous results, we want to propose three
-hypotheses from the document to be verified from the thesis.
+Based on previous results, we want to propose two hypotheses in this document
+to be examined and verified in the thesis.
 %
-Firstly, we want to confirm that our parallelization approach for DFT can be
-generalized to speedup different type of inline monitors expecting to have
-similar amount performance improvement.
+Given that the most monitor logic can be reconstructed from another thread with
+the subset state we defined for DFT, we first want to confirm that our
+parallelization approach for DFT can be generalized to support different types
+of in-line monitors expecting to have similar performance improvement.
 %
-Secondly, we want to establish a modeling framework to make decision about each
-monitor's fitness to our parallel approach in advance, prior to real execution.
+Secondly, we want to examine and explore alternative choices for the
+instrumentation layer. An expensive VM-based instrumentation framework is used
+in our previous work to in-line event collector and communication stubs to the
+application process and this in turn accounted the most for the slowdowns. We
+want to confirm that we can have further speedup by substituting the framework
+with more efficient instrumentation technologies.
 %
-Lastly, we want to explore and examine available alternatives for the
-instrumentation framework that we have used to in-line event collector and
-communication stubs to the application process. 
-%
-%For this, I will {\it i)} improve VM-based instrumentation which is currently
-%employed {it ii)} propose a H/W based architecture that support the our
-%approach to parallelize in-line analysis.  \\
+To help verifying proposed hypotheses, we also want to establish an overhead
+model framework. With this analytic framework, we expect to analyze and predict
+performance changes in respond to the modifications that we would make to
+our system prior to real execution. 
 
 \end{abstract}
