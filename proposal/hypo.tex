@@ -11,19 +11,19 @@ Even though our previous work mostly focuses on a specific instance of inline
 monitor (\ie DFT), we strongly believe that the approach can easily be
 generalized to support analyses of other kind with minimal porting effort.
 Table~\ref{tab:analyses} introduces a list of well-known inline
-monitors~\cite{cab:oopsala2009}. While it purpose is either to protect or to
-profile application process at runtime, inline monitors are categorized for
-each one's architectural specifics denoted by column entries. The leftmost
+monitors~\cite{cab:oopsala2009} that either protect or profile application
+processes at runtime categorized by their structural features. The leftmost
 column of {\it Shadow Memory} denotes whether the monitor requires shadow
-memory area to keep track of memory updates from the application context. {\it
-Data dependency} denotes whether the monitor's operation depend on the result
-of previous operations. This property tells us whether we can parallelize the
-analysis performed by the monitor for further performance improvement. The
-column for {\it Check Operation} denotes whether the monitor is entitled to
-check for specific set of violations. For instance, Dynamic taint analysis
-(DTA)~\cite{taintcheck:ndss2005} tool checks for every {\tt RET} instruction to
-see whether a tainted value is used to deviate control transfer. In contrast, {\it
-cache simulation} does not have such operations.
+memory area to keep track of memory updates from the application context. The
+next column of {\it data dependency} denotes sequential dependency among
+operations -- an operation of monitoring logic depends on the result from one
+or more of previous operation(s). This property tells us whether we can
+parallelize the analysis performed by the monitor for further performance
+improvement. The column for {\it Check Operation} denotes whether the monitor
+is entitled to check for specific set of violations. For instance, Dynamic
+taint analysis (DTA)~\cite{taintcheck:ndss2005} tool checks for every {\tt RET}
+instruction to see whether a tainted value is used to deviate control transfer.
+In contrast, {\it cache simulation} does not have such operations.
 
 \begin{table}[h]
     \centering
@@ -76,7 +76,7 @@ operation.
 %
 While it is too expensive to log and transfer identifier for all BBLs executed,
 \sreplica takes advantage of CFG gathered from the profiling stage to optimize
-and minimize the amount of BBL identifers (BBID) to be transferred.
+and minimize the amount of BBL identifiers (BBID) to be transferred.
 
 Typical instruction set architectures (ISA) including {\tt x86} system have
 three different type of control transfers illustrated from

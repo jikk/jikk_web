@@ -4,12 +4,18 @@
 {\em the ACM Conference on Computer and Communications Security, CCS'13,
   Berlin, Germany, November 4 - 6, 2013}. ACM, 2013.
 
-\bibitem{cfi}
+\bibitem{cfi:ccs2005}
 Mart\'{\i}n Abadi, Mihai Budiu, \'{U}lfar Erlingsson, and Jay Ligatti.
 \newblock Control-flow integrity.
 \newblock In {\em Proceedings of the 12th ACM Conference on Computer and
   Communications Security}, CCS '05, pages 340--353, New York, NY, USA, 2005.
   ACM.
+
+\bibitem{cfi}
+Mart\'{\i}n Abadi, Mihai Budiu, \'{U}lfar Erlingsson, and Jay Ligatti.
+\newblock Control-flow integrity.
+\newblock In {\em Proceedings of the 12th ACM Conference on Computer and
+  Communications Security\/} \cite{cfi:ccs2005}, pages 340--353.
 
 \bibitem{xray:osdi2012}
 Mona Attariyan, Michael Chow, and Jason Flinn.

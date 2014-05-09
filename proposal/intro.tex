@@ -1,84 +1,107 @@
 % !TEX root = proposal.tex
 \section{Introduction} \label{sec:intro}
 
-In modern computing environment, the task of protecting computer systems from
-software failures due to malicious attacks or developer mistakes becomes more
-and more challenging.
+In the modern computing environment, the task of protecting computer systems
+from software failures due to malicious attacks or developer mistakes becomes
+more and more challenging.
 %
-Among many proposals, defense techonologies based on data flow tracking (DFT)
-have gained many attentions both from industry and research communites for its
-verified usefulness and variety application domains. 
+Among many proposals, defense technologies based on data flow tracking (DFT)
+have gained a lot of attention both from research community and industry for
+its verified usefulness and variety application domains. 
 %
-However, the wide adoptation of the technology to the production system is
-hindered by the excessive amount of slowdown since, in most cases, DFT is
-implemented as a form of inline monitors that interleave protection logic along
-with the original program's execution. The high overhead problem is inherent to
-analysis aporoaches of the kind.
+However, the wide adoptation of the technology in production system is hindered
+by the excessive amount of slowdown since, in most cases, DFT is implemented as
+a form of in-line monitors that interleave protection logic with the original
+program's execution and the approach is known to incur large amount of
+slowdown.
 
-For a last a few years, we have focused on making DFT more practical by
-addressing the very issue of high overhead which becomes more apparent when we
-apply the technology against unknown binaries running from commodity system and
-support full coverage of a given execution environment.
+In our past research, we have focused on making DFT more practical by
+addressing the high overhead issue which becomes worse when applied to unknown
+binaries. It is important to support the binaries running from commodity system
+otherwise we would encounter the coverage problem for a given execution
+environment.
 %
-From the following paragrah we briefly introduce our past research
+In the following paragraphs, we briefly introduce our past research
 contributions along the line of effort.
 
+\begin{itemize}
 %
 % Previous work summary.
 %
-{\bf \libdft}~\cite{libdft}: this is our initial effort to implement DFT
-prototype. It takes the conventional approach to implement DFT which inserts
-monitoring (\ie DFT tracking) operations per each instruction using dynamic
-binary instrumentation~(DBI) framework~\cite{pin:pldi2005}. The system could
-achieve reasonable amount of performance improvement over the latest DFT
+\item {\bf \libdft}~\cite{libdft}: this is our initial effort to implement a DFT
+prototype. It takes the conventional approach to implement DFT by inserting
+monitoring (\ie DFT tracking) operations per each instruction using
+PIN~\cite{pin:pldi2005}, a dynamic binary instrumentation~(DBI) framework. The
+system exhibited reasonable performance improvement over the state-of-art DFT
 implementations of the time thanks to the following design and engineering
-contributions. Firstly, it has carefully crafted DFT tracking logics to minimize
-the switching cost between the original and DFT contexts facillitating
-{\it instrumentation inlining}. Secondly, its shadow memory is structured to
-minimize the memory translation cost which occurs whenever the original execution
-accesses to its the memory entries.
+contributions. Firstly, it reduces the cost of switching between the original
+and DFT contexts using {\it instrumentation inlining} by carefully crafting the
+tracking code used to propagate tag values.  Secondly, its shadow memory is
+structured to minimize the memory translation cost which occurs whenever the
+original execution accesses to one of its the memory entries.
 
-{\bf \tfafull (\tfa)}~\cite{tfa:ndss2012}: previous DFT systems (including
-\libdft) had been implemented taking the approach of {\it per-instruction-level}
-interleaving of the original execution and DFT logics. Having that being said,
-previous DFT systems suffered from performance problems for not understanding
-(a) global context for DFT execution and (b) DFT semantics which is different
-from the original execution. \tfa addressed these issues by extending \libdft
-and dedicating off-line analysis phase to decouple DFT logics from the original
+\item {\bf \tfafull (\tfa)}~\cite{tfa:ndss2012}: previous DFT systems (including
+\libdft) were implemented taking the approach of {\it per-instruction}
+interleaving of the original execution and DFT logic. That being said, previous
+DFT systems suffered from performance problems for being agnostic of  (a) the
+global context of DFT execution and (b) DFT semantics that differ from the
+original execution. \tfa addressed these issues by extending \libdft and
+dedicating an off-line analysis phase to decouple DFT logic from the original
 execution.  Then it performs a number of application and DFT analysis specific
-optimizations to gain $\times$ 2 over the baseline tool of \libdft.
+optimizations to gain $\times$ 2 speedup over the baseline tool of \libdft.
 
-{\bf \sreplica}~\cite{sreplica:ccs2013}: extending \tfa further, \sreplica
-executes two different contexts decoupled from \tfa analysis in parallel from
-different cores. In this execution model, the frequency and volume
-communication traffic connecting two threads are simply too much masking all of
-the parallelization benefit. The system addresses the issue by first defining
-the minimal subset states from the application to be transferred and then
-applied a number of novel optimizations to compress them aggressively. As a
-result, the system reduces per basic block (BBL) message requirement from 4.81
-to 1.2 subsequently contributing to its $\times 2.75$ slowdown over native
-execution when it is evaluated for SPEC 2006 CPU benchmark. This is $\times$ 2,
-$\times$ 4 speed up over our previous systems of \libdft and \tfa respectively.
+\item {\bf \sreplica}~\cite{sreplica:ccs2013}: extending \tfa further, \sreplica
+executes in parallel the two contexts, that \tfa analysis decoupled, from
+different cores.  In this execution model, the frequency and volume of the
+communication traffic connecting two threads are simply too much masking the
+parallelization benefit. The system addresses the issue by first defining the
+minimal subset states from the application to be transferred and then applied a
+number of novel optimizations to compress them aggressively. As a result, the
+system reduces the per basic block (BBL) message requirement from 4.81 to 1.2
+subsequently contributing to its $\times 2.75$ slowdown over native execution
+when evaluated with the SPEC 2006 CPU benchmark. This is a speedup of $\times$
+2, $\times$ 4 over our previous systems of \libdft and \tfa respectively.
+\end{itemize}
+Based the research contributions we have made aforementioned items, we propose
+the following two hypotheses to be verified in the thesis.
 
 %
 % Hypothesis begins.
 %
-Given that the main contribution of our latest work, \sreplica lies in
-proposing the parallel architecture that performs DFT analysis with
-unprecedented efficiency, the first hypothesis to be verified is that
-\sreplica's approach can be generalized to support other families of inline
-monitors~\cite{cab:oopsala2009}. 
+\begin{itemize}
+\item {\bf Hypothesis 1:} Given that the main contribution of our latest work,
+\sreplica lies in proposing the parallel architecture that performs DFT
+analysis with unprecedented efficiency, the first hypothesis to be verified is
+that \sreplica's approach can be generalized to support other families of
+in-line monitors~\cite{cab:oopsala2009}. We aim to extend \sreplica to support
+Control Flow Integrity (CFI)~\cite{cfi:ccs2005} and memory integrity
+tools~\cite{drmemory:cgo2011, memcheck} that have similar architecture with
+DFT.
 
-However, as each one's architectural specifics and design goal varies much, not
-all inline monitors are susceptible for parallelization and \sreplica's
-approach to enjoy similar amount of performance improvement. For those
-monitors, different execution scenarios may serve better. Thus, we need to have
-a modeling framework to choose the right execution scenario for different
-inline monitors prior to its actual development and deployment. Establishing
-and verifying the model is our second hypothesis that we want to confirm.
+\item {\bf Hypothesis 2:} In-line monitors that aim to be a tool that works against
+unknown binaries mostly resort to virtualization layer (in our case PIN DBI
+framework) for instrumentation. The next hypothesis that we want to confirm is
+that the substrate can be substituted with different instrumentation mediums to
+implement the equivalent parallelization framework. Along the way, we will
+begin with a study that compares three different DBI
+frameworks~\cite{pin:pldi2005, dynamorio, valgrind} for their instrumentation
+and performance characteristics and then move on to other type of software
+instrumentation approach such as binary re-writing~\cite{brewriting:usenix2003}
+and DTrace~\cite{DTrace}. We will also explore the effectiveness and
+flexibility of the approach of hardware assisted
+instrumentation~\cite{lba:isca2008, raksha:isca2007}.
+\end{itemize}
 
-In the overhead analysis model, three different execution scenarios to
-categorize different inline monitors. 
+Since every in-inline monitor has different architectural characteristics and
+design goals, \sreplica's parallelization approach may not lead to to a similar
+performance improvement. For monitors of this kind, different execution
+scenarios may serve better. We hence need a modeling framework to choose the
+right execution scenario for different in-line monitors prior to its actual
+development and deployment.  Establishing and verifying the model is our second
+hypothesis that we want to confirm.
+
+In the overhead analysis model, we have three different execution scenarios to
+categorize different in-line monitors. 
 
 \begin{itemize}
 
@@ -92,30 +115,22 @@ categorize different inline monitors.
 
     \item {\bf 1-n model}: Inline monitor shows the best response time when
             more than one analysis threads are assigned to each application
-            thread.  This model requires dedicated dispatcher thread for
+            thread.  This model requires a dedicated dispatcher thread for
             scheduling.
     \end{itemize}
 
-For example,  DFT analysis falls into the second category (1-1 model) which
+For example, DFT analysis falls into the second category (1-1 model) which
 means that the analysis shows the best response time when it is assigned with
 one analysis thread per each analysis thread.  
+%
+By having the analytic modeling framework, we also expect to a capability to
+verify the validity of changes we will make to fulfill proposed hypotheses
+prior to their developments and executions. 
 
-Given that inline monitors that aim to be a tool that works against unknown
-binaries mostly resort to virtualization layer (in our case PIN DBI framework)
-for instrumentation, the last hypothesis that we want to confirm is that the
-substrate can be substituted with different instrumentation mediums to
-implement the equivalent parallelization framework. Along the way, we will
-begin with a study that compares three different DBI
-frameworks~\cite{pin:pldi2005, dynamorio, valgrind} for their instrumentation
-and performance characteristics and then we will move on to other type of
-software instrumentation approach such as binary
-re-writing~\cite{brewriting:usenix2003} and DTrace~\cite{DTrace}. We will also
-explore the effective and flexibility of the approach of hardware assisted
-instrumentation~\cite{lba:isca2008, raksha:isca2007}.
-
-Rest of document is organized as follows. Relevant relate work and our own
+The rest of document is organized as follows. Relevant related work and our own
 previous research outputs that lead to this proposal are discussed from
-Section~\ref{sec:related}, and the details of hypotheses follows in
-Section~\ref{sec:hypo}. Section~\ref{sec:plan} talks about research plan to
-fulfill research items proposed from the document.
+Section~\ref{sec:related} and Section~\ref{sec:previous} respectively, and the
+details of the hypotheses follows in Section~\ref{sec:hypo}.
+Section~\ref{sec:plan} talks about the research plan to fulfill the research
+goals proposed in this document.
 
