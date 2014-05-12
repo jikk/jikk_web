@@ -1,9 +1,6 @@
 % !TEX root = proposal.tex
 \section{Research Assumptions} \label{sec:hypo} 
 
-In this section, I discuss about hypotheses to be verified and confirmed
-from the thesis.
-
 \subsection{\sreplica Generalization}
 \label{ssec:general}
 
@@ -20,10 +17,10 @@ operations -- an operation of monitoring logic depends on the result from one
 or more of previous operation(s). This property tells us whether we can
 parallelize the analysis performed by the monitor for further performance
 improvement. The column for {\it Check Operation} denotes whether the monitor
-is entitled to check for specific set of violations. For instance, Dynamic
-taint analysis (DTA)~\cite{taintcheck:ndss2005} tool checks for every {\tt RET}
+is entitled to check for a specific set of violations. For instance, dynamic
+taint analysis (DTA)~\cite{taintcheck:ndss2005} tools check every {\tt RET}
 instruction to see whether a tainted value is used to deviate control transfer.
-In contrast, {\it cache simulation} does not have such operations.
+In contrast, {\it cache simulation} does not have such requirement.
 
 \begin{table}[h]
     \centering
@@ -32,23 +29,23 @@ In contrast, {\it cache simulation} does not have such operations.
 Analyses & Shadow Memory & Data Dependency & Check Operation \\ 
 \hline \hline
 Data Flow Tracking (DFT) & O & O & O \\ \hline
-Control Flow Integrity (CFI) & O & O & O \\ \hline
+Control Flow Integrity (CFI) & X & X & O \\ \hline
 \specialcell{Memory Integrity Tool \\ (Memcheck)} & O & O & O \\ \hline
-LockCheck & O & O & O \\ \hline
-Method Counting & O & O & O \\ \hline
-Call Graph Profiling & O & O & O \\ \hline
-Path Profiling & O & O & O \\ \hline
-Cache Simulation & O & O & O \\ \hline
+LockCheck & O & X & O \\ \hline
+Method Counting & X & X & X \\ \hline
+Call Graph Profiling & X & X & X \\ \hline
+Path Profiling & X & X & X \\ \hline
+Cache Simulation & O & O & X \\ \hline
 \end{tabular}
-\caption{ categorizes different inline monitors based on each one's
-architectural specifics. \label{tab:analyses}}
+\caption{ present inline monitors categorized based on each one's
+architectural characteristics. \label{tab:analyses}}
 \end{table}
 
 Our goal here is to extend \sreplica approach to support most of monitors
 presented from Table~\ref{tab:analyses}. While the eventual output would be a
 new framework equipped with supporting API that allow users to write tools that
 would serve for their needs. However, due to time and resource constraint, we
-will begin with building the proof-of-concept implementation that support two
+will begin building a proof-of-concept implementation to support two
 representative inline monitors of control flow integrity (CFI)~\cite{cfi} and
 memory integrity tool~\cite{memcheck, drmemory:cgo2011}.
 
@@ -57,35 +54,35 @@ memory integrity tool~\cite{memcheck, drmemory:cgo2011}.
 CFI, similarly to DTA, aims to prevent attackers from compromising applications
 by hijacking their control flow. Programs normally follow programmer-intended
 execution paths. CFI enforces program flow to follow one of these predetermined
-paths. Determining a complete CFG of a program is a challenging task in itself,
+paths. Determining a complete CFG of a program is a challenging task by itself,
 but assuming such a CFG is available, CFI operates as follows.  Run-time checks
 are injected in the application to ensure that control flow remains within the
 CFG. These checks are placed before every indirect control flow transfer in the
 application and check that the destination is one of the intended ones.
-Basically, all possible destinations of a particular control flow instruction
+Specifically, all possible destinations of a particular control flow instruction
 are assigned the same identifier (ID), which is validated before transferring
 control. While this can be overly permissive, because multiple instructions may
-have the same targets assigning the same ID to the super-set of destinations,
+have the same target thus assigning the same ID to a super-set of destinations,
 this approach allows fast checks. 
 
-Control flow tracking already have existed as a core component of the current
-prototype of \sreplica to replicate the execution trace observed from
-the original application thread at BBL level granularity. This is to locate
-\tfa summary from the analysis thread and to perform corresponding DFT
+Control flow tracking is already a core component of the current prototype of
+\sreplica that replicates the execution trace observed from the original
+application thread at BBL level granularity. This is to locate that \tfa
+summary from the analysis thread and to perform the corresponding DFT
 operation.
 %
-While it is too expensive to log and transfer identifier for all BBLs executed,
-\sreplica takes advantage of CFG gathered from the profiling stage to optimize
-and minimize the amount of BBL identifiers (BBID) to be transferred.
+While it is too expensive to log and transfer the identifier for all BBLs
+executed, \sreplica takes advantage of th CFG gathered from the profiling stage
+to minimize the number of BBL identifiers (BBID) to be transferred.
 
-Typical instruction set architectures (ISA) including {\tt x86} system have
-three different type of control transfers illustrated from
-Figure~\ref{fig:cfg0}. (a) direct jumps, (b) direct branches, and (c) indirect
+Typical instruction set architectures (ISAs) including {\tt x86} systems have
+three different types of control transfers illustrated in
+Figure~\ref{fig:cfg0}: (a) direct jumps, (b) direct branches, and (c) indirect
 jumps. For direct jumps, BBIDs for successor BBLs can be excluded from logging,
 since there is only a single, fixed exit once execution enters into BBL0. For
 example, the transitions from BBL0 to BBL1, and then to BBL2 in
 Figure~\ref{fig:cfg0} can be excluded. Direct branches can have two outcomes.
-They are either taken, or fall through where execution continues at the next
+They are either taken, or fall through in which cases execution continues at the next
 instruction. We exploit this property to only enqueue a BBID, when the least
 frequent outcome, according to our dynamic profiling, occurs. For instance,
 when BBL3 follows BBL2 in Figure~\ref{fig:cfg0}. We use the absence of BBL3’s
@@ -95,14 +92,14 @@ BBID. Last, for indirect jumps we always record the BBID following them, since
 they are hard to predict.  Fortunately, the number of such jumps are less
 compared with direct transfers.
 %
-Applying our approach on the example CFG from Figure~\ref{fig:cfg0}, we would
-only need to enqueue the id of BBL3 once. When it is applied to real
+Applying our approach on the CFG of Figure~\ref{fig:cfg0}, we would
+only need to enqueue the id of BBL3 once. When applied to real
 applications, it could save $70 \sim 80 \%$ of BBIDs from being logged.
 
-It is a data representation issue that becomes a main challenge as we use
+It is a data representation issue that becomes the main challenge as we use
 \sreplica's control flow replication to implement CFI. \sreplica differentiates
 BBID from effective address (EA) by assigning different address range.
-Aforementioned control flow optimization exploits this representation to
+The aforementioned control flow optimization exploits this representation to
 discern the direct branch choice. Encounter with EA entry (not BBID) explicitly
 implies the branch choice is made to the edge with larger execution count.
 %
