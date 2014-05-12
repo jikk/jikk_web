@@ -1,39 +1,36 @@
 % !TEX root = proposal.tex
 \section{Related Work}
 \label{sec:related}
-In this section, I discuss related work relevant to the thesis proposal. 
 
 \subsection{Inline Monitors}
 \label{ssec:inline}
 
-Program protection and profiling using inline monitors are dynamic approach
-that execute specific analysis logics along with the application process.
-Instance of the technology includes data flow tracking (DFT), memory integrity
-checking~\cite{memcheck, drmemory:cgo2011}, control flow integrity~\cite{cfi},
-method counting, call graph profiling and so on. Given that the technology can
-be implemented by interleaving analysis and monitoring logics into the program
-execution, we can choose different instrumentation targets either of source
-code or program binaries and therefore use different instrumentation frameworks
-to implement inline monitors.
+Program protection and profiling using inline monitors is a dynamic approach
+that executes specific analysis logics along with the application process.
+Instances of this technology includes data flow tracking (DFT), memory
+integrity checking~\cite{memcheck, drmemory:cgo2011}, control flow
+integrity~\cite{cfi}, method counting, call graph profiling \etc. Given that
+the technology can be implemented by interleaving analysis and monitoring
+logics into the program execution, we can choose to instrument either  source
+code or program binary and therefore use different frameworks to implement
+inline monitors.
 
-With source code based approach, we can use representations exposed  by
-compiler~\cite{llvm:cgo04} internals of abstract syntax tree (AST) or
-intermedidate representation (IR) as instrumentation targets or we take
-source-to-source tranformation~\cite{txl, cil} to generate new source code
-embedded with monitoring logics. This approach comes in reasonable amount of
-overhead roughly around $2\times$ or less, but it is limited in coverage not
-being able to support COTS binaries (\ie 3rd party libraries).  An alternative
-to this limitation is to leverage binary instrumentation approaches either
-based on process-wide virtualization using dynamic binary
-instrumentation(DBI)~\cite{pin:pldi2005, dynamorio, valgrind} or system-wide
-virtualization~\cite{qemu:usenix05, xen:sosp2003}. These address coverage issue
-as these can handle unknown program binaries. However, it comes with excessive
-amount of overhead which vary from $\times 5 \sim \times 100$ based on analyses
-and application domains. Hardware assisted
-implementation~\cite{raksha:isca2007, lba:isca2008} can be considered to
-implement inline monitors with minimal amount of overhead usually less than 5\%
-at most with full coverage of execution environment, however the we have not
-yet seen this being supported by major vendors with their commodity products.
+When instrumenting the source code, we can make use of compiler internal
+representations~\cite{llvm:cgo04} such as abstract syntax tree (AST) or
+intermediate representation (IR) or use source-to-source
+transformation~\cite{txl, cil} to generate new source code embedded with
+monitoring logics. This approach induces reasonable overhead of roughly
+$\times2$ or less, but it is limited in coverage since COTS binaries (\ie 3rd
+party libraries) are not supported. An alternative that overcomes this
+limitation is to leverage binary instrumentation based on either process-wide
+virtualization using dynamic binary instrumentation (DBI)~\cite{pin:pldi2005,
+dynamorio, valgrind} or system-wide virtualization~\cite{qemu:usenix05,
+xen:sosp2003}. However, it comes with an excessive amount of overhead which
+varies from $\times 5 \sim \times 100$ based on analyses and application
+domains. Hardware assisted implementation~\cite{raksha:isca2007, lba:isca2008}
+is considered to implement inline monitors with minimal overhead usually less
+than 5\% with full coverage of execution environment, however the we have not
+seen this being supported by major vendors in their commodity products yet.
 
 \subsection{Data Flow Tracking (DFT)}
 
@@ -117,11 +114,6 @@ the high overhead of communicating it to the analysis thread(s).
 
 \section{Previous Research}
 \label{sec:previous}
-
-From my previous research, I have addressed the high overhead issue inherent to
-heavy-weighted inline monitors such as DFT implementations. In this section, we
-discuss details of each and related research output.
-
 \subsection{\libdft}
 
 \libdft is a highly optimized DFT framework that shows comparable to or faster
