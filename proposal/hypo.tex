@@ -139,33 +139,34 @@ in this case, as it is verified before every memory reference.
 \begin{tabular}{|l|l|}
 \hline
 {\bf Instruction} & {\bf Tag propagation rule} \\ \hline \hline
-    {\tt \specialcell{ALU-OP OP1 $\leftarrow$ OP2 \\ (add, sub \dots)}} & 
-    {\tt t(op1) $\vert=$ t(op2)}\\ \hline
-    {\tt MOV OP1  $\leftarrow$  OP2} & {\tt t(op1) = t(op2)}     \\ \hline
-    {\tt LOAD OP1 $\leftarrow$ [OP2]} & {\tt t(OP1) = t([OP2])}  \\ \hline
-    {\tt STORE [OP1] $\leftarrow$ OP2} & {\tt t([OP1]) = t(OP2)} \\ \hline
+{\tt \specialcell{int* p $\leftarrow$ malloc() \\ (allocation)}} & 
+    {\tt t(p) $=$ UNDEF}\\ \hline
+    {\tt op1  $\leftarrow$  0x1234} & {\tt t(op1) = DEF}     \\ \hline
+    {\tt ALU-OP OP1  $\leftarrow$  OP2} & {\tt t(op1) = t(op1 ALU-OP op2)}     \\ \hline
+    {\tt if op1 == then goto L} & {\tt Complain if t(op1) == UNDEF} \\ \hline
 \end{tabular}
 \caption{presents an interpretation of DFT semantics for pseudo instruction set
 architecture.}
 \label{tab:memcheck_tracking}
 \end{table}
 
-To extend \sreplica to support the tool of this kind of functionalities, we have to make changes to
-its components that include (a) the binary analyzer that translates {\tt x86}
-instructions into intermediate representation (\tfa), (b) the analysis component
-that perform optimizations against the representation.  Even though changes are
-not fundamental to \sreplica's core architecture, we still need to clarify how system
-behaviors would change in respond to the modifications we make. 
+To extend \sreplica to support the tool of this kind of functionalities, we
+have to make changes to its components that include (a) the binary analyzer
+that translates {\tt x86} instructions into intermediate representation (\tfa),
+(b) the analysis component that perform optimizations against the
+representation.  Even though changes are not fundamental to \sreplica's core
+architecture, we still need to clarify how system behaviors would change in
+respond to the modifications we make. 
 
 \subsection{Instrumentation Infrastructure Study}
 \label{ssec:inst_infra}
 
-As we have discussed from Section~\ref{ssec:prev_eval}, it is the cost to
+As we discussed in Section~\ref{ssec:prev_eval}, it is the cost to
 instrument the application thread to inline event collector that accounts for
-the largest portion of the slowdown. In this section, we discuss about
-alternatives for this substrate to improve the overall response time. Firstly,
-we compare three different DBI frameworks including PIN DBI our choice for
-\sreplica and then move on to cover different approaches based on
+the largest portion of the slowdown. In this section, we discuss 
+alternatives of this substrate to improve the overall response time. Firstly,
+we compare three different DBI frameworks including PIN DBI (our choice for
+\sreplica) and then move on to cover different approaches based on
 software~\cite{brewriting:usenix2003, DTrace} and
 hardware~\cite{raksha:isca2007, lba:isca2008} assisted instrumentation. 
 
@@ -173,38 +174,38 @@ hardware~\cite{raksha:isca2007, lba:isca2008} assisted instrumentation.
 \label{ssec:dbi_study}
 
 Dynamic binary instrumentation (DBI) frameworks enable the development of
-program analysis tools for unknown binary by facilitating automated low-level
+program analysis tools on unknown binaries by facilitating automated low-level
 instrumentation. This technology takes advantage of the process-level
-virtualization populating the code cache entries that combines original codes
-with users-authored analysis logics. This technique has become essential
-building blocks in developing tools that enhance the security and reliability
+virtualization populating the code cache entries that combines the original codes
+with users-authored analysis logics. This technique has become an essential
+building block in developing tools that enhance the security and reliability
 of software systems.  Representative frameworks of this kind are
 PIN~\cite{pin:pldi2005}, Valgrind~\cite{valgrind}, and
 DynamoRIO~\cite{dynamorio}.
 %
-Placed in the same layer between a running application and underlying operating
+Placed in the same layer between a running application and the underlying operating
 system, each framework comes with different capabilities and performance
-implications as each framework’s design principles varies up to their intended
+implications as each framework’s design principles differs based on their intended
 application domain. However, developers who want to leverage the technology
-were rarely informed regarding how to choose a right framework that would serve
+were rarely informed on how to choose a right framework that would serve
 best to their purpose.
 %
-In this work, we compare three aforementioned frameworks by carefully examining
-three different aspects – efficiency, capability, and usability. Purpose of our
+In this work, we compare three of aforementioned frameworks by carefully examining
+three different aspects: efficiency, capability, and usability. The purpose of our
 work is to provide a proper guideline to developers who want to develop
-security analysis tools enhancing this technology.
+security analysis tools using this technology.
 
 \subsubsection{Other Software Instrumentation Approaches}
 \label{ssec:sw_inst}
 
-Trade-off to flexibility of instrumentation leveraging DBI framework based
-process-wide virtualization, it cost users to pay high overhead in the course
-of translating the binary, interleaving with analysis logic, store those into
-the code-cache for future re-use. Having this in mind, we want to explore
-feasible alternatives (software approaches but not based on virtualization
-technologies) that can replace the layer with less overhead. Ones that we are
-actively looking into are solutions based on {\it binary re-writing}~\cite{cfi,
-brewriting:usenix2003} and also want to extend light-weighted system
+Process-wide virtualization (\ie DBI) provides flexibility in instrumentation
+process, but it cost users to pay high overhead in the course of translating
+the binary, interleaving with analysis logic, and storing those into the code-cache
+for future re-use. With this in mind, we want to explore feasible
+software alternatives (but not based on virtualization technologies)
+that can replace the layer with less overhead. The solution that we are actively
+looking into are solutions based on {\it binary re-writing}~\cite{cfi,
+brewriting:usenix2003} and we also plan to extend light-weighted system
 tracing/monitoring frameworks similar to {\it DTrace}~\cite{DTrace} technology.
 
 \subsubsection{Hardware Assisted Instrumentation} 
@@ -213,10 +214,10 @@ tracing/monitoring frameworks similar to {\it DTrace}~\cite{DTrace} technology.
 We are also considering to hardware based instrumentation to enhance
 \sreplica's execution model. Chen \etal already proposed log based architecture
 (LBA)~\cite{lba:isca2008}, a framework for decoupled analysis having hardware
-level support, but it's initial prototype failed to address the issue of too
-much amount of information collected from the application and transferred using
-shared cache connecting two different core which is later resolved by the
-software side optimization. 
+level support, but its initial prototype failed to address the issue of the
+excessive information collected from the application and transferred using the
+shared cache connecting the two different cores. The overhead issue is later
+resolved by the software side optimization. 
 %
 Our insight is that we can use \sreplica's approach to handle excessive amount
 of communication volume and frequency to tackle the issue. Furthermore, our
@@ -224,10 +225,9 @@ optimal data representation of effective addresses (EAs) and control transfer
 trace (BBID), needed to replicate inline monitors, would reduce the size of
 required hardware component.
 %
-The main design and implementation challenges are (a) reduction in space
-requirement for additional hardware component and (b) flexible support of
-different monitoring logics without requiring hardware logic update.
-
+The main design and implementation challenges are (a) reducing the space
+requirement for additional hardware component and (b) providing a flexible
+support of different monitoring logics without requiring hardware logic update.
 
 \begin{figure}[tb]
     \centering
