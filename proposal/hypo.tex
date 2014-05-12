@@ -117,12 +117,12 @@ naively logging all BBIDs would incur too high overhead.
 \subsubsection{Memory Integrity Tool (Memcheck)}
 
 Memory integrity tools~\cite{memcheck, drmemory:cgo2011, asan} are designed to
-assist developers by reporting (a) memory leakage errors implemented by
-instrumenting known memory allocator and deallocator routines to check whether
-a program terminates not deallocating any allocated memory chunks and (b) usage
-of uninitialized variable by tracking its propagations according to the rules
-specified from Table~\ref{tab:memcheck_tracking}. The tool reports the usage of
-such uninitialized variables at any point of the program execution.
+assist developers by reporting (a) memory leakage errors by instrumenting known
+memory allocator and deallocator routines to check whether a program terminates
+before freeing any allocated memory chunks and (b) usage of an uninitialized
+variable by tracking its propagations according to the rules specified in
+Table~\ref{tab:memcheck_tracking}. The tool reports the usage of such
+uninitialized variables at any point of the program execution.
 %
 DFT shares much of its architectural characteristics with memory integrity
 tools since they utilize shadow memory to track the status of real memory space
@@ -150,11 +150,11 @@ architecture.}
 \label{tab:memcheck_tracking}
 \end{table}
 
-To extend \sreplica to support the tool of this kind, we have to make changes
-its components that include (a) binary analyzer that translates {\tt x86}
-instructions into intermediate representation (\tfa), (b) analysis component
+To extend \sreplica to support the tool of this kind of functionalities, we have to make changes to
+its components that include (a) the binary analyzer that translates {\tt x86}
+instructions into intermediate representation (\tfa), (b) the analysis component
 that perform optimizations against the representation.  Even though changes are
-fundamental to its core architecture, we still need to clarify how system
+not fundamental to \sreplica's core architecture, we still need to clarify how system
 behaviors would change in respond to the modifications we make. 
 
 \subsection{Instrumentation Infrastructure Study}
