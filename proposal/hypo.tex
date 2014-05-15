@@ -233,8 +233,8 @@ support of different monitoring logics without requiring hardware logic update.
     \centering
     \includegraphics[width=0.90\linewidth]{figs/model0.eps}
 
-    \caption{present three different models to instrument inline monitors. From
-    the left to right it has (a) inlining model, (b) a producer - a consumer
+    \caption{Presents three different models to instrument inline monitors. From
+    left to right (a) inlining model, (b) a producer -  consumer
     model, and (c) one producer - multiple consumers model.\label{fig:model0}}
 
 \end{figure}
@@ -242,56 +242,56 @@ support of different monitoring logics without requiring hardware logic update.
 \subsection{Overhead Modeling Framework}
 
 Inline monitors that we discussed from Section~\ref{ssec:inline} may have
-different performance implications and become slower being parallelized than
-when the monitoring logic is in-lined into a original process. Or we may find
-some other execution model what would work better for a monitor. For instance,
-when the monitoring logic is too heavy-weighted, it is better to distribute
-workloads over multiple number of the worker threads having a arbitrator
-thread. Formalizing the idea, we consider three different models presented from
-Figure~\ref{fig:model0} to categorize inline monitors.
+different performance implications that would make them become slower when
+parallelized than when the monitoring logic is in-lined into an original
+process. We may find some other execution model what would work better for a
+monitor. For instance, when the monitoring logic is too heavy-weight, it might
+be better to distribute the workload over multiple worker threads
+using a arbitrator thread. Formalizing the idea, we consider three different
+models presented in Figure~\ref{fig:model0} to categorize inline monitors.
 
 \begin{itemize}
 
-    \item{{\bf Inlining model:} Inline monitor shows the best response time
+    \item{{\bf Inlining model:} This inline monitor exhibits the best response time
             when the monitoring logic is interleaved with the application
     thread. Simple monitors such as call graph profiler falls into this
     category.}
 
-    \item{{\bf $1-1$ model:} Inline monitor shows the best response time when
-            an analysis thread is assigned to each application thread. This
-    model is same as produce-consumer design pattern. \sreplica implements this
-    model parallelizing DFT analysis.}
+    \item{{\bf $1-1$ model:} This inline monitor exhibits the best response time when
+            every application thread  is assigned a corresponding analysis thread. This
+    model is same as the produce-consumer design pattern. \sreplica implements this
+    model to parallelize DFT analysis.}
 
-    \item{{\bf $1-n$ model:} Inline monitor shows the best response time when
+    \item{{\bf $1-n$ model:} This inline monitor exhibits the best response time when
             more than one analysis threads are assigned to each application
-    thread. This model requires dedicated dispatcher thread for scheduling. To
-    be suitable for this model, analysis need to be heavy-weighted and have
+    thread. This model requires a dedicated dispatcher thread for scheduling. To
+    be suitable for this model, analysis needs to be heavy-weight and have
     weak data dependency. Cache simulation falls into this category.}
 
 \end{itemize}
 
 %
-Given that we have three different execution models, we want to establish an
-analytic framework that would take one of in-lined model as an input and
-determine the suitable model for the best response time. Once we establish the
-framework, we expect to see how performance implications changes from the
-modeling framework as we make changes to confirm other hypotheses we discussed
+Given three aforementioned execution models, we want to establish an analytic
+framework that would take one of in-lined model as an input and determine the
+model that would lead to the best response time. Once we establish the
+framework, we expect to have an ability to predict performance changes in
+response to changes we make to \sreplica to fulfill hypotheses we discussed
 from Section~\ref{ssec:general} and Section~\ref{ssec:inst_infra} 
 
-Ha\etal\cite{cab:oopsala2009} proposed a model simpler than our by taking only
-two execution models of {\it Inlining model} (Figure~\ref{fig:model0} (a)), and
-{\it $1-1$ model} (Figure~\ref{fig:model0} (b)) into its consideration. By not
-having a model for Figure~\ref{fig:model0} (c), their model cannot cover cases
-where we have too expensive monitoring logic or the cost for event collector
-and its instrumentation become very thin. Furthermore, their purpose of having
-the model is different from ours not to choose best model for different
-monitors.  In our case, dynamic profiler will be used to capture performance
-characteristics of target application and monitors to be analyzed. Based on
-profiling result, we expect the framework can better categorize inline monitors 
-to have best response time.
+Ha \etal\cite{cab:oopsala2009} proposed a model simpler than ours by taking
+only two of execution models namely {\it Inlining model}
+(Figure~\ref{fig:model0} (a)), and {\it $1-1$ model} (Figure~\ref{fig:model0}
+(b)) into consideration. By not having a model for Figure~\ref{fig:model0} (c),
+their model cannot cover cases where we have too expensive monitoring logic or
+the cost for event collector and its instrumentation becomes very thin.
+Furthermore, their purpose of having the model is different from ours. In our
+case, the dynamic profiler will be used to capture performance characteristics
+of target applications and monitors to be analyzed. Based on the profiling result,
+we expect the framework to better categorize inline monitors based on
+response time.
 
-As we noted from previous sections, we attempt to change the performance
-characteristics by \sreplica and examining instrumentation layer for better
+As we noted in the previous sections, we attempt to change the performance
+characteristics of \sreplica and examine the instrumentation layer for better
 performance. The modeling framework would be a meaningful contribution, if we
 can confirm the benefits and disadvantages of these choices ahead of time.
  
